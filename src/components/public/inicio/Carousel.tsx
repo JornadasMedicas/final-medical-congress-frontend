@@ -43,8 +43,11 @@ export const Carousel = () => {
                 {items.map((item: { name: string, img: string }) => <ItemCarousel key={item.name} item={item} />).filter((_item, index: number) => index === activeItem)}
             </Box>
             <Box gap={3} sx={{ display: 'flex', justifyContent: 'center', width: '100%', minHeight: responsive ? '2.5vh' : '3vh', alignItems: 'center', mt: responsive ? 0 : 2, mb: responsive ? 1 : 0 }}>
-                {items.map((_item: { name: string, img: string }, index: number) => (
-                    <Box onClick={(e) => handleClick(e, index)} sx={{ backgroundColor: index === activeItem ? 'rgba(19, 50, 44, 1)' : 'rgba(19, 50, 44, 0.3)', width: '13px', height: '13px', borderRadius: 10, '&:hover': { cursor: 'pointer' } }} />
+                {items.map((item: { name: string, img: string }, index: number) => (
+                    <Box
+                        key={item.name}
+                        onClick={(e) => handleClick(e, index)}
+                        sx={{ backgroundColor: index === activeItem ? 'rgba(19, 50, 44, 1)' : 'rgba(19, 50, 44, 0.3)', width: '13px', height: '13px', borderRadius: 10, transition: 'background 1s ease', '&:hover': { cursor: 'pointer' } }} />
                 ))}
             </Box>
         </Stack>
