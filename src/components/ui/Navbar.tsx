@@ -6,10 +6,10 @@ import { PropsUIContext } from '../../interfaces/context/IUIContext';
 import { UIContext } from '../../context/UIContext';
 
 const navItem = [
-    { name: 'Inicio', pathTo: 'carousel' },
-    { name: 'Programa', pathTo: 'program' },
-    { name: 'Sedes', pathTo: 'location' },
-    { name: 'Contacto', pathTo: 'contact' },
+    { name: 'Inicio' },
+    { name: 'Programa' },
+    { name: 'Sedes' },
+    { name: 'Contacto' },
     /* { name: 'Registro', pathTo: 'register' } */
 ];
 
@@ -29,7 +29,7 @@ export const Navbar = () => {
 
     const goToSection = (pathTo: string) => {
         setAnchorElNav(null);
-        setActiveSection(activeSection);
+        setActiveSection(pathTo);
 
         if (pathTo === 'register') {
             navigate(`/register`, { replace: true });

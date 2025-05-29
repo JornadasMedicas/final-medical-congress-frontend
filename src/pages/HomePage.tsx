@@ -32,16 +32,16 @@ export const HomePage = () => {
 
     return (
         <Stack>
-            <Box component="section" id="carousel">
+            <Box component="section" id="Inicio">
                 <Inicio />
             </Box>
-            <Box component="section" id="program">
+            <Box component="section" id="Programa">
                 <Programa />
             </Box>
-            <Box component="section" id="location">
+            <Box component="section" id="Sedes">
                 <Sedes />
             </Box>
-            <Box component="section" id="contact">
+            <Box component="section" id="Contacto">
                 <Contacto />
             </Box>
         </Stack>
