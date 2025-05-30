@@ -39,8 +39,27 @@ export const Carousel = () => {
 
     return (
         <Stack>
-            <Box sx={{ width: '100%', minHeight: responsive ? '44vh' : '42vh' }}>
-                {items.map((item: { name: string, img: string }) => <ItemCarousel key={item.name} item={item} />).filter((_item, index: number) => index === activeItem)}
+            <Box
+                sx={{
+                    width: '100%',
+                    minHeight: responsive ? '44vh' : '42vh',
+                    position: 'relative'
+                }}
+            >
+                {items.map((item: { name: string, img: string }, index: number) => (
+                    <Box
+                        key={item.name}
+                        sx={{
+                            position: 'absolute',
+                            width: '100%',
+                            opacity: index === activeItem ? 1 : 0,
+                            transition: 'opacity 1s ease-in-out',
+                            pointerEvents: index === activeItem ? 'auto' : 'none'
+                        }}
+                    >
+                        <ItemCarousel item={item} />
+                    </Box>
+                ))}
             </Box>
             <Box gap={3} sx={{ display: 'flex', justifyContent: 'center', width: '100%', minHeight: responsive ? '2.5vh' : '3vh', alignItems: 'center', mt: responsive ? 0 : 2, mb: responsive ? 1 : 0 }}>
                 {items.map((item: { name: string, img: string }, index: number) => (

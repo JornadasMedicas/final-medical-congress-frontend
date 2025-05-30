@@ -16,7 +16,7 @@ export const ItemCarousel = (props: any) => {
                 position: 'relative',
                 overflow: 'hidden'
             }}>
-            <Box component={'img'} src={props.item.img} sx={{ zIndex: 0, position: 'absolute', justifyContent: 'center', width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}>
+            <Box loading='eager' component={'img'} src={props.item.img} sx={{ zIndex: 0, position: 'absolute', justifyContent: 'center', width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}>
             </Box>
             <Box sx={{ height: { md: '70px', xs: '50px' }, mt: 'auto', ml: { md: '5vh', xs: '2vh' }, zIndex: 2 }}>
                 

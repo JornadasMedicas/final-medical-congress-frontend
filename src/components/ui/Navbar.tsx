@@ -1,7 +1,7 @@
 import { AppBar, Box, Button, Container, Divider, IconButton, Menu, MenuItem, Toolbar, Typography, useMediaQuery } from '@mui/material'
 import React, { useContext, useState } from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
-import { NavLink, NavigateFunction, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { PropsUIContext } from '../../interfaces/context/IUIContext';
 import { UIContext } from '../../context/UIContext';
 
@@ -17,7 +17,6 @@ export const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const { activeSection, setActiveSection, setDynamic } = useContext<PropsUIContext>(UIContext);
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const navigate: NavigateFunction = useNavigate();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -30,13 +29,6 @@ export const Navbar = () => {
     const goToSection = (pathTo: string) => {
         setAnchorElNav(null);
         setActiveSection(pathTo);
-
-        if (pathTo === 'register') {
-            navigate(`/register`, { replace: true });
-        } else {
-            navigate(`/?section=${pathTo}`, { replace: true });
-        }
-
         setDynamic(1);
     };
 
@@ -53,7 +45,6 @@ export const Navbar = () => {
                             <Typography
                                 variant="h5"
                                 noWrap
-                                component="a"
                                 sx={{
                                     mr: 1,
                                     ml: 1.5,
