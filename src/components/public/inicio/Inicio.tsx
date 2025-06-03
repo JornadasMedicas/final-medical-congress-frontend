@@ -10,7 +10,7 @@ export const Inicio = () => {
             <Grid size={12} sx={{ textAlign: 'center', minHeight: responsive ? '46.5vh' : '45vh' }}>
                 <Carousel />
             </Grid>
-            <Box sx={{ ml: responsive ? 3.5 : 13, mr: responsive ? 3.5 : 13 }}>
+            <Box sx={{ ml: responsive ? 3 : 13, mr: responsive ? 3 : 13 }}>
                 <Grid size={12} sx={{ display: 'flex', textAlign: 'center', minHeight: '10vh', alignItems: 'center', justifyContent: 'center' }}>
                     <Box sx={{
                         display: 'flex',
@@ -26,7 +26,7 @@ export const Inicio = () => {
                             fontFamily={'sans-serif'}
                             fontWeight={700}
                             sx={{
-                                color: 'secondary.main',
+                                color: 'text.primary',
                                 fontSize: responsive ? '25px' : '30px',
                                 pl: responsive ? 1 : 0,
                                 pr: responsive ? 1 : 0

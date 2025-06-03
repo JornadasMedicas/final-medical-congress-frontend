@@ -35,7 +35,7 @@ export const Carousel = () => {
         }, 4000);
 
         return () => clearInterval(interval);
-    }, [activeItem]);
+    }, []);
 
     return (
         <Stack>
@@ -54,6 +54,7 @@ export const Carousel = () => {
                             width: '100%',
                             opacity: index === activeItem ? 1 : 0,
                             transition: 'opacity 1s ease-in-out',
+                            willChange: 'opacity',
                             pointerEvents: index === activeItem ? 'auto' : 'none'
                         }}
                     >
