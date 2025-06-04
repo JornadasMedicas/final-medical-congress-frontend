@@ -1,4 +1,4 @@
-import { Box, Button, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Divider, Typography, useMediaQuery } from "@mui/material";
 import { useContext, useState } from "react";
 import { PropsUIContext } from "../../../interfaces/context/IUIContext";
 import { UIContext } from "../../../context/UIContext";
@@ -37,8 +37,8 @@ export const RenderProgramas = ({ programas }: PropsIProgramas) => {
                 {
                     programas.map((item, index) => (
                         <Box
-                            component={motion.div}
                             key={item.buttonText}
+                            component={motion.div}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
@@ -51,8 +51,7 @@ export const RenderProgramas = ({ programas }: PropsIProgramas) => {
                             <Typography sx={{ m: 'auto', fontFamily: 'sans-serif', fontSize: '20px', fontWeight: 700, color: 'background.default', textAlign: 'center' }}>
                                 {item.title}
                             </Typography>
-                            <Box sx={{ cursor: 'pointer', transition: 'transform 0.3s ease', ':hover': { transform: 'scale(1.03)', transition: 'transform 0.3s ease' } }} onClick={() => handleClickOpen(item.img)}>
-                                <img loading='lazy' alt={item.altImgText} style={{ transition: 'all 0.3s ease', filter: 'drop-shadow(0px 0px 5px grey)', width: '100%', height: 'auto' }} src={item.img} />
+                            <Box component={'img'} src={item.img} loading='lazy' alt={item.altImgText} sx={{ cursor: 'pointer', transition: 'transform 0.3s ease', filter: 'drop-shadow(0px 0px 5px grey)', ':hover': { transform: 'scale(1.03)', transition: 'transform 0.3s ease' } }} onClick={() => handleClickOpen(item.img)}>
                             </Box>
                             {
                                 item.onDowload &&
@@ -61,6 +60,9 @@ export const RenderProgramas = ({ programas }: PropsIProgramas) => {
                                         {item.buttonText}
                                     </Button>
                                 </Box>
+                            }
+                            {
+                                (responsive && index !== programas.indexOf(programas[programas.length - 1])) && <Divider sx={{ width: '50%', m: 'auto', mt: 1, mb: 1, border: 'ridge' }} />
                             }
                         </Box>
                     ))
