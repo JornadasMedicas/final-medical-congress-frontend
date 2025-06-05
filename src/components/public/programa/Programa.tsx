@@ -22,7 +22,7 @@ export const Programa = () => {
                     PROGRAMA
                 </Divider>
             </Grid>
-            <Grid size={12} sx={{ display: 'flex', justifyContent: 'center', mb: responsive ? 1 : 1 }}>
+            <Grid size={12} sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
                 <Tabs
                     value={tab}
                     onChange={handleChange}

@@ -16,7 +16,7 @@ const MemoizedPrograma = React.memo(Programa);
 const MemoizedSedes = React.memo(Sedes);
 const MemoizedContacto = React.memo(Contacto);
 
-export const HomePage = () => {
+const HomePage = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const { dynamic, activeSection } = useContext<PropsUIContext>(UIContext);
 
@@ -50,3 +50,5 @@ export const HomePage = () => {
         </Stack>
     )
 }
+
+export default HomePage;

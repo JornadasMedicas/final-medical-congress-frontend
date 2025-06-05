@@ -34,8 +34,14 @@ export const Proximamente = () => {
             </Typography>
             {
                 responsive ?
-                    <Box sx={{ width: '100%', position: 'relative', overflow: 'hidden' }}>
-                        <img width={'100%'} height={'100%'} style={{ position: 'absolute', bottom: 0, zIndex: 2 }} src={`${import.meta.env.VITE_APP_BASE_ROUTE}/incoming.webp`} />
+                    <Box
+                        component={motion.div}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: 0.1, duration: 0.5, ease: 'easeOut' }}
+                        viewport={{ once: true }}
+                        sx={{ width: '100%', position: 'relative', overflow: 'hidden' }}>
+                        <img width={'100%'} height={'100%'} style={{ position: 'absolute', bottom: 0, filter: 'drop-shadow(0px 0px 3.5px grey)', zIndex: 2 }} src={`${import.meta.env.VITE_APP_BASE_ROUTE}/incoming.webp`} />
                     </Box>
                     :
                     <Box
@@ -55,7 +61,7 @@ export const Proximamente = () => {
                                 width: 'auto',
                                 overflow: 'hidden',
                                 filter: 'drop-shadow(0px 0px 9px grey)',
-                                mt: 2,
+                                mt: 2
                             }}
                         />
                     </Box>

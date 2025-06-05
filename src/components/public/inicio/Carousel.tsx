@@ -35,7 +35,7 @@ export const Carousel = () => {
         }, 4000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [activeItem]);
 
     return (
         <Stack>

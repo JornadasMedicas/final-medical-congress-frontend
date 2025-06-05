@@ -5,8 +5,8 @@ import {
     /* BrowserRouter as Router, Routes, */
 } from "react-router-dom"
 /* import { Admin } from "../components/admin/Admin" */
-import { DashboardRoutes } from "./DashboardRoutes"
-import { HomePage } from "../pages/HomePage"
+import { DashboardRoutes } from "./DashboardRoutes";
+import HomePage from "../pages/HomePage";
 /* import { Registro } from '../components/public/Registro' */
 
 export const AppRouter = () => {
