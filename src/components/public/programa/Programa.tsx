@@ -16,7 +16,7 @@ export const Programa = () => {
     };
 
     return (
-        <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : '100vh', flexDirection: 'column', ml: responsive ? 3 : 13, mr: responsive ? 3 : 13 }}>
+        <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : '100vh', flexDirection: 'column', ml: responsive ? 3 : 13, mr: responsive ? 3 : 13, mt: 2 }}>
             <Grid size={12} sx={{ mb: 2, mt: 3 }}>
                 <Divider sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: responsive ? '80%' : '50%', m: 'auto' }}>
                     PROGRAMA
@@ -61,7 +61,7 @@ export const Programa = () => {
                     }} label="2023" />
                 </Tabs>
             </Grid>
-            <Grid size={12} sx={{ mt: 2, mb: 2, height: '100%' }}>
+            <Grid size={12} sx={{ mt: 2, mb: responsive ? 0 : 2, height: '100%' }}>
                 {
                     tab === 0 && <Proximamente />
                 }
