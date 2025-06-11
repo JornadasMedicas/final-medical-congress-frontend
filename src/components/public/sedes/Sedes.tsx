@@ -20,7 +20,10 @@ export const Sedes = () => {
             style: 'mapbox://styles/mapbox/streets-v12', // Estilo del mapa
             center: itemData[0].location, // starting position [lng, lat]
             zoom: 16, // Nivel de zoom inicial
-            hash: false
+            hash: false,
+            projection: {
+                name: 'globe'
+            }
         });
 
         // Agregar un marcador (opcional)
@@ -44,23 +47,24 @@ export const Sedes = () => {
     }, [selectedItem]);
 
     return (
-        <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : '100vh', flexDirection: 'column', ml: responsive ? 3 : 13, mr: responsive ? 3 : 13, mt: responsive ? 2 : 0 }}>
-            <Grid size={responsive ? 12 : 6} sx={{ mb: 2, mt: responsive ? 0 : 3 }}>
+        <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : '90.5vh', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: responsive ? 2 : 5, pb: responsive ? 4 : 0 }}>
+            <Grid size={responsive ? 12 : 6} sx={{ mb: 2, mt: responsive ? 0 : 0 }}>
                 <Divider sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: responsive ? '80%' : '50%', m: 'auto' }}>
                     SEDES
                 </Divider>
             </Grid>
             <Grid container size={12}>
-                <Grid size={responsive ? 12 : 6} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: responsive ? 'auto' : '75vh', gap: responsive ? 4 : 10, mb: responsive ? 3 : 0 }}>
+                <Grid size={responsive ? 12 : 6} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: responsive ? 'auto' : '75vh', gap: responsive ? 4 : 20, mb: responsive ? 3 : 0 }}>
                     {
                         sedes2024.map((sede, index) => (
                             <Box
                                 key={sede.id}
                                 sx={{
-                                    boxShadow: '0px 8px 10px 0px rgba(1,18,38, 0.15)',
-                                    borderTopLeftRadius: 10,
-                                    borderBottomLeftRadius: 10,
-                                    borderTopRightRadius: responsive ? 10 : 0,
+
+                                    boxShadow: '0px 2px 10px 5px rgba(1,18,38, 0.15)',
+                                    borderTopLeftRadius: 5,
+                                    borderBottomLeftRadius: 5,
+                                    borderTopRightRadius: responsive ? 10 : 5,
                                     borderBottomRightRadius: responsive ? 10 : 0,
                                     transform: index === selectedItem ? 'scale(1.05)' : 'scale(1)',
                                     transition: 'transform 0.3s ease', ':hover': {
@@ -74,7 +78,13 @@ export const Sedes = () => {
                                 <Grid container size={12}>
                                     <Grid size={responsive ? 12 : 6}
                                         sx={{
-                                            p: responsive ? 2 : 2.5
+                                            p: responsive ? 2 : 2.5,
+                                            backgroundColor: '#ffffff',
+                                            borderTopLeftRadius: 5,
+                                            borderBottomLeftRadius: 5,
+                                            borderLeft: selectedItem === index ? '4px solid #50736c' : '',
+                                            borderTopRightRadius: responsive ? 10 : 5,
+                                            borderBottomRightRadius: responsive ? 10 : 0,
                                         }}>
                                         <Typography
                                             fontFamily={'sans-serif'}
@@ -85,15 +95,18 @@ export const Sedes = () => {
                                             {sede.title}
                                         </Typography>
                                     </Grid>
-                                    <Grid size={responsive ? 12 : 6} sx={{ backgroundColor: '#50736c' }}>
-                                        <Box sx={{ backgroundColor: 'white', height: '100%', width: '20%', borderBottomRightRadius: '100px' }} />
-                                    </Grid>
+                                    {
+                                        !responsive &&
+                                        <Grid size={6} sx={{ backgroundColor: '#50736c' }}>
+                                            <Box sx={{ backgroundColor: 'white', height: '100%', width: '20%', borderBottomRightRadius: '100px' }} />
+                                        </Grid>
+                                    }
                                 </Grid>
                             </Box>
                         ))
                     }
                 </Grid>
-                <Grid size={responsive ? 12 : 6} sx={{ backgroundColor: '#50736c', height: '100%', minHeight: 'auto', borderRadius: 3, p: 2, zIndex: 2, boxShadow: '0 8px 10px 0 rgba(1,18,38, 0.15)', }}>
+                <Grid size={responsive ? 12 : 6} sx={{ backgroundColor: '#50736c', height: '100%', minHeight: 'auto', borderRadius: 3, p: responsive ? 1 : 2, zIndex: 2, boxShadow: '0 8px 10px 0 rgba(1,18,38, 0.15)', }}>
                     <Box sx={{ backgroundColor: 'white', height: responsive ? 'auto' : '74.5vh', p: 2, textAlign: 'center' }}>
                         <Typography
                             key={itemData[0].address}

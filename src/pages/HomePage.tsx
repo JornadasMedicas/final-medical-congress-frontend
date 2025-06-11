@@ -35,13 +35,13 @@ const HomePage = () => {
     
     return (
         <Stack>
-            <Box component="section" id="Inicio">
+            <Box component="section" id="Inicio" sx={{ backgroundColor: '#f7f7f7'}}>
                 <MemoizedInicio />
             </Box>
             <Box component="section" id="Programa">
                 <MemoizedPrograma />
             </Box>
-            <Box component="section" id="Sedes">
+            <Box component="section" id="Sedes" sx={{ backgroundColor: '#f7f7f7'}}>
                 <MemoizedSedes />
             </Box>
             <Box component="section" id="Contacto">

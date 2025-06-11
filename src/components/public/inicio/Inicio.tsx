@@ -1,25 +1,50 @@
-import { Box, Grid, Typography, useMediaQuery } from "@mui/material"
+import { Box, Card, CardContent, Grid, Typography, useMediaQuery } from "@mui/material"
 import { Carousel } from "./Carousel";
 import { motion } from "motion/react";
+import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
+import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
+import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
+
+const cards = [
+    {
+        title: '35 Años',
+        subtitle: 'de Asistencia Médica',
+        icon: <CalendarTodayTwoToneIcon sx={{ fontSize: 40, color: '#13322c' }} />,
+        color: '#275e51'
+    },
+    {
+        title: 'Colaboración',
+        subtitle: 'y Avances en Salud',
+        icon: <PeopleAltTwoToneIcon sx={{ fontSize: 40, color: '#13322c' }} />,
+        color: '#275e51'
+    },
+    {
+        title: 'Innovación',
+        subtitle: 'y Excelencia',
+        icon: <WorkspacePremiumTwoToneIcon sx={{ fontSize: 40, color: '#13322c' }} />,
+        color: '#275e51'
+    }
+]
 
 export const Inicio = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
 
     return (
-        <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : '100vh', flexDirection: 'column' }}>
+        <Grid container columns={12} sx={{ display: 'flex', minHeight: 'auto', flexDirection: 'column', mt: responsive ? 0 : 2, pb: 6 }}>
             <Grid size={12} sx={{ textAlign: 'center', minHeight: responsive ? '46.5vh' : '45vh' }}>
                 <Carousel />
             </Grid>
-            <Box sx={{ ml: responsive ? 3 : 13, mr: responsive ? 3 : 13 }}>
+            <Box sx={{ ml: responsive ? 3 : 20, mr: responsive ? 3 : 20 }}>
                 <Grid size={12} sx={{ display: 'flex', textAlign: 'center', minHeight: '10vh', alignItems: 'center', justifyContent: 'center' }}>
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'center',
-                        width: 'fit-content'
+                        width: 'fit-content',
+                        flexDirection: 'column'
                     }}>
                         <Typography
                             component={motion.div}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: -50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.85, ease: 'easeInOut' }}
                             viewport={{ once: true }}
@@ -27,43 +52,129 @@ export const Inicio = () => {
                             fontWeight={700}
                             sx={{
                                 color: 'text.primary',
-                                fontSize: responsive ? '25px' : '30px',
+                                fontSize: responsive ? '27px' : '37px',
                                 pl: responsive ? 1 : 0,
-                                pr: responsive ? 1 : 0
+                                pr: responsive ? 1 : 0,
+                                pt: responsive ? 2 : 0,
+                                pb: responsive ? 1 : 0
                             }}>
                             ¡BIENVENIDOS A LAS JORNADAS MÉDICAS!
                         </Typography>
+                        <Box sx={{ width: responsive ? '45%' : '50%', height: '5px', background: 'linear-gradient(90deg,rgba(84, 173, 147, 1) 0%, rgba(19, 50, 44, 1) 100%)', m: 'auto', mb: 2 }} />
                     </Box>
                 </Grid>
+                <Grid container columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column' : 'row', justifyContent: 'center', gap: 3, mb: 4, mt: 1 }}>
+                    {
+                        cards.map((card, index) => (
+                            <Grid size={'auto'}>
+                                <Card
+                                    component={motion.div}
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.85, delay: 0.3 * index }}
+                                    viewport={{ once: true }}
+                                    sx={{
+                                        borderRadius: 3,
+                                        boxShadow: 3,
+                                        borderTop: `4px solid ${card.color}`, // azul claro
+                                        width: responsive ? '100%' : 370,
+                                        textAlign: 'center',
+                                        '&:hover': {
+                                            transform: 'scale(1.05)',
+                                            boxShadow: 4,
+                                        },
+                                    }}
+                                >
+                                    <CardContent>
+                                        <Box display="flex" justifyContent="center" mb={1}>
+                                            {card.icon}
+                                        </Box>
+                                        <Typography variant="h6" fontWeight="bold" color="text.primary">
+                                            {card.title}
+                                        </Typography>
+                                        <Typography variant="body2" color="background.default">
+                                            {card.subtitle}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))
+                    }
+                </Grid>
                 <Grid
+                    component={motion.div}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.85, ease: 'easeInOut', delay: 0.8 }}
+                    viewport={{ once: true }}
                     size={12}
-                    sx={{ pt: responsive ? 0 : 2}}
+                    sx={{ pt: responsive ? 0 : 2 }}
                 >
                     <Box
                         sx={{
                             display: 'flex',
-                            pt: responsive ? 2 : 0
+                            flexDirection: 'column',
+                            pt: responsive ? 2 : 0,
+                            background: 'linear-gradient(170deg,rgba(243, 237, 225, 0.4) 0%, rgba(255, 255, 255, 1) 50%, rgba(215, 240, 231, 0.4) 100%)',
+                            boxShadow: '3px 5px 10px 0px rgba(1,18,38, 0.2)',
+                            borderRadius: 5,
+                            width: responsive ? 'auto' : '60%',
+                            m: 'auto',
+                            p: responsive ? 2 : 5,
+                            gap: 3
                         }}>
                         <Typography
-                            component={motion.div}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.85, ease: 'easeInOut', delay: 0.8 }}
-                            viewport={{ once: true }}
                             fontFamily={'sans-serif'}
                             fontWeight={500}
                             textAlign={'justify'}
-                            letterSpacing={1}
+                            letterSpacing={0.5}
                             lineHeight={responsive ? 'auto' : 2}
                             sx={{
                                 color: 'secondary.main',
                                 fontSize: responsive ? '18px' : '20px'
                             }}>
-                            Es un honor darles la bienvenida a este congreso tan especial, donde celebramos 35 años de logros, colaboración y avances en el campo de la salud de Veracruz. Este aniversario no solo marca un hito en nuestra historia, sino que también nos brinda la oportunidad de reflexionar sobre nuestro recorrido y mirar hacia el futuro con renovada esperanza y determinación.
-                            A lo largo de estos 35 años, hemos enfrentado numerosos desafíos, pero también hemos alcanzado metas significativas gracias al esfuerzo y dedicación de cada uno de ustedes. Este congreso es un testimonio de nuestro compromiso continuo con la excelencia y la innovación.
-                            Quiero expresar mi más profundo agradecimiento a todos los que han contribuido a este viaje: a nuestros directivos, por su apoyo incondicional; a los ponentes, por compartir su valioso conocimiento; y a todos los asistentes, por su entusiasmo y participación activa.
-                            En este evento, no solo celebraremos nuestros logros pasados, sino que también exploraremos nuevas ideas y estrategias para enfrentar los retos futuros. Estoy seguro de que las discusiones y presentaciones que tendremos en los próximos días serán inspiradoras y fructíferas.
-                            Cerramos este mensaje con un llamado a la acción: sigamos trabajando juntos, con pasión y dedicación, para construir un futuro aún más brillante. ¡Feliz 35 aniversario!
+                            Es un honor darles la bienvenida a este congreso tan especial, donde celebramos <b style={{ color: '#13322c' }}> 35 años de logros, colaboración y avances</b> en el campo de la salud de Veracruz.
+                        </Typography>
+                        <Typography
+                            fontFamily={'sans-serif'}
+                            fontWeight={500}
+                            textAlign={'justify'}
+                            letterSpacing={0.5}
+                            lineHeight={responsive ? 'auto' : 2}
+                            sx={{
+                                color: 'secondary.main',
+                                fontSize: responsive ? '18px' : '20px'
+                            }}>
+                            A lo largo de estos 35 años, hemos enfrentado numerosos desafíos, pero también hemos alcanzado metas significativas gracias al esfuerzo y dedicación de cada uno de ustedes. Este congreso es un testimonio de nuestro <b style={{ color: '#322118' }}>compromiso continuo con la excelencia y la innovación</b>.
+                        </Typography>
+                        <Typography
+                            fontFamily={'sans-serif'}
+                            fontWeight={500}
+                            textAlign={'justify'}
+                            letterSpacing={0.5}
+                            lineHeight={responsive ? 'auto' : 2}
+                            fontStyle={'italic'}
+                            sx={{
+                                color: 'gray',
+                                fontSize: responsive ? '18px' : '20px',
+                                p: 2,
+                                textAlign: 'right',
+                                borderRadius: 5,
+                                borderLeft: '4px solid #50736c'
+                            }}>
+                            "Quiero expresar mi más profundo agradecimiento a todos los que han contribuido a este viaje: a nuestros directivos, por su apoyo incondicional; a los ponentes, por compartir su valioso conocimiento; y a todos los asistentes, por su entusiasmo y participación activa".
+                        </Typography>
+                        <Typography
+                            fontFamily={'sans-serif'}
+                            fontWeight={500}
+                            textAlign={'justify'}
+                            letterSpacing={0.5}
+                            lineHeight={responsive ? 'auto' : 2}
+                            sx={{
+                                color: 'secondary.main',
+                                fontSize: responsive ? '18px' : '20px'
+                            }}>
+                            En este evento, no solo celebraremos nuestros logros pasados, sino que también exploraremos nuevas ideas y estrategias para enfrentar los retos futuros.
                         </Typography>
                     </Box>
                 </Grid>
