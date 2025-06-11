@@ -6,6 +6,7 @@ import { ModalImagen } from "./ModalImagen";
 import { RenderProgramas } from './RenderProgramas';
 import { programa2023, programa2024 } from '../../../helpers/programas/data';
 import { Proximamente } from "./Proximamente";
+import { motion } from "motion/react";
 
 export const Programa = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -18,7 +19,13 @@ export const Programa = () => {
     return (
         <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : 'auto', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: 2 }}>
             <Grid size={12} sx={{ mb: 2, mt: 3 }}>
-                <Divider sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: responsive ? '80%' : '50%', m: 'auto' }}>
+                <Divider
+                    component={motion.div}
+                    initial={{ opacity: 0, y: -50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.85, ease: 'easeInOut' }}
+                    viewport={{ once: true }}
+                    sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: responsive ? '80%' : '50%', m: 'auto' }}>
                     PROGRAMA
                 </Divider>
             </Grid>
