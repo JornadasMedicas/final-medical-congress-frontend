@@ -31,39 +31,11 @@ export const Inicio = () => {
 
     return (
         <Grid container columns={12} sx={{ display: 'flex', minHeight: 'auto', flexDirection: 'column', mt: responsive ? 0 : 2, pb: 6 }}>
-            <Grid size={12} sx={{ textAlign: 'center', minHeight: responsive ? '46.5vh' : '45vh' }}>
+            <Grid size={12} sx={{ textAlign: 'center', minHeight: responsive ? '46.5vh' : '65vh' }}>
                 <Carousel />
             </Grid>
             <Box sx={{ ml: responsive ? 3 : 20, mr: responsive ? 3 : 20 }}>
-                <Grid size={12} sx={{ display: 'flex', textAlign: 'center', minHeight: '10vh', alignItems: 'center', justifyContent: 'center' }}>
-                    <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        width: 'fit-content',
-                        flexDirection: 'column'
-                    }}>
-                        <Typography
-                            component={motion.div}
-                            initial={{ opacity: 0, y: -50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.85, ease: 'easeInOut' }}
-                            viewport={{ once: true }}
-                            fontFamily={'sans-serif'}
-                            fontWeight={700}
-                            sx={{
-                                color: 'text.primary',
-                                fontSize: responsive ? '27px' : '37px',
-                                pl: responsive ? 1 : 0,
-                                pr: responsive ? 1 : 0,
-                                pt: responsive ? 2 : 0,
-                                pb: responsive ? 1 : 0
-                            }}>
-                            ¡BIENVENIDOS A LAS JORNADAS MÉDICAS!
-                        </Typography>
-                        <Box sx={{ width: responsive ? '45%' : '50%', height: '5px', background: 'linear-gradient(90deg,rgba(84, 173, 147, 1) 0%, rgba(19, 50, 44, 1) 100%)', m: 'auto', mb: 2 }} />
-                    </Box>
-                </Grid>
-                <Grid container columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column' : 'row', justifyContent: 'center', gap: 3, mb: 4, mt: 1 }}>
+                <Grid container columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column' : 'row', justifyContent: 'center', gap: 3, mb: 4, mt: 2 }}>
                     {
                         cards.map((card, index) => (
                             <Grid size={'auto'}>
@@ -76,7 +48,7 @@ export const Inicio = () => {
                                     sx={{
                                         borderRadius: 3,
                                         boxShadow: 3,
-                                        borderTop: `4px solid ${card.color}`, // azul claro
+                                        borderTop: `4px solid ${card.color}`,
                                         width: responsive ? '100%' : 370,
                                         textAlign: 'center',
                                         '&:hover': {
@@ -115,14 +87,34 @@ export const Inicio = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             pt: responsive ? 2 : 0,
-                            background: 'linear-gradient(170deg,rgba(243, 237, 225, 0.4) 0%, rgba(255, 255, 255, 1) 50%, rgba(215, 240, 231, 0.4) 100%)',
+                            backgroundColor: 'primary.main',
                             boxShadow: '3px 5px 10px 0px rgba(1,18,38, 0.2)',
                             borderRadius: 5,
                             width: responsive ? 'auto' : '60%',
                             m: 'auto',
                             p: responsive ? 2 : 5,
-                            gap: 3
+                            gap: 3,
+                            borderLeft: ''
                         }}>
+                        <Typography
+                            m={'auto'}
+                            fontFamily={'sans-serif'}
+                            fontWeight={'bold'}
+                            textAlign={'justify'}
+                            sx={{
+                                color: 'secondary.main',
+                                fontSize: responsive ? '18px' : '27px',
+                            }}
+                        >
+                            MENSAJE DE BIENVENIDA
+                        </Typography>
+                        <img
+                            loading="eager"
+                            width={responsive ? '165px' : '200px'}
+                            height={'auto'}
+                            src={`${import.meta.env.VITE_APP_BASE_ROUTE}/leaf_ornament.webp`}
+                            style={{ margin: 'auto', marginTop: -20 }}
+                        />
                         <Typography
                             fontFamily={'sans-serif'}
                             fontWeight={500}

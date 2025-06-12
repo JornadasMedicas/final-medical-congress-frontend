@@ -6,6 +6,7 @@ import { errors, validateContactFields } from "../../../helpers/contacto/validat
 import { postContactMail } from "../../../services/contacto/contactService";
 import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
+import { motion } from "motion/react";
 
 const initialState = { nombre: '', telefono: '', correo: '', asunto: '', descripcion: '' };
 const regex = /^[A-Za-z\s]*$/;
@@ -53,9 +54,9 @@ export const Contacto = () => {
     }
 
     return (
-        <Grid container sx={{ pb: responsive ? '2vh' : '7.5vh', position: 'relative', mt: responsive ? 2 : 0}}>
+        <Grid container sx={{ pb: responsive ? '2vh' : '7.5vh', position: 'relative', mt: responsive ? 2 : 0 }}>
             <Grid size={responsive ? 12 : 6} sx={{ height: 'auto', pb: responsive ? '2vh' : 0, display: responsive ? 'none' : 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Box sx={{ width: '80%' }}>
+                <Box sx={{ width: '80%', pl: 10 }}>
                     <Typography fontSize={'20px'} fontFamily={'sans-serif'} textAlign={'justify'} fontWeight={500} letterSpacing={1}>
                         Para cualquier consulta relacionada al evento, por favor completa el formulario de contacto o comunícate con la subdirección de Enseñanza del Centro de Alta Especialidad Dr. Rafael Lucio al teléfono 228-814-4500 Ext. 1116.
                     </Typography>
@@ -65,8 +66,14 @@ export const Contacto = () => {
                 </Box>
             </Grid>
             <Grid size={responsive ? 12 : 6} sx={{ textAlign: 'center', height: 'auto' }}>
-                <Box /* ref={ref} */ sx={{ mt: '4vh', visibility:'visible' }}>
-                    <Divider sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'secondary.main', width: responsive ? '80%' : '50%', m: 'auto' }}>
+                <Box sx={{ mt: '4vh', visibility: 'visible' }}>
+                    <Divider
+                        component={motion.div}
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.85, ease: 'easeInOut' }}
+                        viewport={{ once: true }}
+                        sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'secondary.main', width: responsive ? '80%' : '50%', m: 'auto' }}>
                         CONTACTO
                     </Divider>
                 </Box>

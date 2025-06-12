@@ -38,13 +38,13 @@ const HomePage = () => {
             <Box component="section" id="Inicio" sx={{ backgroundColor: '#f7f7f7'}}>
                 <MemoizedInicio />
             </Box>
-            <Box component="section" id="Programa">
+            <Box component="section" id="Programa" sx={{ backgroundColor: '#f7f7f7'}}>
                 <MemoizedPrograma />
             </Box>
             <Box component="section" id="Sedes" sx={{ backgroundColor: '#f7f7f7'}}>
                 <MemoizedSedes />
             </Box>
-            <Box component="section" id="Contacto">
+            <Box component="section" id="Contacto" sx={{ backgroundColor: '#f7f7f7'}}>
                 <MemoizedContacto />
             </Box>
         </Stack>

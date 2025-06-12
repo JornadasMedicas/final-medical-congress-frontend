@@ -49,7 +49,14 @@ export const Sedes = () => {
     return (
         <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : '90.5vh', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: responsive ? 2 : 5, pb: responsive ? 4 : 0 }}>
             <Grid size={responsive ? 12 : 6} sx={{ mb: 2, mt: responsive ? 0 : 0 }}>
-                <Divider sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: responsive ? '80%' : '50%', m: 'auto' }}>
+                <Divider
+                    component={motion.div}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.85, ease: 'easeInOut' }}
+                    viewport={{ once: true }}
+                    sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: responsive ? '80%' : '50%', m: 'auto' }}
+                >
                     SEDES
                 </Divider>
             </Grid>
@@ -107,7 +114,15 @@ export const Sedes = () => {
                     }
                 </Grid>
                 <Grid size={responsive ? 12 : 6} sx={{ backgroundColor: '#50736c', height: '100%', minHeight: 'auto', borderRadius: 3, p: responsive ? 1 : 2, zIndex: 2, boxShadow: '0 8px 10px 0 rgba(1,18,38, 0.15)', }}>
-                    <Box sx={{ backgroundColor: 'white', height: responsive ? 'auto' : '74.5vh', p: 2, textAlign: 'center' }}>
+                    <Box
+                        sx={{
+                            backgroundColor: 'white',
+                            height: responsive ? 'auto' : '74.5vh',
+                            p: 2,
+                            textAlign: 'center',
+                            position: 'relative',
+                            overflow: 'hidden'
+                        }}>
                         <Typography
                             key={itemData[0].address}
                             component={motion.div}

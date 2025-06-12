@@ -21,7 +21,7 @@ export const Programa = () => {
             <Grid size={12} sx={{ mb: 2, mt: 3 }}>
                 <Divider
                     component={motion.div}
-                    initial={{ opacity: 0, y: -50 }}
+                    initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.85, ease: 'easeInOut' }}
                     viewport={{ once: true }}

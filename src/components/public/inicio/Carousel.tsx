@@ -42,7 +42,7 @@ export const Carousel = () => {
             <Box
                 sx={{
                     width: '100%',
-                    minHeight: responsive ? '44vh' : '42vh',
+                    minHeight: responsive ? '44vh' : '62vh', //42
                     position: 'relative'
                 }}
             >
