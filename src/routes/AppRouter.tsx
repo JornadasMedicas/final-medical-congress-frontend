@@ -1,13 +1,16 @@
 import {
     Navigate,
     Route,
-    HashRouter as Router, Routes,
-    /* BrowserRouter as Router, Routes, */
+    /* HashRouter as Router, Routes, */
+    BrowserRouter as Router, Routes,
 } from "react-router-dom"
-/* import { Admin } from "../components/admin/Admin" */
 import { DashboardRoutes } from "./DashboardRoutes";
-import HomePage from "../pages/HomePage";
+import { lazy, Suspense } from "react";
+import { Loader } from "../components/ui/Loader";
+import { AdminProvider } from "../providers/AdminProvider";
 /* import { Registro } from '../components/public/Registro' */
+const LazyAdmin = lazy(() => import('../components/admin/Admin'));
+const LazyHome = lazy(() => import('../pages/HomePage'));
 
 export const AppRouter = () => {
 
@@ -15,9 +18,19 @@ export const AppRouter = () => {
         <Router>
             <Routes>
                 <Route path='/' element={<DashboardRoutes />}>
-                    <Route index element={<HomePage />} />
+                    <Route index element={
+                        <Suspense fallback={<Loader />}>
+                            <LazyHome />
+                        </Suspense>
+                    } />
                     {/* <Route path='register' element={<Registro />} /> */}
-                    {/* <Route path='admin' element={<Admin />} /> */}
+                    <Route path='admin' element={
+                        <Suspense fallback={<Loader />}>
+                            <AdminProvider>
+                                <LazyAdmin />
+                            </AdminProvider>
+                        </Suspense>
+                    } />
 
                     <Route path="*" element={<Navigate to="/" />} />
                 </Route>

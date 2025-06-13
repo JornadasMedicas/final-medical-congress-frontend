@@ -33,12 +33,12 @@ export const Navbar = () => {
     };
 
     return (
-        <AppBar position="fixed" sx={{ display: 'flex', backgroundColor: 'background.default' }}>
+        <AppBar position="fixed" sx={{ display: 'flex', backgroundColor: 'background.default', zIndex: 4 }}>
             <Container maxWidth={'xl'}>
                 <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Box sx={{ display: responsive ? 'none' : 'flex', flexDirection: 'row', alignItems: 'center' }}>
                         <NavLink to={'/home'} style={{ marginBottom: -7 }}>
-                            <img loading='lazy' src={`${import.meta.env.VITE_APP_BASE_ROUTE}/logo_ver.png`} alt="Logo_ver" width={'auto'} height={'55px'} />
+                            <img loading='eager' src={`${import.meta.env.VITE_APP_BASE_ROUTE}/logo_ver.webp`} alt="Logo_ver" width={'auto'} height={'55px'} />
                         </NavLink>
                         <Divider orientation="vertical" variant='middle' flexItem sx={{ ml: 1.5, backgroundColor: 'primary.main' }} />
                         <NavLink to={'/home'} style={{ textDecoration: 'none' }}>
@@ -105,7 +105,7 @@ export const Navbar = () => {
                     <Box sx={{ display: responsive ? 'flex' : 'none', flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent: 'center' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <NavLink to={'/home'} style={{ display: responsive ? 'flex' : 'none' }}>
-                                <img loading='lazy' src={`${import.meta.env.VITE_APP_BASE_ROUTE}/logo_ver.png`} alt="Logo_ver" width={'auto'} height={'55px'} />
+                                <img loading='lazy' src={`${import.meta.env.VITE_APP_BASE_ROUTE}/logo_ver.webp`} alt="Logo_ver" width={'auto'} height={'55px'} />
                             </NavLink>
                             <Divider orientation="vertical" variant='middle' flexItem sx={{ ml: 1.5, display: responsive ? 'flex' : 'none', backgroundColor: 'primary.main' }} />
                             <NavLink to={'/home'} style={{ textDecoration: 'none' }}>

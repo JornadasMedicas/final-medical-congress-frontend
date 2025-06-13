@@ -44,6 +44,6 @@ export default defineConfig({
   build: {
     outDir: 'docs'
   },
-  base: "/final-medical-congress-frontend" //route base for github pages without domain
-  /* base: "/", */
+  /* base: "/final-medical-congress-frontend" */ //route base for github pages without domain
+  base: "/",
 })
