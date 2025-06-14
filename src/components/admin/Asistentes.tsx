@@ -5,7 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import AsistentesPaginationTable from './AsistentesPaginationTable';
 import { AdminContext } from '../../context/AdminContext';
 import { modulosFiltros, talleresFiltros } from './Asistencia';
-import { AssistantsRows, columns } from '../../helpers/admin/asistantsTable';
+import { assistantsRows, columns } from '../../helpers/admin/asistantsTable';
 import { ReqAssistantsAutocomplete, ReqAssistantsAutocompleteInterface, ReqAssistantsTableData, ReqEventEditions } from '../../interfaces/admin/IAdmin';
 
 export const Asistentes = () => {
@@ -53,33 +53,27 @@ export const Asistentes = () => {
             module: assistantsTable.filters.module,
             workshop: assistantsTable.filters.workshop
         }).then((data: any) => {
-            
-            let row = AssistantsRows(data.data);
-            console.log(row);
-            setTableData({ ...tableData, rows: row });
-        })
+
+            let row = assistantsRows(data.data);
+            setTableData(prev => ({ ...prev, rows: row }));
+        });
 
         getTotalAssitants({
             email: assistantsTable.filters.email,
             module: assistantsTable.filters.module,
             workshop: assistantsTable.filters.workshop
         }).then((data: any) => {
-            setTableData({ ...tableData, totalRows: data.data });
-            setAssistantsTableAction({ ...assistantsTable, totalRows: data.data })
+            setTableData(prev => ({ ...prev, totalRows: data.data }));
+            setAssistantsTableAction({ ...assistantsTable, totalRows: data.data });
         });
 
         getEventEditions().then(((data: ReqEventEditions[]) => {
-            setTableData({ ...tableData, editions: data });
+            setTableData(prev => ({ ...prev, editions: data }));
         }));
     }, [assistantsTable.tablePage, assistantsTable.filters.email, assistantsTable.filters.module, assistantsTable.filters.workshop]);
 
-    useEffect(() => {
-        //atensao
-        setAssistantsTableAction({ ...assistantsTable, filters: { ...assistantsTable.filters, email: '', module: '', workshop: '' } });
-    }, []);
-
     return (
-        <Grid container className='animate__animated animate__fadeIn' rowSpacing={3} columns={12} sx={{ display: 'flex', flexDirection: 'row', mt: responsive ? 0 : -4 }}>
+        <Grid container className='animate__animated animate__fadeIn' rowSpacing={3} columns={12} sx={{ display: 'flex', flexDirection: 'row', mt: responsive ? 0 : -4, width: '100%' }}>
             <Grid size={'auto'}>
                 <Box sx={{ height: '7vh', width: '100%', mb: -3, pl: 3, pr: 3, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-end' }}>
                     <FormControl sx={{ minWidth: 300 }}>
@@ -245,7 +239,7 @@ export const Asistentes = () => {
                             rows={tableData.rows}
                             paginationMode='server'
                             getRowId={(row) => row.id}
-                            rowCount={tableData.totalRows}
+                            rowCount={assistantsTable.totalRows}
                             pageSizeOptions={[10]}
                             columns={columns}
                             slots={{ pagination: AsistentesPaginationTable }}

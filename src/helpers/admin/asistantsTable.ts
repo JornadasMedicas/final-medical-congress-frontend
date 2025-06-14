@@ -1,6 +1,9 @@
 import { GridColDef } from '@mui/x-data-grid';
-import dayjs from 'dayjs';
-import _utc from 'dayjs/plugin/utc';
+import dayjs from "dayjs";
+import utc from 'dayjs/plugin/utc';
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import timezone from "dayjs/plugin/timezone";
+import 'dayjs/locale/es';
 
 export const columns: GridColDef[] = [
     { field: 'acronimo', headerName: 'ACRONIMO', flex: 1, headerAlign: 'center', align: 'center', sortable: false },
@@ -16,10 +19,14 @@ export const columns: GridColDef[] = [
     }
 ];
 
-export const AssistantsRows = (assistants: any) => {
-    dayjs.locale('es-mx')
+export const assistantsRows = (assistants: any) => {
+    dayjs.extend(utc);
+    dayjs.extend(localizedFormat);
+    dayjs.extend(timezone);
+    dayjs.locale('es');
 
     const rows = assistants.map((data: any) => {
+
         return {
             id: data.id,
             acronimo: data.acronimo,
