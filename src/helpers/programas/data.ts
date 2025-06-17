@@ -1,3 +1,20 @@
+//DATA PROGRAMA TABS
+export const programaTabs = [
+    {
+        id: 0,
+        label: '2023'
+    },
+    {
+        id: 1,
+        label: '2024'
+    },
+    {
+        id: 2,
+        label: '2025'
+    }
+]
+
+//DATA BANNERS PROGRAMA
 export const programa2024 = [
     {
         title: 'CONGRESO ENFERMERÍA',

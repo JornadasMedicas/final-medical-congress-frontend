@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { PropsAssistantsTable, TablePropsJornadasAdmin } from "../interfaces/admin/AdminContext";
+import dayjs from "dayjs";
 
 export const tableValues = {
     tablePage: 0,
@@ -9,7 +10,7 @@ export const tableValues = {
         email: '',
         module: '',
         workshop: '',
-        year: ''
+        year: dayjs().year().toString()
     }
 }
 

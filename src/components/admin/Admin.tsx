@@ -14,18 +14,25 @@ const Admin = () => {
     const { setActiveSection } = useContext(UIContext);
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const { pathname } = useLocation();
-    const [tab, setTab] = useState<string>('1');
-    const [localStorageUser, setLocalStorageUser] = useState<any>(null);
+    const [localStorageUser] = useState<{ username: string, password: string } | null>(() => {
+        const user = localStorage.getItem('user');
+        return user ? JSON.parse(user) : null;
+    });
+
+    const [tab, setTab] = useState<string>(() => {
+        const tab = localStorage.getItem('adminTab');
+        return tab ? JSON.parse(tab) : '2';
+    });
 
     useEffect(() => {
         window.scrollTo(0, 0);
         setActiveSection('Admin');
     }, [pathname]);
 
-    useEffect(() => {
-        const user = localStorage.getItem('user');
-        setLocalStorageUser(user);
-    }, []);
+    const handleTab = (value: string) => {
+        setTab(value);
+        localStorage.setItem('adminTab', JSON.stringify(value));
+    }
 
     return (
         <>
@@ -37,12 +44,8 @@ const Admin = () => {
                         <Grid size={12}>
                             <TabContext value={tab}>
                                 <TabList
-                                    TabIndicatorProps={{
-                                        style: {
-                                            backgroundColor: "#bd4f2b"
-                                        }
-                                    }}
-                                    onChange={(_e, value) => setTab(value)}
+                                    slotProps={{ indicator: { style: { backgroundColor: "#bd4f2b" } } }}
+                                    onChange={(_e, value) => handleTab(value)}
                                     variant='fullWidth'
                                     sx={{ maxHeight: 55, borderRadius: 3, boxShadow: 4, ml: 'auto', mr: 'auto', maxWidth: responsive ? '95%' : '40%' }}
                                 >

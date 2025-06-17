@@ -30,7 +30,7 @@ export const Inicio = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
 
     return (
-        <Grid container columns={12} sx={{ display: 'flex', minHeight: 'auto', flexDirection: 'column', mt: responsive ? 0 : 2, pb: 6 }}>
+        <Grid container columns={12} sx={{ display: 'flex', minHeight: 'auto', flexDirection: 'column', mt: responsive ? 0 : 2, mb: responsive ? 4 : 7 }}>
             <Grid size={12} sx={{ textAlign: 'center', minHeight: responsive ? '46.5vh' : '65vh' }}>
                 <Carousel />
             </Grid>

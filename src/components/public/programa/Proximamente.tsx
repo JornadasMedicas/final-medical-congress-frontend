@@ -8,7 +8,7 @@ export const Proximamente = () => {
         <Grid
             container
             columns={12}
-            sx={{ display: 'flex', justifyContent: 'center', height: '77vh' }}>
+            sx={{ display: 'flex', justifyContent: 'center', height: '77vh', mb: responsive ? 4 : 10 }}>
             <Typography
                 component={motion.div}
                 initial={{ clipPath: 'inset(0 100% 0 0)', opacity: 0 }}

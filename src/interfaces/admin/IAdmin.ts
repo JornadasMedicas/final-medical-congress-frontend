@@ -1,3 +1,5 @@
+import { PropsTableAssistantsFilters } from "./AdminContext";
+
 export interface PropsGetAssistants {
     limit: string;
     page: string;
@@ -52,18 +54,9 @@ export interface PropsGetAssistantsInterface {
     created_at: string;
 }
 
-export interface PropsGetAssistantsFilters {
+export interface PropsGetAssistantsFilters extends PropsTableAssistantsFilters {
     limit: string;
     page: number;
-    email: string;
-    module: string;
-    workshop: string;
-}
-
-export interface PropsGetCountAssistantsFilters {
-    email: string;
-    module: string;
-    workshop: string;
 }
 
 export interface ReqAssistantsAutocompleteInterface {

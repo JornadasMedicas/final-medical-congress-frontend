@@ -25,7 +25,7 @@ export const Asistentes = () => {
     }
 
     const handleEditions = (value: any) => {
-        setAssistantsTableAction({ ...assistantsTable, filters: { ...assistantsTable.filters, year: value } });
+        setAssistantsTableAction({ ...assistantsTable, filters: { ...assistantsTable.filters, module: '', year: value  } });
     }
 
     const handleAutoChange = (value: ReqAssistantsAutocompleteInterface | null) => {
@@ -45,13 +45,14 @@ export const Asistentes = () => {
         }
     }
 
-    useEffect(() => {
+    useEffect(() => {        
         getAssitants({
             limit: '10',
             page: assistantsTable.tablePage,
             email: assistantsTable.filters.email,
             module: assistantsTable.filters.module,
-            workshop: assistantsTable.filters.workshop
+            workshop: assistantsTable.filters.workshop,
+            year: assistantsTable.filters.year
         }).then((data: any) => {
 
             let row = assistantsRows(data.data);
@@ -61,7 +62,8 @@ export const Asistentes = () => {
         getTotalAssitants({
             email: assistantsTable.filters.email,
             module: assistantsTable.filters.module,
-            workshop: assistantsTable.filters.workshop
+            workshop: assistantsTable.filters.workshop,
+            year: assistantsTable.filters.year
         }).then((data: any) => {
             setTableData(prev => ({ ...prev, totalRows: data.data }));
             setAssistantsTableAction({ ...assistantsTable, totalRows: data.data });
@@ -70,7 +72,7 @@ export const Asistentes = () => {
         getEventEditions().then(((data: ReqEventEditions[]) => {
             setTableData(prev => ({ ...prev, editions: data }));
         }));
-    }, [assistantsTable.tablePage, assistantsTable.filters.email, assistantsTable.filters.module, assistantsTable.filters.workshop]);
+    }, [assistantsTable.tablePage, assistantsTable.filters.email, assistantsTable.filters.module, assistantsTable.filters.workshop, assistantsTable.filters.year]);
 
     return (
         <Grid container className='animate__animated animate__fadeIn' rowSpacing={3} columns={12} sx={{ display: 'flex', flexDirection: 'row', mt: responsive ? 0 : -4, width: '100%' }}>
@@ -101,18 +103,18 @@ export const Asistentes = () => {
                                     borderColor: '#bd4f2b'
                                 }
                             }}>
-                            <option value={'0'}>Todos</option>
+                            <option value={0}>Todos</option>
                             <optgroup label="MODULOS">
                                 {
-                                    modulosFiltros.map((item: any) => (
-                                        <option value={item.nombre}>{item.nombre}</option>
+                                    modulosFiltros.map((item) => (
+                                        <option key={item.id} value={item.nombre}>{item.nombre}</option>
                                     ))
                                 }
                             </optgroup>
                             <optgroup label="TALLERES">
                                 {
                                     talleresFiltros.map((item: any) => (
-                                        <option value={item.id}>{item.nombre}</option>
+                                        <option key={item.id} value={item.id}>{item.nombre}</option>
                                     ))
                                 }
                             </optgroup>
@@ -125,7 +127,10 @@ export const Asistentes = () => {
                     <Autocomplete
                         autoComplete={false}
                         autoHighlight
-                        sx={{ width: '400px', ml: responsive ? '30px' : '0px' }}
+                        sx={{
+                            width: '400px',
+                            ml: responsive ? '30px' : '0px',
+                        }}
                         getOptionLabel={(option: any) => option.nombre}
                         includeInputInList
                         filterOptions={(x) => x}
@@ -149,14 +154,22 @@ export const Asistentes = () => {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                sx={{ width: responsive ? '80%' : '95%', mt: 0.5 }}
+                                sx={{
+                                    width: responsive ? '80%' : '95%',
+                                    mt: 0.5,
+                                    "& .MuiInput-underline:after": {
+                                        borderBottomColor: "#b7402a"
+                                    }
+                                }}
                                 size='small'
                                 variant='standard'
                                 autoComplete='off'
                                 placeholder='Nombre o correo...'
-                                inputProps={{
-                                    ...params.inputProps,
-                                    autoComplete: 'new-password'
+                                slotProps={{
+                                    htmlInput: {
+                                        ...params.inputProps,
+                                        autoComplete: 'new-password'
+                                    }
                                 }}
                                 onChange={(e) => searchAssistant(e.target.value)}
                             />
@@ -190,7 +203,7 @@ export const Asistentes = () => {
                             }
                         }}>
                         {tableData.editions.map(edition => (
-                            <option value={edition.edicion}>{edition.edicion}</option>
+                            <option key={edition.edicion} value={edition.edicion}>{edition.edicion}</option>
                         ))}
                     </Select>
                 </FormControl>

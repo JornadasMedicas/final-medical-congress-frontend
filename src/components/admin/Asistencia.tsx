@@ -20,19 +20,19 @@ export const talleresFiltros = [ //!IMPORTANT update every year - doesn't affect
 
 export const modulosFiltros = [ //!IMPORTANT update every year - doesn't affect backend
     {
-        id: 5,
+        id: 3,
         nombre: 'Medicina'
     },
     {
-        id: 6,
+        id: 4,
         nombre: 'Enfermería'
     },
     {
-        id: 7,
+        id: 5,
         nombre: 'Químicos'
     },
     {
-        id: 8,
+        id: 6,
         nombre: 'Estomatología'
     }
 ]

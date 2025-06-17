@@ -4,13 +4,13 @@ import Tab from '@mui/material/Tab';
 import { useState } from "react";
 import { ModalImagen } from "./ModalImagen";
 import { RenderProgramas } from './RenderProgramas';
-import { programa2023, programa2024 } from '../../../helpers/programas/data';
+import { programa2023, programa2024, programaTabs } from '../../../helpers/programas/data';
 import { Proximamente } from "./Proximamente";
 import { motion } from "motion/react";
 
 export const Programa = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const [tab, setTab] = useState<number>(1);
+    const [tab, setTab] = useState<number>(programaTabs[programaTabs.length - 1].id);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setTab(newValue);
@@ -18,7 +18,7 @@ export const Programa = () => {
 
     return (
         <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : 'auto', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: 2 }}>
-            <Grid size={12} sx={{ mb: 2, mt: 3 }}>
+            <Grid size={12} sx={{ mb: 2, mt: 0 }}>
                 <Divider
                     component={motion.div}
                     initial={{ opacity: 0, y: 50 }}
@@ -45,38 +45,31 @@ export const Programa = () => {
                         },
                     }}
                 >
-                    <Tab sx={{
-                        width: '100%',
-                        color: 'primary.main',
-                        '&.Mui-selected': {
-                            color: 'text.secondary', // color cuando está activo
-                        },
-                    }} label="2025" />
-                    <Tab sx={{
-                        width: '100%',
-                        color: 'primary.main',
-                        '&.Mui-selected': {
-                            color: 'text.secondary', // color cuando está activo
-                        },
-                    }} label="2024" />
-                    <Tab sx={{
-                        width: '100%',
-                        color: 'primary.main',
-                        '&.Mui-selected': {
-                            color: 'text.secondary', // color cuando está activo
-                        },
-                    }} label="2023" />
+                    {programaTabs.slice().reverse().map((edicion) => (
+                        <Tab
+                            key={edicion.id}
+                            value={edicion.id}
+                            sx={{
+                                width: '100%',
+                                color: 'primary.main',
+                                '&.Mui-selected': {
+                                    color: 'text.secondary', // color cuando está activo
+                                },
+                            }}
+                            label={edicion.label}
+                        />
+                    ))}
                 </Tabs>
             </Grid>
             <Grid size={12} sx={{ mt: 2, height: '100%' }}>
                 {
-                    tab === 0 && <Proximamente />
+                    tab === 0 && <RenderProgramas programas={programa2023} />
                 }
                 {
                     tab === 1 && <RenderProgramas programas={programa2024} />
                 }
                 {
-                    tab === 2 && <RenderProgramas programas={programa2023} />
+                    tab === 2 && <Proximamente />
                 }
             </Grid>
             <ModalImagen />

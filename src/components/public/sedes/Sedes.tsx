@@ -47,8 +47,8 @@ export const Sedes = () => {
     }, [selectedItem]);
 
     return (
-        <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : '90.5vh', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: responsive ? 2 : 5, pb: responsive ? 4 : 0 }}>
-            <Grid size={responsive ? 12 : 6} sx={{ mb: 2, mt: responsive ? 0 : 0 }}>
+        <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : '90.5vh', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: responsive ? 2 : 5, mb: responsive ? 0 : -3 }}>
+            <Grid size={responsive ? 12 : 6} sx={{ mb: responsive ? 2 : 2 }}>
                 <Divider
                     component={motion.div}
                     initial={{ opacity: 0, y: 50 }}
