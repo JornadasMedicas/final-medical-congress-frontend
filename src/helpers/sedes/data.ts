@@ -16,7 +16,7 @@ export const sedes2024: PropsSedes[] = [
         location: [-96.91924225652667, 19.542849287196848]
     },
     {
-        id: 1,
+        id: 3,
         title: 'CONGRESO QUÍMICOS Y ESTOMATOLOGÍA',
         address: 'Av. Adolfo Ruiz Cortines 2903, Unidad Magisterial, Xalapa, Ver.',
         map: 'https://www.google.com.mx/maps/place/Centro+de+Alta+Especialidad+%22Dr.+Rafael+Lucio%22/@19.5517662,-96.9384562,17z/data=!3m1!4b1!4m6!3m5!1s0x85db2e16cb33d43b:0xef08a9e7531a4f7d!8m2!3d19.5517612!4d-96.9358813!16s%2Fg%2F1yl452rl7?entry=ttu&g_ep=EgoyMDI0MTExOC4wIKXMDSoASAFQAw%3D%3D',

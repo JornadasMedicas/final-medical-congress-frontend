@@ -4,6 +4,7 @@ import utc from 'dayjs/plugin/utc';
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import timezone from "dayjs/plugin/timezone";
 import 'dayjs/locale/es';
+import { PropsGetAssistantsInterface } from '../../interfaces/admin/IAdmin';
 
 export const columns: GridColDef[] = [
     { field: 'acronimo', headerName: 'ACRONIMO', flex: 1, headerAlign: 'center', align: 'center', sortable: false },
@@ -19,13 +20,13 @@ export const columns: GridColDef[] = [
     }
 ];
 
-export const assistantsRows = (assistants: any) => {
+export const assistantsRows = (assistants: PropsGetAssistantsInterface[]) => {
     dayjs.extend(utc);
     dayjs.extend(localizedFormat);
     dayjs.extend(timezone);
     dayjs.locale('es');
 
-    const rows = assistants.map((data: any) => {
+    const rows = assistants.map((data: PropsGetAssistantsInterface) => {
 
         return {
             id: data.id,

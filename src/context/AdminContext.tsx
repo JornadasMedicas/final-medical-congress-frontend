@@ -1,8 +1,8 @@
 import { createContext, ReactNode, useState } from "react";
-import { PropsAssistantsTable, TablePropsJornadasAdmin } from "../interfaces/admin/AdminContext";
+import { PropsAssistantsTable, TablePropsJornadasAdmin } from "../interfaces/admin/IAdminContext";
 import dayjs from "dayjs";
 
-export const tableValues = {
+const tableValues = {
     tablePage: 0,
     totalRows: 0,
     loading: false,
@@ -14,7 +14,7 @@ export const tableValues = {
     }
 }
 
-export const AdminContext = createContext<TablePropsJornadasAdmin>({
+const AdminContext = createContext<TablePropsJornadasAdmin>({
     assistantsTable: tableValues,
     setAssistantsTableAction: () => { },
 });
@@ -23,11 +23,13 @@ export const AdminContextProvider = ({ children: Component }: { children: ReactN
     const [assistantsTable, setAssistantsTableAction] = useState<PropsAssistantsTable>(tableValues);
 
     return (
-        <AdminContext.Provider value={{
+        <AdminContext value={{
             assistantsTable,
             setAssistantsTableAction
         }}>
             {Component}
-        </AdminContext.Provider>
+        </AdminContext>
     )
 }
+
+export default AdminContext;

@@ -1,7 +1,9 @@
 import { Box, Paper, Typography, useMediaQuery } from '@mui/material'
 import { motion } from 'framer-motion';
+import { memo } from 'react';
+import { PropsItemCarousel } from '../../../interfaces/inicio/IInicio';
 
-export const ItemCarousel = (props: any) => {
+export const ItemCarousel = memo((props: PropsItemCarousel) => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
 
     return (
@@ -56,4 +58,4 @@ export const ItemCarousel = (props: any) => {
             </Box>
         </Paper>
     )
-}
+});

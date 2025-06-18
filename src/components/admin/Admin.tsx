@@ -6,7 +6,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useLocation } from 'react-router-dom';
 import { Login } from './Login';
 import { navBarHeigth, navBarHeigthResponsive } from '../../pages/HomePage';
-import { UIContext } from '../../context/UIContext';
+import UIContext from '../../context/UIContext';
 import { Asistencia } from './Asistencia';
 import { Asistentes } from './Asistentes';
 
@@ -27,7 +27,7 @@ const Admin = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         setActiveSection('Admin');
-    }, [pathname]);
+    }, [pathname, setActiveSection]);
 
     const handleTab = (value: string) => {
         setTab(value);

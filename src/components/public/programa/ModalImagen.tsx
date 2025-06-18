@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from "@mui/material"
 import { useContext } from "react";
-import { UIContext } from "../../../context/UIContext";
+import UIContext from "../../../context/UIContext";
 import { PropsUIContext } from "../../../interfaces/context/IUIContext";
 
 export const ModalImagen = () => {

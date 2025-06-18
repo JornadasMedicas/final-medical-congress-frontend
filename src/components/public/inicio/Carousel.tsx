@@ -25,7 +25,7 @@ export const Carousel = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const [activeItem, setActiveItem] = useState<number>(0);
 
-    const handleClick = (_e: any, index: number) => {
+    const handleClick = (index: number) => {
         setActiveItem(index);
     }
 
@@ -66,7 +66,7 @@ export const Carousel = () => {
                 {items.map((item: { name: string, img: string }, index: number) => (
                     <Box
                         key={item.name}
-                        onClick={(e) => handleClick(e, index)}
+                        onClick={() => handleClick(index)}
                         sx={{ backgroundColor: index === activeItem ? 'rgba(19, 50, 44, 1)' : 'rgba(19, 50, 44, 0.3)', width: '13px', height: '13px', borderRadius: 10, transition: 'background 1s ease', '&:hover': { cursor: 'pointer' } }} />
                 ))}
             </Box>

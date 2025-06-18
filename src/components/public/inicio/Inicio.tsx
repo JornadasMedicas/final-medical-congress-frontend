@@ -1,9 +1,12 @@
 import { Box, Card, CardContent, Grid, Typography, useMediaQuery } from "@mui/material"
 import { Carousel } from "./Carousel";
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
+import { useContext, useEffect, useRef } from "react";
+import { PropsUIContext } from "../../../interfaces/context/IUIContext";
+import UIContext from "../../../context/UIContext";
 
 const cards = [
     {
@@ -27,7 +30,17 @@ const cards = [
 ]
 
 export const Inicio = () => {
+    const { setActiveSection, setTriggerRelocation } = useContext<PropsUIContext>(UIContext);
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
+    const refs = useRef(null);
+    const isInView = useInView(refs, { once: false });
+
+    useEffect(() => {
+        if (isInView) {
+            setActiveSection('Inicio');
+            setTriggerRelocation(false);
+        }
+    }, [isInView, setActiveSection, setTriggerRelocation]);
 
     return (
         <Grid container columns={12} sx={{ display: 'flex', minHeight: 'auto', flexDirection: 'column', mt: responsive ? 0 : 2, mb: responsive ? 4 : 7 }}>
@@ -38,7 +51,7 @@ export const Inicio = () => {
                 <Grid container columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column' : 'row', justifyContent: 'center', gap: 3, mb: 4, mt: 2 }}>
                     {
                         cards.map((card, index) => (
-                            <Grid size={'auto'}>
+                            <Grid key={card.title} size={'auto'}>
                                 <Card
                                     component={motion.div}
                                     initial={{ opacity: 0, y: 50 }}
@@ -97,6 +110,7 @@ export const Inicio = () => {
                             borderLeft: ''
                         }}>
                         <Typography
+                            ref={refs}
                             m={'auto'}
                             fontFamily={'sans-serif'}
                             fontWeight={'bold'}
@@ -173,4 +187,4 @@ export const Inicio = () => {
             </Box>
         </Grid>
     )
-}
+};

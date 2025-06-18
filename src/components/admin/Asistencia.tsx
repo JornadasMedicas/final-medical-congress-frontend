@@ -6,42 +6,13 @@ import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import { globalUpdateAssistance } from '../../helpers/admin/assistanceAlerts';
 import { getAssitantInfo } from '../../services/admin/adminService';
 import { PropsGetAssistantInfo, ReqAssistantInfo } from '../../interfaces/admin/IAdmin';
-
-export const talleresFiltros = [ //!IMPORTANT update every year - doesn't affect backend
-    {
-        id: 1,
-        nombre: 'Estrategias Integradas'
-    },
-    {
-        id: 2,
-        nombre: 'Uso de ROTEM'
-    }
-]
-
-export const modulosFiltros = [ //!IMPORTANT update every year - doesn't affect backend
-    {
-        id: 3,
-        nombre: 'Medicina'
-    },
-    {
-        id: 4,
-        nombre: 'Enfermería'
-    },
-    {
-        id: 5,
-        nombre: 'Químicos'
-    },
-    {
-        id: 6,
-        nombre: 'Estomatología'
-    }
-]
+import { talleresFiltros } from '../../helpers/admin/data';
 
 export const Asistencia = () => {
     const [moduleValues, setModuleValues] = useState({ qrdata: '', emaildata: '' });
     const [workshopValues, setWorkshopValues] = useState({ qrdata: '', emaildata: '' });
     const [assistances, setAssistances] = useState({ emaildata: '' });
-    const [openModal, setOpenModal] = useState(false);
+    const [openModal, setOpenModal] = useState<boolean>(false);
     const [assistantInfo, setAssistantInfo] = useState<PropsGetAssistantInfo>();
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
 
@@ -55,14 +26,14 @@ export const Asistencia = () => {
     useEffect(() => {
         const updateAssistance = async () => {
             try {
-                let separated = moduleValues.qrdata.split("|").length - 1;
+                const separated = moduleValues.qrdata.split("|").length - 1;
 
                 if (separated === 1) {
                     setModuleValues({ qrdata: '', emaildata: '' });
                     globalUpdateAssistance(moduleValues.qrdata, 'congreso');
                 }
             } catch (error) {
-                // Se espera que este error ocurra, no hacer nada.
+                console.log(error);
             }
         }
 
@@ -80,14 +51,14 @@ export const Asistencia = () => {
 
         const updateAssistance = async () => {
             try {
-                let separated = workshopValues.qrdata.split("|").length - 1;
+                const separated = workshopValues.qrdata.split("|").length - 1;
 
                 if (separated === 1) {
                     setWorkshopValues({ qrdata: '', emaildata: '' });
                     globalUpdateAssistance(workshopValues.qrdata, 'talleres');
                 }
             } catch (error) {
-                // Se espera que este error ocurra, no hacer nada.
+                console.log(error);
             }
         }
 
@@ -95,7 +66,7 @@ export const Asistencia = () => {
     }, [workshopValues.qrdata]);
 
     //modal
-    const getAssistant = async (_e: any) => {
+    const getAssistant = async () => {
         const assistant: ReqAssistantInfo = await getAssitantInfo(assistances.emaildata);
         setAssistantInfo(assistant.data);
         setOpenModal(true);
@@ -120,12 +91,14 @@ export const Asistencia = () => {
                                         name='qrdata'
                                         value={moduleValues.qrdata}
                                         onChange={(e) => setModuleValues({ ...moduleValues, qrdata: e.target.value })}
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <QrCodeScannerIcon />
-                                                </InputAdornment>
-                                            )
+                                        slotProps={{
+                                            input: {
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <QrCodeScannerIcon />
+                                                    </InputAdornment>
+                                                )
+                                            }
                                         }}
                                         sx={{
                                             "& label.Mui-focused": {
@@ -148,12 +121,14 @@ export const Asistencia = () => {
                                         name='email'
                                         value={moduleValues.emaildata}
                                         onChange={(e) => setModuleValues({ ...moduleValues, emaildata: e.target.value })}
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <PersonAddAlt1Icon />
-                                                </InputAdornment>
-                                            )
+                                        slotProps={{
+                                            input: {
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <PersonAddAlt1Icon />
+                                                    </InputAdornment>
+                                                )
+                                            }
                                         }}
                                         sx={{
                                             "& label.Mui-focused": {
@@ -199,12 +174,14 @@ export const Asistencia = () => {
                                         name='qrdata2'
                                         value={workshopValues.qrdata}
                                         onChange={(e) => setWorkshopValues({ ...workshopValues, qrdata: e.target.value })}
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <QrCodeScannerIcon />
-                                                </InputAdornment>
-                                            )
+                                        slotProps={{
+                                            input: {
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <QrCodeScannerIcon />
+                                                    </InputAdornment>
+                                                )
+                                            }
                                         }}
                                         sx={{
                                             "& label.Mui-focused": {
@@ -227,12 +204,14 @@ export const Asistencia = () => {
                                         name='email2'
                                         value={workshopValues.emaildata}
                                         onChange={(e) => setWorkshopValues({ ...workshopValues, emaildata: e.target.value })}
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <PersonAddAlt1Icon />
-                                                </InputAdornment>
-                                            )
+                                        slotProps={{
+                                            input: {
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <PersonAddAlt1Icon />
+                                                    </InputAdornment>
+                                                )
+                                            }
                                         }}
                                         sx={{
                                             "& label.Mui-focused": {
@@ -276,13 +255,15 @@ export const Asistencia = () => {
                             placeholder='asistente@ejemplo.com'
                             name='email3'
                             value={assistances.emaildata}
-                            onChange={(e: any) => setAssistances({ emaildata: e.target.value })}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <PersonAddAlt1Icon />
-                                    </InputAdornment>
-                                )
+                            onChange={(e) => setAssistances({ emaildata: e.target.value })}
+                            slotProps={{
+                                input: {
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <PersonAddAlt1Icon />
+                                        </InputAdornment>
+                                    )
+                                }
                             }}
                             sx={{
                                 "& label.Mui-focused": {
@@ -300,7 +281,7 @@ export const Asistencia = () => {
                             disabled={assistances.emaildata === '' ? true : false}
                             endIcon={<SendIcon />}
                             variant='contained'
-                            onClick={(e) => getAssistant(e)}
+                            onClick={getAssistant}
                             sx={{ color: 'primary.main', backgroundColor: "background.default", ":hover": { backgroundColor: 'primary.main', color: "background.default" }, marginBottom: 0, marginTop: 2, marginLeft: 1, width: '95px', height: '30px' }}
                         >
                             Enviar
@@ -310,7 +291,7 @@ export const Asistencia = () => {
             </Grid>
             <Dialog
                 open={openModal}
-                onClose={(_e) => setOpenModal(false)}
+                onClose={() => setOpenModal(false)}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -371,7 +352,7 @@ export const Asistencia = () => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={(_e) => setOpenModal(false)} sx={{
+                    <Button autoFocus onClick={() => setOpenModal(false)} sx={{
                         color: 'primary.main', backgroundColor: "background.default", ":hover": { backgroundColor: 'primary.main', color: "background.default", boxShadow: 3 }
                     }}>Cerrar</Button>
                 </DialogActions>

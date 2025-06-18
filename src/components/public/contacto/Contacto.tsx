@@ -1,12 +1,14 @@
 import { Box, Button, CircularProgress, Divider, Grid, TextField, Typography, useMediaQuery } from "@mui/material"
 import EmailIcon from '@mui/icons-material/Email';
-import { useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { PropsErrorsData, PropsFormData } from "../../../interfaces/contacto/IContactForm";
 import { errors, validateContactFields } from "../../../helpers/contacto/validateContactForm";
 import { postContactMail } from "../../../services/contacto/contactService";
 import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2';
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
+import { PropsUIContext } from "../../../interfaces/context/IUIContext";
+import UIContext from "../../../context/UIContext";
 
 const initialState = { nombre: '', telefono: '', correo: '', asunto: '', descripcion: '' };
 const regex = /^[A-Za-z\s]*$/;
@@ -18,6 +20,9 @@ export const Contacto = () => {
     const [data, setData] = useState<PropsFormData>(initialState);
     const [err, setErrors] = useState<PropsErrorsData>(errors);
     const [loading, setLoading] = useState<boolean>(false);
+    const { setActiveSection, setTriggerRelocation } = useContext<PropsUIContext>(UIContext);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: false });
 
     const handleSubmit = async () => {
         const isOk: boolean = validateContactFields(data, err, setErrors);
@@ -53,6 +58,13 @@ export const Contacto = () => {
         }
     }
 
+    useEffect(() => {
+        if (isInView) {
+            setActiveSection('Contacto');
+            setTriggerRelocation(false);
+        }
+    }, [isInView, setActiveSection, setTriggerRelocation]);
+
     return (
         <Grid container sx={{ pb: responsive ? '2vh' : '7.5vh', position: 'relative', mt: responsive ? 2 : 0 }}>
             <Grid size={responsive ? 12 : 6} sx={{ height: 'auto', pb: responsive ? '2vh' : 0, display: responsive ? 'none' : 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -68,6 +80,7 @@ export const Contacto = () => {
             <Grid size={responsive ? 12 : 6} sx={{ textAlign: 'center', height: 'auto' }}>
                 <Box sx={{ mt: '4vh', visibility: 'visible' }}>
                     <Divider
+                        ref={ref}
                         component={motion.div}
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}

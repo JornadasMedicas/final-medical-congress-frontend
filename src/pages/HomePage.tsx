@@ -1,7 +1,7 @@
 import { Box, Stack, useMediaQuery } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { PropsUIContext } from "../interfaces/context/IUIContext";
-import { UIContext } from "../context/UIContext";
+import UIContext from "../context/UIContext";
 import { Inicio } from "../components/public/inicio/Inicio";
 import { Sedes } from "../components/public/sedes/Sedes";
 import { Contacto } from "../components/public/contacto/Contacto";
@@ -18,13 +18,13 @@ const MemoizedContacto = React.memo(Contacto);
 
 const HomePage = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const { dynamic, activeSection } = useContext<PropsUIContext>(UIContext);
+    const { triggerRelocation, activeSection } = useContext<PropsUIContext>(UIContext);
 
-    useEffect(() => {
+    useEffect(() => {        
         if (activeSection) {
             const sectionElement: HTMLElement | null = document.getElementById(activeSection);
 
-            if (sectionElement && dynamic === 1) {
+            if (sectionElement && triggerRelocation === true) {
                 window.scrollTo({
                     top: sectionElement.offsetTop - (responsive ? navBarHeigthResponsive : navBarHeigth),
                     behavior: 'smooth'

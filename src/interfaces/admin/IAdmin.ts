@@ -1,4 +1,49 @@
-import { PropsTableAssistantsFilters } from "./AdminContext";
+import { PropsTableAssistantsFilters } from "./IAdminContext";
+
+export interface ReqAssistants {
+    msg: string;
+    ok: boolean;
+    data: PropsGetAssistantsInterface[];
+}
+
+export interface PropsGetAssistantsInterface {
+    id: number;
+    acronimo: string;
+    nombre: string;
+    correo: string;
+    tel: string;
+    created_at: string;
+}
+
+export interface PropsGetAssistantsFilters extends PropsTableAssistantsFilters {
+    limit: string;
+    page: number;
+}
+
+export interface ReqAssistantsTableData {
+    rows: PropsGetAssistantsInterface[];
+    totalRows: number;
+    editions: ReqEventEditions[];
+}
+
+export interface ReqAssistantsAutocompleteInterface {
+    id: number | null;
+    nombre: string;
+    correo: string;
+}
+
+export interface ReqAssistantsAutocomplete {
+    ok: boolean;
+    msg: string;
+    data: ReqAssistantsAutocompleteInterface[]
+}
+
+export interface ReqAssistantsTotalCount {
+    ok: boolean;
+    msg: string;
+    data: number
+}
+
 
 export interface PropsGetAssistants {
     limit: string;
@@ -7,6 +52,7 @@ export interface PropsGetAssistants {
     module: string;
     workshop: string;
 }
+
 export interface PropsGetAssistantInfo {
     id: number;
     acronimo: string;
@@ -39,45 +85,7 @@ export interface ReqAssistantInfo {
     data: PropsGetAssistantInfo;
 }
 
-export interface ReqAssistants {
-    msg: string;
-    ok: boolean;
-    data: PropsGetAssistantsInterface[];
-}
-
-export interface PropsGetAssistantsInterface {
-    id: number;
-    acronimo: string;
-    nombre: string;
-    correo: string;
-    tel: string;
-    created_at: string;
-}
-
-export interface PropsGetAssistantsFilters extends PropsTableAssistantsFilters {
-    limit: string;
-    page: number;
-}
-
-export interface ReqAssistantsAutocompleteInterface {
-    id: number | null;
-    nombre: string;
-    correo: string;
-}
-
-export interface ReqAssistantsAutocomplete {
-    ok: boolean;
-    msg: string;
-    data: ReqAssistantsAutocompleteInterface[]
-}
-
 export interface ReqEventEditions {
     id: number;
     edicion: string;
-}
-
-export interface ReqAssistantsTableData {
-    rows: any[];
-    totalRows: number;
-    editions: ReqEventEditions[];
 }

@@ -3,10 +3,10 @@ import { Autocomplete, Box, Card, FormControl, Grid, InputLabel, Paper, Select, 
 import { getAssitants, getAssitantsAutocomplete, getEventEditions, getTotalAssitants } from '../../services/admin/adminService';
 import { DataGrid } from '@mui/x-data-grid';
 import AsistentesPaginationTable from './AsistentesPaginationTable';
-import { AdminContext } from '../../context/AdminContext';
-import { modulosFiltros, talleresFiltros } from './Asistencia';
+import AdminContext from '../../context/AdminContext';
 import { assistantsRows, columns } from '../../helpers/admin/asistantsTable';
-import { ReqAssistantsAutocomplete, ReqAssistantsAutocompleteInterface, ReqAssistantsTableData, ReqEventEditions } from '../../interfaces/admin/IAdmin';
+import { ReqAssistants, ReqAssistantsAutocomplete, ReqAssistantsAutocompleteInterface, ReqAssistantsTableData, ReqAssistantsTotalCount, ReqEventEditions } from '../../interfaces/admin/IAdmin';
+import { modulosFiltros, talleresFiltros } from '../../helpers/admin/data';
 
 export const Asistentes = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -24,8 +24,8 @@ export const Asistentes = () => {
         }
     }
 
-    const handleEditions = (value: any) => {
-        setAssistantsTableAction({ ...assistantsTable, filters: { ...assistantsTable.filters, module: '', year: value  } });
+    const handleEditions = (value: string) => {
+        setAssistantsTableAction({ ...assistantsTable, filters: { ...assistantsTable.filters, module: '', year: value } });
     }
 
     const handleAutoChange = (value: ReqAssistantsAutocompleteInterface | null) => {
@@ -38,14 +38,14 @@ export const Asistentes = () => {
 
     const searchAssistant = async (value: string) => {
         if (value !== '') {
-            let asistente: ReqAssistantsAutocomplete = await getAssitantsAutocomplete(value);
+            const asistente: ReqAssistantsAutocomplete = await getAssitantsAutocomplete(value);
             setOptions(asistente.data);
         } else {
             setOptions([]);
         }
     }
 
-    useEffect(() => {        
+    useEffect(() => {
         getAssitants({
             limit: '10',
             page: assistantsTable.tablePage,
@@ -53,9 +53,8 @@ export const Asistentes = () => {
             module: assistantsTable.filters.module,
             workshop: assistantsTable.filters.workshop,
             year: assistantsTable.filters.year
-        }).then((data: any) => {
-
-            let row = assistantsRows(data.data);
+        }).then((res: ReqAssistants) => {
+            const row = assistantsRows(res.data);
             setTableData(prev => ({ ...prev, rows: row }));
         });
 
@@ -64,15 +63,15 @@ export const Asistentes = () => {
             module: assistantsTable.filters.module,
             workshop: assistantsTable.filters.workshop,
             year: assistantsTable.filters.year
-        }).then((data: any) => {
-            setTableData(prev => ({ ...prev, totalRows: data.data }));
-            setAssistantsTableAction({ ...assistantsTable, totalRows: data.data });
+        }).then((res: ReqAssistantsTotalCount) => {
+            setTableData(prev => ({ ...prev, totalRows: res.data }));
+            setAssistantsTableAction(prev => ({ ...prev, totalRows: res.data }));
         });
 
-        getEventEditions().then(((data: ReqEventEditions[]) => {
-            setTableData(prev => ({ ...prev, editions: data }));
+        getEventEditions().then(((res: ReqEventEditions[]) => {
+            setTableData(prev => ({ ...prev, editions: res }));
         }));
-    }, [assistantsTable.tablePage, assistantsTable.filters.email, assistantsTable.filters.module, assistantsTable.filters.workshop, assistantsTable.filters.year]);
+    }, [assistantsTable.tablePage, assistantsTable.filters.email, assistantsTable.filters.module, assistantsTable.filters.workshop, assistantsTable.filters.year, setAssistantsTableAction]);
 
     return (
         <Grid container className='animate__animated animate__fadeIn' rowSpacing={3} columns={12} sx={{ display: 'flex', flexDirection: 'row', mt: responsive ? 0 : -4, width: '100%' }}>
@@ -106,14 +105,14 @@ export const Asistentes = () => {
                             <option value={0}>Todos</option>
                             <optgroup label="MODULOS">
                                 {
-                                    modulosFiltros.map((item) => (
+                                    modulosFiltros.map((item: { id: number, nombre: string }) => (
                                         <option key={item.id} value={item.nombre}>{item.nombre}</option>
                                     ))
                                 }
                             </optgroup>
                             <optgroup label="TALLERES">
                                 {
-                                    talleresFiltros.map((item: any) => (
+                                    talleresFiltros.map((item: { id: number, nombre: string }) => (
                                         <option key={item.id} value={item.id}>{item.nombre}</option>
                                     ))
                                 }
@@ -131,7 +130,7 @@ export const Asistentes = () => {
                             width: '400px',
                             ml: responsive ? '30px' : '0px',
                         }}
-                        getOptionLabel={(option: any) => option.nombre}
+                        getOptionLabel={(option: ReqAssistantsAutocompleteInterface) => option.nombre}
                         includeInputInList
                         filterOptions={(x) => x}
                         filterSelectedOptions
@@ -210,7 +209,7 @@ export const Asistentes = () => {
             </Grid>
             <Card sx={{ width: '100%' }}>
                 <Paper sx={{ height: '100%', width: '100%', minHeight: '74vh' }}>
-                    <TableContainer sx={{ height: responsive ? 'auto' : '74vh', width: '100%' }}>
+                    <TableContainer sx={{ height: '74vh', width: '100%' }}>
                         <DataGrid
                             sx={{
                                 backgroundColor: '#ffffff',

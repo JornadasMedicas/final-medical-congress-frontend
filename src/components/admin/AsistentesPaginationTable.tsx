@@ -1,14 +1,14 @@
 import { Box, Grid, Pagination, PaginationItem, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react'
-import { AdminContext } from '../../context/AdminContext';
+import AdminContext from '../../context/AdminContext';
 
 export const AsistentesPaginationTable = () => {
     const [page, setPage] = useState<number>(0);
     const { assistantsTable, setAssistantsTableAction } = useContext(AdminContext);
 
     useEffect(() => {
-        setAssistantsTableAction({ ...assistantsTable, tablePage: page })
-    }, [page])
+        setAssistantsTableAction(prev => ({ ...prev, tablePage: page  }))
+    }, [page, setAssistantsTableAction]);
 
 
     const handleChange = (_e: React.ChangeEvent<unknown>, value: number) => {
@@ -39,8 +39,7 @@ export const AsistentesPaginationTable = () => {
                             shape="circular"
                             page={page + 1}
                             count={Math.ceil(assistantsTable.totalRows / 10)}
-                            // @ts-expect-error
-                            renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
+                            renderItem={(props2) => <PaginationItem {...props2}/>}
                             onChange={(e, value) => handleChange(e, value)}
                         />
                     </Grid>

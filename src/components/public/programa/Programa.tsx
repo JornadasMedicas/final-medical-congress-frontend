@@ -1,25 +1,38 @@
 import { Divider, Grid, useMediaQuery } from "@mui/material"
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ModalImagen } from "./ModalImagen";
 import { RenderProgramas } from './RenderProgramas';
 import { programa2023, programa2024, programaTabs } from '../../../helpers/programas/data';
 import { Proximamente } from "./Proximamente";
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
+import { PropsUIContext } from "../../../interfaces/context/IUIContext";
+import UIContext from "../../../context/UIContext";
 
 export const Programa = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const [tab, setTab] = useState<number>(programaTabs[programaTabs.length - 1].id);
+    const { setActiveSection, setTriggerRelocation } = useContext<PropsUIContext>(UIContext);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: false });
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setTab(newValue);
     };
 
+    useEffect(() => {
+        if (isInView) {
+            setActiveSection('Programa');
+            setTriggerRelocation(false);
+        }
+    }, [isInView, setActiveSection, setTriggerRelocation]);
+
     return (
         <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : 'auto', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: 2 }}>
             <Grid size={12} sx={{ mb: 2, mt: 0 }}>
                 <Divider
+                    ref={ref}
                     component={motion.div}
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}

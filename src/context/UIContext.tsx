@@ -1,19 +1,19 @@
 import { createContext, ReactNode, useState } from "react";
 import { PropsModal, PropsUIContext } from "../interfaces/context/IUIContext";
 
-export const UIContext = createContext<PropsUIContext>({
+const UIContext = createContext<PropsUIContext>({
     activeSection: 'Inicio',
     setActiveSection: () => { },
     modalData: { isOpen: false, img: '' },
     setModalData: () => { },
-    dynamic: 0,
-    setDynamic: () => { }
+    triggerRelocation: false,
+    setTriggerRelocation: () => { }
 });
 
 export const UIContextProvider = ({ children: Component }: { children: ReactNode }) => {
     const [activeSection, setActiveSection] = useState<string>('Inicio');
     const [modalData, setModalData] = useState<PropsModal>({ isOpen: false, img: '' });
-    const [dynamic, setDynamic] = useState<number>(0);
+    const [triggerRelocation, setTriggerRelocation] = useState<boolean>(false);
 
     return (
         <UIContext value={{
@@ -21,10 +21,12 @@ export const UIContextProvider = ({ children: Component }: { children: ReactNode
             setActiveSection,
             modalData,
             setModalData,
-            dynamic,
-            setDynamic
+            triggerRelocation,
+            setTriggerRelocation
         }}>
             {Component}
         </UIContext>
     )
 }
+
+export default UIContext;

@@ -1,15 +1,20 @@
 import { Box, Divider, Grid, Typography, useMediaQuery } from "@mui/material"
 import { sedes2024 } from "../../../helpers/sedes/data";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { PropsSedes } from "../../../interfaces/sedes/ISedes";
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import mapboxgl from 'mapbox-gl';
+import { PropsUIContext } from "../../../interfaces/context/IUIContext";
+import UIContext from "../../../context/UIContext";
 
 export const Sedes = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const [selectedItem, setSelectedItem] = useState<number>(0);
-    const itemData: PropsSedes[] = sedes2024.filter((_item, index) => index === selectedItem);
+    const itemData: PropsSedes[] = useMemo(() => sedes2024.filter((_item, index) => index === selectedItem), [selectedItem])
     const mapContainer = useRef(''); // Ref para el contenedor del mapa
+    const { setActiveSection, setTriggerRelocation } = useContext<PropsUIContext>(UIContext);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: false });
 
     useEffect(() => {
         // Configura Mapbox GL con tu token de acceso
@@ -44,12 +49,20 @@ export const Sedes = () => {
 
         // Limpieza cuando el componente se desmonte
         return () => map.remove();
-    }, [selectedItem]);
+    }, [selectedItem, itemData]);
+
+    useEffect(() => {
+        if (isInView) {
+            setActiveSection('Sedes');
+            setTriggerRelocation(false);
+        }
+    }, [isInView, setActiveSection, setTriggerRelocation]);
 
     return (
         <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : '90.5vh', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: responsive ? 2 : 5, mb: responsive ? 0 : -3 }}>
             <Grid size={responsive ? 12 : 6} sx={{ mb: responsive ? 2 : 2 }}>
                 <Divider
+                    ref={ref}
                     component={motion.div}
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}

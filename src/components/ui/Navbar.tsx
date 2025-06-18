@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink } from 'react-router-dom';
 import { PropsUIContext } from '../../interfaces/context/IUIContext';
-import { UIContext } from '../../context/UIContext';
+import UIContext from '../../context/UIContext';
 
 const navItem = [
     { name: 'Inicio' },
@@ -15,7 +15,7 @@ const navItem = [
 
 export const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    const { activeSection, setActiveSection, setDynamic } = useContext<PropsUIContext>(UIContext);
+    const { activeSection, setActiveSection, setTriggerRelocation } = useContext<PropsUIContext>(UIContext);
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -29,7 +29,7 @@ export const Navbar = () => {
     const goToSection = (pathTo: string) => {
         setAnchorElNav(null);
         setActiveSection(pathTo);
-        setDynamic(1);
+        setTriggerRelocation(true);
     };
 
     return (

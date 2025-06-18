@@ -8,6 +8,6 @@ export interface PropsUIContext {
     setActiveSection: React.Dispatch<React.SetStateAction<string>>;
     modalData: PropsModal;
     setModalData: React.Dispatch<React.SetStateAction<PropsModal>>;
-    dynamic: number;
-    setDynamic: React.Dispatch<React.SetStateAction<number>>
+    triggerRelocation: boolean;
+    setTriggerRelocation: React.Dispatch<React.SetStateAction<boolean>>;
 }

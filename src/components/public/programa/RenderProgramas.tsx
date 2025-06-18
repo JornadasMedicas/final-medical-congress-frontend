@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Typography, useMediaQuery } from "@mui/material";
 import { useContext, useState } from "react";
 import { PropsUIContext } from "../../../interfaces/context/IUIContext";
-import { UIContext } from "../../../context/UIContext";
+import UIContext from "../../../context/UIContext";
 import { Masonry } from "@mui/lab";
 import { PropsIProgramas } from "../../../interfaces/programas/IProgramas";
 import { motion } from "motion/react";
@@ -12,7 +12,7 @@ export const RenderProgramas = ({ programas }: PropsIProgramas) => {
     const { setModalData } = useContext<PropsUIContext>(UIContext);
     const [buttonLoading, setButtonLoading] = useState<string | null>(null);
 
-    const onDownload = (_e: any, doc: string, id: string) => {
+    const onDownload = (doc: string, id: string) => {
         setButtonLoading(id);
         const link = document.createElement("a");
         link.download = `JORNADAS.pdf`;
@@ -56,7 +56,7 @@ export const RenderProgramas = ({ programas }: PropsIProgramas) => {
                             {
                                 item.onDowload &&
                                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                    <Button loading={buttonLoading === item.buttonText} onClick={(e) => onDownload(e, item.onDowload, item.buttonText)} variant="contained" endIcon={<DownloadIcon />} sx={{ backgroundColor: 'background.default', color: 'primary.main', ":hover": { backgroundColor: 'primary.main', color: 'background.default' }, width: responsive ? '100%' : '100%' }}>
+                                    <Button loading={buttonLoading === item.buttonText} onClick={() => onDownload(item.onDowload, item.buttonText)} variant="contained" endIcon={<DownloadIcon />} sx={{ backgroundColor: 'background.default', color: 'primary.main', ":hover": { backgroundColor: 'primary.main', color: 'background.default' }, width: responsive ? '100%' : '100%' }}>
                                         {item.buttonText}
                                     </Button>
                                 </Box>

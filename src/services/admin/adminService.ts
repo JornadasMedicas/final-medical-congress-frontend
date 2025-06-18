@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import jornadasApi from '../../api/jornadasApi';
 import { PropsGetAssistantsFilters } from '../../interfaces/admin/IAdmin';
-import { PropsTableAssistantsFilters } from '../../interfaces/admin/AdminContext';
+import { PropsTableAssistantsFilters } from '../../interfaces/admin/IAdminContext';
 
 export const getAssitantInfo = async (email: string) => {
     try {
@@ -39,7 +39,7 @@ export const getTotalAssitants = async ({ ...params }: PropsTableAssistantsFilte
     }
 }
 
-export const getEventEditions = async (): Promise<any> => {
+export const getEventEditions = async () => {
     try {
         const res: AxiosResponse = await jornadasApi.get(`/api/assistants/editions`);
         return res.data;
