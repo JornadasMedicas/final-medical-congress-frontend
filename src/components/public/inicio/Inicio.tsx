@@ -1,12 +1,10 @@
 import { Box, Card, CardContent, Grid, Typography, useMediaQuery } from "@mui/material"
 import { Carousel } from "./Carousel";
-import { motion, useInView } from "motion/react";
+import { motion } from "motion/react";
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
-import { useContext, useEffect, useRef } from "react";
-import { PropsUIContext } from "../../../interfaces/context/IUIContext";
-import UIContext from "../../../context/UIContext";
+import { SectionObserver } from "../../ui/SectionObserver";
 
 const cards = [
     {
@@ -30,17 +28,7 @@ const cards = [
 ]
 
 export const Inicio = () => {
-    const { setActiveSection, setTriggerRelocation } = useContext<PropsUIContext>(UIContext);
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const refs = useRef(null);
-    const isInView = useInView(refs, { once: false });
-
-    useEffect(() => {
-        if (isInView) {
-            setActiveSection('Inicio');
-            setTriggerRelocation(false);
-        }
-    }, [isInView, setActiveSection, setTriggerRelocation]);
 
     return (
         <Grid container columns={12} sx={{ display: 'flex', minHeight: 'auto', flexDirection: 'column', mt: responsive ? 0 : 2, mb: responsive ? 4 : 7 }}>
@@ -98,6 +86,7 @@ export const Inicio = () => {
                     <Box
                         sx={{
                             display: 'flex',
+                            position: 'relative',
                             flexDirection: 'column',
                             pt: responsive ? 2 : 0,
                             backgroundColor: 'primary.main',
@@ -109,8 +98,8 @@ export const Inicio = () => {
                             gap: 3,
                             borderLeft: ''
                         }}>
+                        <SectionObserver sectionId="Inicio" />
                         <Typography
-                            ref={refs}
                             m={'auto'}
                             fontFamily={'sans-serif'}
                             fontWeight={'bold'}
