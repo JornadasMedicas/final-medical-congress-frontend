@@ -1,20 +1,21 @@
 import { Divider, Grid, useMediaQuery } from "@mui/material"
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { useState } from "react";
+import { useContext } from 'react';
 import { ModalImagen } from "./ModalImagen";
 import { RenderProgramas } from './RenderProgramas';
 import { programa2023, programa2024, programaTabs } from '../../../helpers/programas/data';
 import { Proximamente } from "./Proximamente";
 import { motion } from "motion/react";
 import { SectionObserver } from "../../ui/SectionObserver";
+import UIContext from "../../../context/UIContext";
 
 export const Programa = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const [tab, setTab] = useState<number>(programaTabs[programaTabs.length - 1].id);
+    const { programTab, setProgramTab } = useContext(UIContext);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-        setTab(newValue);
+        setProgramTab(newValue);
     };
 
     return (
@@ -33,7 +34,7 @@ export const Programa = () => {
             </Grid>
             <Grid size={12} sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
                 <Tabs
-                    value={tab}
+                    value={programTab}
                     onChange={handleChange}
                     variant="fullWidth"
                     scrollButtons="auto"
@@ -65,13 +66,13 @@ export const Programa = () => {
             </Grid>
             <Grid size={12} sx={{ mt: 2, height: '100%' }}>
                 {
-                    tab === 0 && <RenderProgramas programas={programa2023} />
+                    programTab === 0 && <RenderProgramas programas={programa2023} />
                 }
                 {
-                    tab === 1 && <RenderProgramas programas={programa2024} />
+                    programTab === 1 && <RenderProgramas programas={programa2024} />
                 }
                 {
-                    tab === 2 && <Proximamente />
+                    programTab === 2 && <Proximamente />
                 }
             </Grid>
             <ModalImagen />
