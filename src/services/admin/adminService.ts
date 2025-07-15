@@ -35,7 +35,7 @@ export const getTotalAssitants = async ({ ...params }: PropsTableAssistantsFilte
         const res: AxiosResponse = await jornadasApi.get(`/api/assistants/total/count`, { params });
         return res.data;
     } catch (err: unknown) {
-        return { error: err };
+        return { ok: false };
     }
 }
 
@@ -44,7 +44,25 @@ export const getEventEditions = async () => {
         const res: AxiosResponse = await jornadasApi.get(`/api/assistants/editions`);
         return res.data;
     } catch (err: unknown) {
-        return { error: err };
+        return [];
+    }
+}
+
+export const getModules = async () => {
+    try {
+        const res: AxiosResponse = await jornadasApi.get(`/api/assistants/modules`);
+        return res.data;
+    } catch (err: unknown) {
+        return [];
+    }
+}
+
+export const getWorkshops = async () => {
+    try {
+        const res: AxiosResponse = await jornadasApi.get(`/api/assistants/workshops`);
+        return res.data;
+    } catch (err: unknown) {
+        return [];
     }
 }
 

@@ -20,10 +20,17 @@ export interface PropsGetAssistantsFilters extends PropsTableAssistantsFilters {
     page: number;
 }
 
+export interface ReqGenCatalogs {
+    id: number;
+    nombre: string;
+}
+
 export interface ReqAssistantsTableData {
     rows: PropsGetAssistantsInterface[];
     totalRows: number;
     editions: ReqEventEditions[];
+    modulos: ReqGenCatalogs[];
+    talleres: ReqGenCatalogs[];
 }
 
 export interface ReqAssistantsAutocompleteInterface {

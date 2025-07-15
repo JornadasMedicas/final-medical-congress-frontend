@@ -1,8 +1,9 @@
-import { Box, Grid, Pagination, PaginationItem, Typography } from '@mui/material';
+import { Box, Grid, Pagination, PaginationItem, Typography, useMediaQuery } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react'
 import AdminContext from '../../context/AdminContext';
 
 export const AsistentesPaginationTable = () => {
+    const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const [page, setPage] = useState<number>(0);
     const { assistantsTable, setAssistantsTableAction } = useContext(AdminContext);
 
@@ -18,11 +19,11 @@ export const AsistentesPaginationTable = () => {
     return (
         <>
             <Box sx={{ width: '100%' }}>
-                <Grid container rowSpacing={2} columns={12} sx={{ flexDirection: { xs: "column", md: "row" } }}>
-                    <Grid size={6} sx={{ paddingLeft: '15px' }}>
+                <Grid container rowSpacing={2} columns={12} sx={{ flexDirection: { xs: "column", md: "row" }, mt: responsive ? 2 : 0, mb: responsive ? 2 : 0 }}>
+                    <Grid size={responsive ? 12 : 6} sx={{ paddingLeft: responsive ? 0 : '15px', textAlign: responsive ? 'center' : 'left' }}>
                         <Typography sx={{ paddingTop: '5px' }}>{assistantsTable.totalRows} asistentes totales</Typography>
                     </Grid>
-                    <Grid size={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Grid size={responsive ? 12 : 6} sx={{ display: 'flex', justifyContent: responsive ? 'center' : 'flex-end' }}>
                         <Pagination
                             sx={{
                                 "& li .Mui-selected": {

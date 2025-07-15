@@ -1,16 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
-import { Autocomplete, Box, Card, FormControl, Grid, InputLabel, Paper, Select, TableContainer, TextField, Typography, useMediaQuery } from '@mui/material';
-import { getAssitants, getAssitantsAutocomplete, getEventEditions, getTotalAssitants } from '../../services/admin/adminService';
+import { Autocomplete, Box, FormControl, Grid, InputLabel, LinearProgress, Paper, Select, Stack, TableContainer, TextField, Typography, useMediaQuery } from '@mui/material';
+import { getAssitants, getAssitantsAutocomplete, getEventEditions, getModules, getTotalAssitants, getWorkshops } from '../../services/admin/adminService';
 import { DataGrid } from '@mui/x-data-grid';
 import AsistentesPaginationTable from './AsistentesPaginationTable';
 import AdminContext from '../../context/AdminContext';
 import { assistantsRows, columns } from '../../helpers/admin/asistantsTable';
-import { ReqAssistants, ReqAssistantsAutocomplete, ReqAssistantsAutocompleteInterface, ReqAssistantsTableData, ReqAssistantsTotalCount, ReqEventEditions } from '../../interfaces/admin/IAdmin';
-import { modulosFiltros, talleresFiltros } from '../../helpers/admin/data';
+import { ReqAssistants, ReqAssistantsAutocomplete, ReqAssistantsAutocompleteInterface, ReqAssistantsTableData, ReqAssistantsTotalCount, ReqEventEditions, ReqGenCatalogs } from '../../interfaces/admin/IAdmin';
 
-export const Asistentes = () => {
+export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const [tableData, setTableData] = useState<ReqAssistantsTableData>({ rows: [], totalRows: 0, editions: [] });
+    const [tableData, setTableData] = useState<ReqAssistantsTableData>({ rows: [], totalRows: 0, editions, modulos: [], talleres: [] });
     const [options, setOptions] = useState<ReqAssistantsAutocompleteInterface[]>([]);
     const { assistantsTable, setAssistantsTableAction } = useContext(AdminContext);
 
@@ -54,8 +53,10 @@ export const Asistentes = () => {
             workshop: assistantsTable.filters.workshop,
             year: assistantsTable.filters.year
         }).then((res: ReqAssistants) => {
-            const row = assistantsRows(res.data);
-            setTableData(prev => ({ ...prev, rows: row }));
+            if (res.data) {
+                const row = assistantsRows(res.data);
+                setTableData(prev => ({ ...prev, rows: row }));
+            }
         });
 
         getTotalAssitants({
@@ -64,201 +65,226 @@ export const Asistentes = () => {
             workshop: assistantsTable.filters.workshop,
             year: assistantsTable.filters.year
         }).then((res: ReqAssistantsTotalCount) => {
-            setTableData(prev => ({ ...prev, totalRows: res.data }));
-            setAssistantsTableAction(prev => ({ ...prev, totalRows: res.data }));
+            if (res.ok) {
+                setTableData(prev => ({ ...prev, totalRows: res.data }));
+                setAssistantsTableAction(prev => ({ ...prev, totalRows: res.data }));
+            }
         });
 
         getEventEditions().then(((res: ReqEventEditions[]) => {
-            setTableData(prev => ({ ...prev, editions: res }));
+            if (res.length > 0) {
+                setTableData(prev => ({ ...prev, editions: res }));
+            }
+        }));
+
+        getModules().then(((res: ReqGenCatalogs[]) => {
+            if (res.length > 0) {
+                setTableData(prev => ({ ...prev, modulos: res }));
+            }
+        }));
+
+        getWorkshops().then(((res: ReqGenCatalogs[]) => {
+            if (res.length > 0) {
+                setTableData(prev => ({ ...prev, talleres: res }));
+            }
         }));
     }, [assistantsTable.tablePage, assistantsTable.filters.email, assistantsTable.filters.module, assistantsTable.filters.workshop, assistantsTable.filters.year, setAssistantsTableAction]);
 
     return (
-        <Grid container className='animate__animated animate__fadeIn' rowSpacing={3} columns={12} sx={{ display: 'flex', flexDirection: 'row', mt: responsive ? 0 : -4, width: '100%' }}>
-            <Grid size={'auto'}>
-                <Box sx={{ height: '7vh', width: '100%', mb: -3, pl: 3, pr: 3, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-end' }}>
-                    <FormControl sx={{ minWidth: 300 }}>
-                        <InputLabel
-                            htmlFor="grouped-native-select"
-                            sx={{
-                                '&.Mui-focused': {
-                                    color: 'black',
-                                },
-                                color: 'black'
-                            }}
-                        >
-                            Filtros
-                        </InputLabel>
-                        <Select
-                            variant='outlined'
-                            size='small'
-                            native
-                            defaultValue={0}
-                            id="grouped-native-select"
-                            onChange={(e) => handleFilters(e.target.value)}
-                            label="Filtros"
-                            sx={{
-                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#bd4f2b'
-                                }
-                            }}>
-                            <option value={0}>Todos</option>
-                            <optgroup label="MODULOS">
-                                {
-                                    modulosFiltros.map((item: { id: number, nombre: string }) => (
-                                        <option key={item.id} value={item.nombre}>{item.nombre}</option>
-                                    ))
-                                }
-                            </optgroup>
-                            <optgroup label="TALLERES">
-                                {
-                                    talleresFiltros.map((item: { id: number, nombre: string }) => (
-                                        <option key={item.id} value={item.id}>{item.nombre}</option>
-                                    ))
-                                }
-                            </optgroup>
-                        </Select>
-                    </FormControl>
-                </Box>
-            </Grid>
-            <Grid size={'auto'}>
-                <Box sx={{ height: '7vh', width: '100%', mb: -3, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-end' }}>
-                    <Autocomplete
-                        autoComplete={false}
-                        autoHighlight
-                        sx={{
-                            width: '400px',
-                            ml: responsive ? '30px' : '0px',
-                        }}
-                        getOptionLabel={(option: ReqAssistantsAutocompleteInterface) => option.nombre}
-                        includeInputInList
-                        filterOptions={(x) => x}
-                        filterSelectedOptions
-                        onChange={(_e, value) => handleAutoChange(value)}
-                        options={options}
-                        renderOption={(props, option: ReqAssistantsAutocompleteInterface) => (
-                            <Box
-                                component='li'
-                                sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}
-                            >
-                                <Grid container spacing={2}>
-                                    <Grid size={12}>
-                                        <Typography variant='body2'>
-                                            {option.nombre} :: {option.correo}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Box>
-                        )}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                sx={{
-                                    width: responsive ? '80%' : '95%',
-                                    mt: 0.5,
-                                    "& .MuiInput-underline:after": {
-                                        borderBottomColor: "#b7402a"
-                                    }
-                                }}
-                                size='small'
-                                variant='standard'
-                                autoComplete='off'
-                                placeholder='Nombre o correo...'
-                                slotProps={{
-                                    htmlInput: {
-                                        ...params.inputProps,
-                                        autoComplete: 'new-password'
-                                    }
-                                }}
-                                onChange={(e) => searchAssistant(e.target.value)}
-                            />
-                        )}
-                    />
-                </Box>
-            </Grid>
-            <Grid size={'grow'} sx={{ height: '7vh', width: '100%', mb: -3, pl: 3, pr: 3, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-end' }}>
-                <FormControl sx={{ minWidth: 150 }}>
-                    <InputLabel
-                        htmlFor="grouped-native-select"
-                        sx={{
-                            '&.Mui-focused': {
-                                color: 'black',
-                            },
-                            color: 'black'
-                        }}
-                    >
-                        Edición
-                    </InputLabel>
-                    <Select
-                        variant='outlined'
-                        size='small'
-                        native
-                        value={assistantsTable.filters.year}
-                        onChange={(e) => handleEditions(e.target.value)}
-                        label="Filtros"
-                        sx={{
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#bd4f2b'
-                            }
-                        }}>
-                        {tableData.editions.map(edition => (
-                            <option key={edition.edicion} value={edition.edicion}>{edition.edicion}</option>
-                        ))}
-                    </Select>
-                </FormControl>
-            </Grid>
-            <Card sx={{ width: '100%' }}>
-                <Paper sx={{ height: '100%', width: '100%', minHeight: '74vh' }}>
-                    <TableContainer sx={{ height: '74vh', width: '100%' }}>
-                        <DataGrid
-                            sx={{
-                                backgroundColor: '#ffffff',
-                                border: 2,
-                                borderColor: 'darkgray',
-                                '& .MuiDataGrid-columnHeaderTitle': {
-                                    textOverflow: "clip",
-                                    whiteSpace: "break-spaces",
-                                    lineHeight: 1.5
-                                },
-                                "& .MuiDataGrid-cell": {
-                                    borderRight: 0,
-                                    borderTop: 0
-                                },
-                                '& .MuiDataGrid-columnHeader': {
-                                    borderBottom: 1,
-                                    fontWeight: 'bold',
-                                    borderColor: 'lightblue',
-                                    color: 'primary.main'
-                                },
-                                '& ::-webkit-scrollbar': {
-                                    width: '10px',
-                                },
-                                '& ::-webkit-scrollbar-track': {
-                                    background: '#f1f1f1',
-                                },
-                                '& ::-webkit-scrollbar-thumb': {
-                                    backgroundColor: 'background.default',
-                                },
-                                '& ::-webkit-scrollbar-thumb:hover': {
-                                    background: 'background.default',
-                                },
-                            }}
-                            hideFooterSelectedRowCount
-                            rowHeight={70}
-                            disableColumnMenu
-                            filterMode="server"
-                            disableColumnFilter
-                            rows={tableData.rows}
-                            paginationMode='server'
-                            getRowId={(row) => row.id}
-                            rowCount={assistantsTable.totalRows}
-                            pageSizeOptions={[10]}
-                            columns={columns}
-                            slots={{ pagination: AsistentesPaginationTable }}
-                        />
-                    </TableContainer>
-                </Paper>
-            </Card>
-        </Grid>
+        <>
+            {
+                tableData.editions.length === 0 ?
+                    <LinearProgress color='inherit' sx={{ width: '100%', color: 'text.secondary', position: 'absolute', top: 0 }} />
+                    :
+                    <Stack direction={'column'} spacing={3} sx={{ width: '100%', height: '100%' }}>
+                        <Grid container className='animate__animated animate__fadeIn' rowSpacing={responsive ? 5 : 3} columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column-reverse' : 'row', width: '100%' }}>
+                            <Grid size={'auto'} sx={{ width: responsive ? '100%' : 'auto' }}>
+                                <Box sx={{ width: '100%', pl: 3, pr: 3, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-end' }}>
+                                    <FormControl sx={{ width: responsive ? '100%' : 300 }}>
+                                        <InputLabel
+                                            htmlFor="grouped-native-select"
+                                            sx={{
+                                                '&.Mui-focused': {
+                                                    color: 'black',
+                                                },
+                                                color: 'black'
+                                            }}
+                                        >
+                                            Filtros
+                                        </InputLabel>
+                                        <Select
+                                            variant='outlined'
+                                            size='small'
+                                            native
+                                            defaultValue={0}
+                                            id="grouped-native-select"
+                                            onChange={(e) => handleFilters(e.target.value)}
+                                            label="Filtros"
+                                            sx={{
+                                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                    borderColor: '#bd4f2b'
+                                                }
+                                            }}>
+                                            <option value={0}>Todos</option>
+                                            <optgroup label="MODULOS">
+                                                {
+                                                    tableData.modulos.map((item: { id: number, nombre: string }) => (
+                                                        <option key={item.id} value={item.nombre}>{item.nombre}</option>
+                                                    ))
+                                                }
+                                            </optgroup>
+                                            <optgroup label="TALLERES">
+                                                {
+                                                    tableData.talleres.map((item: { id: number, nombre: string }) => (
+                                                        <option key={item.id} value={item.id}>{item.nombre}</option>
+                                                    ))
+                                                }
+                                            </optgroup>
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                            <Grid size={'auto'} sx={{ width: responsive ? '100%' : '400px', textAlign: 'center' }}>
+                                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-end' }}>
+                                    <Autocomplete
+                                        autoComplete={false}
+                                        autoHighlight
+                                        sx={{
+                                            width: responsive ? '100%' : '400px',
+                                            ml: responsive ? '30px' : '0px',
+                                        }}
+                                        getOptionLabel={(option: ReqAssistantsAutocompleteInterface) => option.nombre}
+                                        includeInputInList
+                                        filterOptions={(x) => x}
+                                        filterSelectedOptions
+                                        onChange={(_e, value) => handleAutoChange(value)}
+                                        options={options}
+                                        renderOption={(props, option: ReqAssistantsAutocompleteInterface) => (
+                                            <Box
+                                                component='li'
+                                                sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}
+                                            >
+                                                <Grid container spacing={2}>
+                                                    <Grid size={12}>
+                                                        <Typography variant='body2'>
+                                                            {option.nombre} :: {option.correo}
+                                                        </Typography>
+                                                    </Grid>
+                                                </Grid>
+                                            </Box>
+                                        )}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                sx={{
+                                                    width: responsive ? '80%' : '95%',
+                                                    mt: 0.5,
+                                                    "& .MuiInput-underline:after": {
+                                                        borderBottomColor: "#b7402a"
+                                                    }
+                                                }}
+                                                size='small'
+                                                variant='standard'
+                                                autoComplete='off'
+                                                placeholder='Nombre o correo...'
+                                                slotProps={{
+                                                    htmlInput: {
+                                                        ...params.inputProps,
+                                                        autoComplete: 'new-password'
+                                                    }
+                                                }}
+                                                onChange={(e) => searchAssistant(e.target.value)}
+                                            />
+                                        )}
+                                    />
+                                </Box>
+                            </Grid>
+                            <Grid size={'grow'} sx={{ width: '100%', pl: 3, pr: 3, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: responsive ? 'center' : 'flex-end' }}>
+                                <FormControl sx={{ width: responsive ? '100%' : 150, mt: responsive ? 3 : 0 }}>
+                                    <InputLabel
+                                        htmlFor="grouped-native-select"
+                                        sx={{
+                                            '&.Mui-focused': {
+                                                color: 'black'
+                                            },
+                                            color: 'black'
+                                        }}
+                                    >
+                                        Edición
+                                    </InputLabel>
+                                    <Select
+                                        variant='outlined'
+                                        size='small'
+                                        native
+                                        value={assistantsTable.filters.year}
+                                        onChange={(e) => handleEditions(e.target.value)}
+                                        label="Filtros"
+                                        sx={{
+                                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                borderColor: '#bd4f2b'
+                                            }
+                                        }}>
+                                        {tableData.editions.map(edition => (
+                                            <option key={edition.edicion} value={edition.edicion}>{edition.edicion}</option>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                        <Grid container className='animate__animated animate__fadeIn' rowSpacing={responsive ? 5 : 3} columns={12} sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
+                            <Paper sx={{ height: '100%', width: '100%' }}>
+                                <TableContainer sx={{ height: responsive ? 'auto' : '71vh', width: '100%' }}>
+                                    <DataGrid
+                                        sx={{
+                                            backgroundColor: '#ffffff',
+                                            border: 2,
+                                            borderColor: 'darkgray',
+                                            '& .MuiDataGrid-columnHeaderTitle': {
+                                                textOverflow: "clip",
+                                                whiteSpace: "break-spaces",
+                                                lineHeight: 1.5
+                                            },
+                                            "& .MuiDataGrid-cell": {
+                                                borderRight: 0,
+                                                borderTop: 0
+                                            },
+                                            '& .MuiDataGrid-columnHeader': {
+                                                borderBottom: 1,
+                                                fontWeight: 'bold',
+                                                borderColor: 'lightblue',
+                                                color: 'primary.main'
+                                            },
+                                            '& ::-webkit-scrollbar': {
+                                                width: '10px',
+                                            },
+                                            '& ::-webkit-scrollbar-track': {
+                                                background: '#f1f1f1',
+                                            },
+                                            '& ::-webkit-scrollbar-thumb': {
+                                                backgroundColor: 'background.default',
+                                            },
+                                            '& ::-webkit-scrollbar-thumb:hover': {
+                                                background: 'background.default',
+                                            },
+                                        }}
+                                        hideFooterSelectedRowCount
+                                        rowHeight={70}
+                                        disableColumnMenu
+                                        filterMode="server"
+                                        disableColumnFilter
+                                        rows={tableData.rows}
+                                        paginationMode='server'
+                                        getRowId={(row) => row.id}
+                                        rowCount={assistantsTable.totalRows}
+                                        pageSizeOptions={[10]}
+                                        columns={columns}
+                                        slots={{ pagination: AsistentesPaginationTable }}
+                                    />
+                                </TableContainer>
+                            </Paper>
+                        </Grid>
+                    </Stack>
+            }
+        </>
     )
 }
