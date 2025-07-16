@@ -57,6 +57,15 @@ export const getModules = async () => {
     }
 }
 
+export const getCountCatalogs = async () => {
+    try {
+        const res: AxiosResponse = await jornadasApi.get(`/api/admin/countCatalogs`);
+        return res.data;
+    } catch (err: unknown) {
+        return [];
+    }
+}
+
 export const getWorkshops = async () => {
     try {
         const res: AxiosResponse = await jornadasApi.get(`/api/assistants/workshops`);

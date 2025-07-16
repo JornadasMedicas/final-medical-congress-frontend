@@ -93,10 +93,10 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
     return (
         <>
             {
-                tableData.editions.length === 0 ?
+                editions.length === 0 ?
                     <LinearProgress color='inherit' sx={{ width: '100%', color: 'text.secondary', position: 'absolute', top: 0 }} />
                     :
-                    <Stack direction={'column'} spacing={3} sx={{ width: '100%', height: '100%' }}>
+                    <Stack direction={'column'} spacing={3} sx={{ width: '100%', height: '100%', pt: 3 }}>
                         <Grid container className='animate__animated animate__fadeIn' rowSpacing={responsive ? 5 : 3} columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column-reverse' : 'row', width: '100%' }}>
                             <Grid size={'auto'} sx={{ width: responsive ? '100%' : 'auto' }}>
                                 <Box sx={{ width: '100%', pl: 3, pr: 3, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-end' }}>

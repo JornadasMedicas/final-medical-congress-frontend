@@ -96,3 +96,10 @@ export interface ReqEventEditions {
     id: number;
     edicion: string;
 }
+
+export interface ReqCountCatalogs {
+    ediciones: number;
+    modulos: number;
+    talleres: number;
+    categorias: number;
+}
