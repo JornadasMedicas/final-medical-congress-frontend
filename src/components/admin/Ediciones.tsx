@@ -50,6 +50,13 @@ export const Ediciones = () => {
             <Grid size={responsive ? 12 : 6}>
                 <Typography fontSize={'15px'}>Fecha Inicial</Typography>
                 <TextField
+                    sx={{
+                        '& .MuiOutlinedInput-root': {
+                            '&.Mui-focused fieldset': {
+                                border: '1px solid green'
+                            },
+                        },
+                    }}
                     variant="outlined"
                     size="small"
                     value={payload.fec_inicial}
@@ -63,10 +70,18 @@ export const Ediciones = () => {
             <Grid size={responsive ? 12 : 6}>
                 <Typography fontSize={'15px'}>Fecha Final</Typography>
                 <TextField
+                    sx={{
+                        '& .MuiOutlinedInput-root': {
+                            '&.Mui-focused fieldset': {
+                                border: '1px solid green'
+                            },
+                        },
+                    }}
                     variant="outlined"
                     size="small"
                     value={payload.fec_final}
                     onChange={(e) => setPayload({ ...payload, fec_final: e.target.value })}
+                    slotProps={{ htmlInput: { min: payload.fec_inicial, max: dayjs(payload.fec_inicial).add(2, 'days').format('YYYY-MM-DD') } }}
                     error={(isSent && payload.fec_final === '') && true}
                     helperText={(isSent && payload.fec_final === '') && 'Este campo es requerido'}
                     fullWidth
