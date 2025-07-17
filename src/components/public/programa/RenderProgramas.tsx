@@ -9,7 +9,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 
 export const RenderProgramas = ({ programas }: PropsIProgramas) => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const { setModalData } = useContext<PropsUIContext>(UIContext);
+    const { setModalProgramData } = useContext<PropsUIContext>(UIContext);
     const [buttonLoading, setButtonLoading] = useState<string | null>(null);
 
     const onDownload = (doc: string, id: string) => {
@@ -28,7 +28,7 @@ export const RenderProgramas = ({ programas }: PropsIProgramas) => {
     };
 
     const handleClickOpen = (img: string) => {
-        setModalData({ isOpen: true, img });
+        setModalProgramData({ isOpen: true, img });
     };
 
     return (

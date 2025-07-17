@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
-import { PropsModal, PropsUIContext } from "../interfaces/context/IUIContext";
+import { PropsModalAdmin, PropsModalImg, PropsUIContext } from "../interfaces/context/IUIContext";
 import { programaTabs } from "../helpers/programas/data";
 
 const UIContext = createContext<PropsUIContext>({
@@ -7,8 +7,10 @@ const UIContext = createContext<PropsUIContext>({
     setActiveSection: () => { },
     programTab: programaTabs[programaTabs.length - 1].id,
     setProgramTab: () => { },
-    modalData: { isOpen: false, img: '' },
-    setModalData: () => { },
+    modalAdminData: { isOpen: false },
+    setModalAdminData: () => { },
+    modalProgramData: { isOpen: false, img: '' },
+    setModalProgramData: () => { },
     triggerRelocation: false,
     setTriggerRelocation: () => { }
 });
@@ -16,7 +18,8 @@ const UIContext = createContext<PropsUIContext>({
 export const UIContextProvider = ({ children: Component }: { children: ReactNode }) => {
     const [activeSection, setActiveSection] = useState<string>('Inicio');
     const [programTab, setProgramTab] = useState<number>(programaTabs[programaTabs.length - 1].id);
-    const [modalData, setModalData] = useState<PropsModal>({ isOpen: false, img: '' });
+    const [modalProgramData, setModalProgramData] = useState<PropsModalImg>({ isOpen: false, img: '' });
+    const [modalAdminData, setModalAdminData] = useState<PropsModalAdmin>({ isOpen: false, img: '' });
     const [triggerRelocation, setTriggerRelocation] = useState<boolean>(false);
 
     return (
@@ -25,8 +28,10 @@ export const UIContextProvider = ({ children: Component }: { children: ReactNode
             setActiveSection,
             programTab,
             setProgramTab,
-            modalData,
-            setModalData,
+            modalProgramData,
+            setModalProgramData,
+            modalAdminData,
+            setModalAdminData,
             triggerRelocation,
             setTriggerRelocation
         }}>

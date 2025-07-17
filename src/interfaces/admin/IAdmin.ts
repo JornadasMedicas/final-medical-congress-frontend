@@ -102,4 +102,21 @@ export interface ReqCountCatalogs {
     modulos: number;
     talleres: number;
     categorias: number;
+    constancias: number;
+}
+
+export interface PropsAdminToolCards {
+    id: number;
+    Icon: any;
+    title: string;
+    description: string;
+    label: string;
+    registries: number;
+    Cmp: React.ComponentType<any> | null;
+}
+
+export interface PropsCreateEdition {
+    edicion: string;
+    fec_inicial: string;
+    fec_final: string;
 }
