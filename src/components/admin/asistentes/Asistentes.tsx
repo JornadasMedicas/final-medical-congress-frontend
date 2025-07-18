@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { Autocomplete, Box, FormControl, Grid, InputLabel, LinearProgress, Paper, Select, Stack, TableContainer, TextField, Typography, useMediaQuery } from '@mui/material';
-import { getAssitants, getAssitantsAutocomplete, getEventEditions, getModules, getTotalAssitants, getWorkshops } from '../../services/admin/adminService';
+import { getAssitants, getAssitantsAutocomplete, getEventEditions, getModules, getTotalAssitants, getWorkshops } from '../../../services/admin/adminService';
 import { DataGrid } from '@mui/x-data-grid';
 import AsistentesPaginationTable from './AsistentesPaginationTable';
-import AdminContext from '../../context/AdminContext';
-import { assistantsRows, columns } from '../../helpers/admin/asistantsTable';
-import { ReqAssistants, ReqAssistantsAutocomplete, ReqAssistantsAutocompleteInterface, ReqAssistantsTableData, ReqAssistantsTotalCount, ReqEventEditions, ReqGenCatalogs } from '../../interfaces/admin/IAdmin';
+import AdminContext from '../../../context/AdminContext';
+import { assistantsRows, columns } from '../../../helpers/admin/asistantsTable';
+import { ReqAssistants, ReqAssistantsAutocomplete, ReqAssistantsAutocompleteInterface, ReqAssistantsTableData, ReqAssistantsTotalCount, ReqEventEditions, ReqGenCatalogs } from '../../../interfaces/admin/IAdmin';
 
 export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");

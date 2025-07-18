@@ -1,16 +1,17 @@
 import { Box, Button, Card, CardActions, CardContent, Chip, Grid, LinearProgress, Stack, Typography, useMediaQuery } from "@mui/material"
-import { PropsAdminToolCards, ReqCountCatalogs, ReqEventEditions } from "../../interfaces/admin/IAdmin"
+import { PropsAdminToolCards, ReqCountCatalogs, ReqEventEditions } from "../../../interfaces/admin/IAdmin"
 import MedicalInformationTwoToneIcon from '@mui/icons-material/MedicalInformationTwoTone';
 import VaccinesTwoToneIcon from '@mui/icons-material/VaccinesTwoTone';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import CategoryIcon from '@mui/icons-material/Category';
 import DraftsTwoToneIcon from '@mui/icons-material/DraftsTwoTone';
 import { useContext, useEffect, useState } from "react";
-import { getCountCatalogs } from "../../services/admin/adminService";
-import { Modal } from "../ui/Modal";
-import { PropsUIContext } from "../../interfaces/context/IUIContext";
-import UIContext from "../../context/UIContext";
+import { getCountCatalogs } from "../../../services/admin/adminService";
+import { Modal } from "../../ui/Modal";
+import { PropsUIContext } from "../../../interfaces/context/IUIContext";
+import UIContext from "../../../context/UIContext";
 import { Ediciones } from "./Ediciones";
+import { Modulos } from "./Modulos";
 
 export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -25,7 +26,8 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             description: 'Crear nueva edición del programa',
             label: 'Ediciones Activas',
             registries: catalogs.ediciones,
-            Cmp: Ediciones
+            Cmp: Ediciones,
+            width: '600px'
         },
         {
             id: 1,
@@ -34,7 +36,8 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             description: 'Agregar y editar módulos del programa',
             label: 'Módulos Activos',
             registries: catalogs.modulos,
-            Cmp: Ediciones
+            Cmp: Modulos,
+            width: '800px'
         },
         {
             id: 2,
@@ -43,7 +46,8 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             description: 'Agregar y editar talleres del programa',
             label: 'Talleres Activos',
             registries: catalogs.talleres,
-            Cmp: Ediciones
+            Cmp: Ediciones,
+            width: '1000px'
         },
         {
             id: 3,
@@ -52,7 +56,8 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             description: 'Agregar y editar categorias del programa',
             label: 'Categorias Activas',
             registries: catalogs.categorias,
-            Cmp: Ediciones
+            Cmp: Ediciones,
+            width: '1000px'
         },
         {
             id: 4,
@@ -61,7 +66,8 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             description: 'Enviar constancias de participación',
             label: 'Constancias Enviadas',
             registries: 0,
-            Cmp: Ediciones
+            Cmp: Ediciones,
+            width: '1000px'
         }
     ]
 
@@ -73,7 +79,7 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
     }, []);
 
     const handleOpenModal = (item: PropsAdminToolCards) => {
-        setModalAdminData({ isOpen: true, Component: item.Cmp, title: item.title, Icon: item.Icon, description: item.description });
+        setModalAdminData({ isOpen: true, Component: item.Cmp, title: item.title, Icon: item.Icon, description: item.description, width: item.width });
     }
 
     return (

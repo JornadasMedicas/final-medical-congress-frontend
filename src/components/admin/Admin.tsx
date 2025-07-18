@@ -9,10 +9,10 @@ import { Login } from './Login';
 import { navBarHeigth, navBarHeigthResponsive } from '../../pages/HomePage';
 import UIContext from '../../context/UIContext';
 /* import { Asistencia } from './Asistencia'; */
-import { Asistentes } from './Asistentes';
+import { Asistentes } from './asistentes/Asistentes';
 import { getEventEditions } from '../../services/admin/adminService';
 import { ReqEventEditions } from '../../interfaces/admin/IAdmin';
-import { Herramientas } from './Herramientas';
+import { Herramientas } from './herramientas/Herramientas';
 
 const Admin = () => {
     const { setActiveSection } = useContext(UIContext);
@@ -54,7 +54,7 @@ const Admin = () => {
                     <Login />
                     :
                     <Grid container sx={{ pt: responsive ? `${navBarHeigthResponsive}px` : `${navBarHeigth}px`, mt: 3, mb: 3 }}>
-                        <Grid size={12} sx={{ mb: responsive ? 0 : tab === '3' ? '24.6vh' : 0 }}>
+                        <Grid size={12} sx={{ mb: responsive ? 0 : tab === '3' ? '25vh' : 0 }}>
                             <TabContext value={tab}>
                                 <TabList
                                     slotProps={{ indicator: { style: { backgroundColor: "#bd4f2b" } } }}

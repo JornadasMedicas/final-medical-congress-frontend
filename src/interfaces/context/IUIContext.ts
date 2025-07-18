@@ -8,6 +8,7 @@ export interface PropsModalAdmin extends PropsModalImg {
     Component?: React.ComponentType<any> | null;
     Icon?: any;
     description?: string;
+    width?: string;
 }
 
 export interface PropsUIContext {

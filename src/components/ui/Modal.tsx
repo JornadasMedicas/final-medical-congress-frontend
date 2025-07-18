@@ -17,7 +17,15 @@ export const Modal = () => {
             open={modalAdminData.isOpen}
             onClose={handleClose}
             aria-labelledby="responsive-dialog-title"
-            fullWidth
+            slotProps={{
+                paper: {
+                    sx: {
+                        width: modalAdminData.width, // Set desired width
+                        height: 'auto', // Set desired height (optional)
+                        maxWidth: 'none', // Prevent default maxWidth
+                    },
+                }
+            }}
         >
             <Stack sx={{ p: 2 }}>
                 <DialogTitle id="responsive-dialog-title" sx={{ p: 0, m: 0 }}>

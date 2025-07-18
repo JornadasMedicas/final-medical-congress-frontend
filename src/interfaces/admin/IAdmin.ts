@@ -23,6 +23,8 @@ export interface PropsGetAssistantsFilters extends PropsTableAssistantsFilters {
 export interface ReqGenCatalogs {
     id: number;
     nombre: string;
+    created_at?: string;
+    updated_at?: string;
 }
 
 export interface ReqAssistantsTableData {
@@ -113,6 +115,7 @@ export interface PropsAdminToolCards {
     label: string;
     registries: number;
     Cmp: React.ComponentType<any> | null;
+    width: string;
 }
 
 export interface PropsCreateEdition {

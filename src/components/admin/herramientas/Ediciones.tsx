@@ -2,11 +2,11 @@ import { Button, Grid, TextField, Typography, useMediaQuery } from "@mui/materia
 import AddIcon from '@mui/icons-material/Add';
 import dayjs from "dayjs";
 import { useContext, useState } from "react";
-import { PropsCreateEdition } from "../../interfaces/admin/IAdmin";
-import { createEdition } from "../../services/admin/adminService";
+import { PropsCreateEdition } from "../../../interfaces/admin/IAdmin";
+import { createEdition } from "../../../services/admin/adminService";
 import { useSnackbar } from 'notistack';
-import { PropsUIContext } from "../../interfaces/context/IUIContext";
-import UIContext from "../../context/UIContext";
+import { PropsUIContext } from "../../../interfaces/context/IUIContext";
+import UIContext from "../../../context/UIContext";
 
 export const Ediciones = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -33,7 +33,6 @@ export const Ediciones = () => {
 
         setLoading(false);
     }
-
 
     return (
         <Grid container sx={{ mt: 2 }} spacing={3}>

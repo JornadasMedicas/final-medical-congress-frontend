@@ -84,6 +84,33 @@ export const createEdition = async (payload: PropsCreateEdition) => {
     }
 }
 
+export const createModule = async (nombre: string) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.post(`/api/admin/createModule`, { nombre });
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
+
+export const editModule = async (payload: { id: number, nombre: string }) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.put(`/api/admin/editModule`, { ...payload });
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
+
+export const deleteModule = async (id: number) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.put(`/api/admin/deleteModule/${id}`);
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
+
 export const putRegistAssistance = async (data: string) => {
     try {
         const res: AxiosResponse = await jornadasApi.put(`/api/assistants/attendance`, { assistant: data });

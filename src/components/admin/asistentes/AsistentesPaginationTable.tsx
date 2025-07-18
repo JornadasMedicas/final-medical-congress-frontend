@@ -1,6 +1,6 @@
 import { Box, Grid, Pagination, PaginationItem, Typography, useMediaQuery } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react'
-import AdminContext from '../../context/AdminContext';
+import AdminContext from '../../../context/AdminContext';
 
 export const AsistentesPaginationTable = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
