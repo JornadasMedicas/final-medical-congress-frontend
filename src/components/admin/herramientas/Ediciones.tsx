@@ -62,7 +62,7 @@ export const Ediciones = () => {
                     onChange={(e) => setPayload({ ...payload, fec_inicial: e.target.value })}
                     fullWidth
                     error={(isSent && payload.fec_inicial === '') && true}
-                    helperText={(isSent && payload.fec_inicial === '') && 'Este campo es requerido'}
+                    helperText={(isSent && payload.fec_inicial === '') && 'Campo necesario'}
                     type="date"
                 />
             </Grid>
@@ -82,7 +82,7 @@ export const Ediciones = () => {
                     onChange={(e) => setPayload({ ...payload, fec_final: e.target.value })}
                     slotProps={{ htmlInput: { min: payload.fec_inicial, max: dayjs(payload.fec_inicial).add(2, 'days').format('YYYY-MM-DD') } }}
                     error={(isSent && payload.fec_final === '') && true}
-                    helperText={(isSent && payload.fec_final === '') && 'Este campo es requerido'}
+                    helperText={(isSent && payload.fec_final === '') && 'Campo necesario'}
                     fullWidth
                     type="date"
                 />

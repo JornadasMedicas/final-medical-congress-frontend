@@ -12,6 +12,7 @@ import { PropsUIContext } from "../../../interfaces/context/IUIContext";
 import UIContext from "../../../context/UIContext";
 import { Ediciones } from "./Ediciones";
 import { Modulos } from "./Modulos";
+import { Talleres } from "./Talleres";
 
 export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -33,7 +34,7 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             id: 1,
             Icon: MedicalInformationTwoToneIcon,
             title: 'Módulos',
-            description: 'Agregar y editar módulos del programa',
+            description: 'Agregar, editar y eliminar módulos del programa',
             label: 'Módulos Activos',
             registries: catalogs.modulos,
             Cmp: Modulos,
@@ -46,8 +47,8 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             description: 'Agregar y editar talleres del programa',
             label: 'Talleres Activos',
             registries: catalogs.talleres,
-            Cmp: Ediciones,
-            width: '1000px'
+            Cmp: Talleres,
+            width: '650px'
         },
         {
             id: 3,

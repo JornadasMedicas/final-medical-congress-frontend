@@ -123,3 +123,16 @@ export interface PropsCreateEdition {
     fec_inicial: string;
     fec_final: string;
 }
+
+export interface PayloadWorkshops {
+    nombre: string;
+    fecha: string;
+    hora_inicio: string;
+    hora_fin: string;
+    modulo: number;
+    edicion: number;
+}
+
+export interface ModuleErrors {
+    [key: string]: boolean;
+}
