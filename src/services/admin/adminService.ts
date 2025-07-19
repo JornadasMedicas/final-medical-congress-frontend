@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import jornadasApi from '../../api/jornadasApi';
-import { PropsCreateEdition, PropsGetAssistantsFilters } from '../../interfaces/admin/IAdmin';
+import { PayloadWorkshops, PropsCreateEdition, PropsGetAssistantsFilters } from '../../interfaces/admin/IAdmin';
 import { PropsTableAssistantsFilters } from '../../interfaces/admin/IAdminContext';
 
 export const getAssitantInfo = async (email: string) => {
@@ -105,6 +105,15 @@ export const editModule = async (payload: { id: number, nombre: string }) => {
 export const deleteModule = async (id: number) => {
     try {
         const res: AxiosResponse = await jornadasApi.put(`/api/admin/deleteModule/${id}`);
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
+
+export const createWorkshop = async (payload: PayloadWorkshops) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.post(`/api/admin/createWorkshop`, { ...payload });
         return res.data;
     } catch (err: unknown) {
         return { error: err };

@@ -1,26 +1,38 @@
 import { Button, FormControl, FormHelperText, Grid, MenuItem, Select, TextField, Typography, useMediaQuery } from "@mui/material"
 import { useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
-import { getEventEditions, getModules } from "../../../services/admin/adminService";
+import { createWorkshop, getEventEditions, getModules } from "../../../services/admin/adminService";
 import { ModuleErrors, PayloadWorkshops, ReqEventEditions, ReqGenCatalogs } from "../../../interfaces/admin/IAdmin";
 import { moduleErrors, validateForm } from '../../../helpers/admin/formErrors';
+import { useSnackbar } from "notistack";
+
+const initialState = { nombre: '', fecha: '', hora_inicio: '', hora_fin: '', modulo: 0, edicion: 0 };
 
 export const Talleres = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const [catModules, setCatModules] = useState<ReqGenCatalogs[]>([]);
     const [catEditions, setCatEditions] = useState<ReqEventEditions[]>([]);
-    const [payload, setPayload] = useState<PayloadWorkshops>({ nombre: '', fecha: '', hora_inicio: '', hora_fin: '', modulo: 0, edicion: 0 });
+    const [payload, setPayload] = useState<PayloadWorkshops>(initialState);
     const [loading, setLoading] = useState<boolean>(false);
     const [errors, setErrors] = useState<ModuleErrors>(moduleErrors);
+    const { enqueueSnackbar } = useSnackbar();
 
-    const handleClick = () => {
-        /* setLoading(true); */
+    const handleClick = async () => {
         const isOk = validateForm(payload, errors, setErrors);
 
-
         if (!isOk) return;
+        setLoading(true);
 
-        /* setLoading(false); */
+        const res = await createWorkshop(payload);
+
+        if (!res.error) {
+            enqueueSnackbar('Taller creado correctamente.', { variant: 'success' });
+            setPayload(initialState);
+        } else {
+            enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
+        }
+
+        setLoading(false);
     }
 
     useEffect(() => {
