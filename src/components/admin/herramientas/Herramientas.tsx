@@ -13,6 +13,7 @@ import UIContext from "../../../context/UIContext";
 import { Ediciones } from "./Ediciones";
 import { Modulos } from "./Modulos";
 import { Talleres } from "./Talleres";
+import { Categorias } from "./Categorias";
 
 export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -44,7 +45,7 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             id: 2,
             Icon: VaccinesTwoToneIcon,
             title: 'Talleres',
-            description: 'Agregar y editar talleres del programa',
+            description: 'Agregar talleres del programa',
             label: 'Talleres Activos',
             registries: catalogs.talleres,
             Cmp: Talleres,
@@ -54,11 +55,11 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             id: 3,
             Icon: CategoryIcon,
             title: 'Categorias',
-            description: 'Agregar y editar categorias del programa',
+            description: 'Agregar, editar y eliminar categorias del programa',
             label: 'Categorias Activas',
             registries: catalogs.categorias,
-            Cmp: Ediciones,
-            width: '1000px'
+            Cmp: Categorias,
+            width: '800px'
         },
         {
             id: 4,
