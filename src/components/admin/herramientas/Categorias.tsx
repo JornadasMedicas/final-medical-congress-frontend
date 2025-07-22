@@ -1,12 +1,18 @@
-import { Button, Grid, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, useMediaQuery } from "@mui/material"
+import { Button, Grid, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography, useMediaQuery } from "@mui/material"
 import MenuSharpIcon from '@mui/icons-material/MenuSharp';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useEffect, useState } from "react";
-import { createModule, deleteModule, editModule, getModules } from "../../../services/admin/adminService";
+import { useContext, useEffect, useState } from "react";
+import { createCategory, editCategory, getCategories } from "../../../services/admin/adminService";
 import { ReqGenCatalogs } from "../../../interfaces/admin/IAdmin";
 import dayjs from "dayjs";
 import { useSnackbar } from "notistack";
+import utc from 'dayjs/plugin/utc';
+import { ModalConfirmDelete } from "./ModalConfirmDelete";
+import { PropsUIContext } from "../../../interfaces/context/IUIContext";
+import UIContext from "../../../context/UIContext";
+
+dayjs.extend(utc);
 
 interface Column {
     field: 'acciones' | 'nombre' | 'created_at' | 'updated_at';
@@ -28,12 +34,15 @@ const columns: Column[] = [
 
 export const Categorias = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
+    const { setModalConfirmDelete } = useContext<PropsUIContext>(UIContext);
     const [rows, setRows] = useState<ReqGenCatalogs[]>([]);
     const [selectedRow, setSelectedRow] = useState<ReqGenCatalogs | null>(null);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [editData, setEditData] = useState<{ id: number, nombre: string }>({ id: 0, nombre: '' });
     const [payload, setPayload] = useState<string>('');
     const [isSent, setIsSent] = useState<boolean>(false);
+    const [page, setPage] = useState<number>(0);
+    const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -53,14 +62,7 @@ export const Categorias = () => {
     }
 
     const handleConfirmDelete = async (row: ReqGenCatalogs | null) => {
-        const res = await deleteModule(row!.id);
-
-        if (!res.error) {
-            enqueueSnackbar('Módulo eliminado correctamente.', { variant: 'success' });
-        } else {
-            enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
-        }
-
+        setModalConfirmDelete({ isOpen: true, title: 'Eliminar Categoría', width: '400px', description: '¿Está seguro de eliminar el registro?', id: row!.id, deleteType: 'category' });
         handleClose();
     }
 
@@ -70,10 +72,10 @@ export const Categorias = () => {
             return;
         };
 
-        const res = await editModule({ id: editData.id, nombre: editData.nombre.charAt(0).toUpperCase() + editData.nombre.slice(1).toLowerCase() });
+        const res = await editCategory({ id: editData.id, nombre: editData.nombre });
 
         if (!res.error) {
-            enqueueSnackbar('Módulo editado correctamente.', { variant: 'success' });
+            enqueueSnackbar('Categoría editada correctamente.', { variant: 'success' });
         } else {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
@@ -86,10 +88,10 @@ export const Categorias = () => {
 
         if (payload === '') return;
 
-        const res = await createModule(payload.charAt(0).toUpperCase() + payload.slice(1).toLowerCase());
+        const res = await createCategory(payload);
 
         if (!res.error) {
-            enqueueSnackbar('Módulo creado correctamente.', { variant: 'success' });
+            enqueueSnackbar('Categoria creada correctamente', { variant: 'success' });
             setPayload('');
             setIsSent(false);
         } else {
@@ -97,8 +99,17 @@ export const Categorias = () => {
         }
     }
 
+    const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
     useEffect(() => {
-        getModules().then(((res: ReqGenCatalogs[]) => {
+        getCategories().then(((res: ReqGenCatalogs[]) => {
             setRows(res);
         }));
     }, []);
@@ -109,7 +120,7 @@ export const Categorias = () => {
                 <TextField
                     variant="standard"
                     value={payload}
-                    placeholder="Nombre del Módulo..."
+                    placeholder="Nombre de Categoria..."
                     onChange={(e) => setPayload(e.target.value)}
                     size="small"
                     sx={{
@@ -143,80 +154,94 @@ export const Categorias = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                >
-                                    <TableCell>
-                                        <Button
-                                            color={'inherit'}
-                                            aria-controls={open ? 'basic-menu' : undefined}
-                                            aria-haspopup="true"
-                                            aria-expanded={open ? 'true' : undefined}
-                                            onClick={(e) => { handleClick(e, row) }}
-                                        >
-                                            <MenuSharpIcon />
-                                        </Button>
-                                        <Menu
+                            {
+                                rows
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((row) => (
+                                        <TableRow
                                             key={row.id}
-                                            id="basic-menu"
-                                            anchorEl={anchorEl}
-                                            open={open}
-                                            onClose={handleClose}
-                                            slotProps={{
-                                                list: {
-                                                    'aria-labelledby': 'basic-button',
-                                                },
-                                                paper: {
-                                                    sx: {
-                                                        boxShadow: '0px 0px 3px rgba(0,0,0,0.05)', // Más suave
-                                                    },
-                                                }
-                                            }}
                                         >
-                                            <MenuItem onClick={() => handleEdit(selectedRow)}>
-                                                <EditIcon sx={{ mr: 1 }} />
-                                                Editar
-                                            </MenuItem>
-                                            <MenuItem onClick={() => handleConfirmDelete(selectedRow)}>
-                                                <DeleteIcon sx={{ mr: 1 }} />
-                                                Eliminar
-                                            </MenuItem>
-                                        </Menu>
-                                    </TableCell>
-                                    <TableCell sx={{ fontSize: 15, maxWidth: '13vw' }}>
-                                        {editData.id === row.id ?
-                                            <TextField
-                                                variant="standard"
-                                                value={editData.nombre}
-                                                onChange={(e) => setEditData({ ...editData, nombre: e.target.value })}
-                                                size="small"
-                                                sx={{
-                                                    '& .MuiInputBase-root:after': {
-                                                        borderBottom: '2px solid green', // Línea inferior cuando está enfocado
-                                                    },
-                                                    '& .MuiInputLabel-root.Mui-focused': {
-                                                        color: 'green', // Color del label cuando está enfocado
-                                                    },
-                                                }}
-                                                onBlur={handleSave}
-                                            />
-                                            :
-                                            <Typography fontSize={15}>{row.nombre}</Typography>
-                                        }
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <Typography fontSize={15}>{dayjs(row.created_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <Typography fontSize={15}>{dayjs(row.updated_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                                            <TableCell>
+                                                <Button
+                                                    color={'inherit'}
+                                                    aria-controls={open ? 'basic-menu' : undefined}
+                                                    aria-haspopup="true"
+                                                    aria-expanded={open ? 'true' : undefined}
+                                                    onClick={(e) => { handleClick(e, row) }}
+                                                >
+                                                    <MenuSharpIcon />
+                                                </Button>
+                                                <Menu
+                                                    key={row.id}
+                                                    id="basic-menu"
+                                                    anchorEl={anchorEl}
+                                                    open={open}
+                                                    onClose={handleClose}
+                                                    slotProps={{
+                                                        list: {
+                                                            'aria-labelledby': 'basic-button',
+                                                        },
+                                                        paper: {
+                                                            sx: {
+                                                                boxShadow: '0px 0px 3px rgba(0,0,0,0.05)', // Más suave
+                                                            },
+                                                        }
+                                                    }}
+                                                >
+                                                    <MenuItem onClick={() => handleEdit(selectedRow)}>
+                                                        <EditIcon sx={{ mr: 1 }} />
+                                                        Editar
+                                                    </MenuItem>
+                                                    <MenuItem onClick={() => handleConfirmDelete(selectedRow)}>
+                                                        <DeleteIcon sx={{ mr: 1 }} />
+                                                        Eliminar
+                                                    </MenuItem>
+                                                </Menu>
+                                            </TableCell>
+                                            <TableCell sx={{ fontSize: 15, maxWidth: '13vw' }}>
+                                                {editData.id === row.id ?
+                                                    <TextField
+                                                        variant="standard"
+                                                        value={editData.nombre}
+                                                        onChange={(e) => setEditData({ ...editData, nombre: e.target.value })}
+                                                        size="small"
+                                                        sx={{
+                                                            '& .MuiInputBase-root:after': {
+                                                                borderBottom: '2px solid green', // Línea inferior cuando está enfocado
+                                                            },
+                                                            '& .MuiInputLabel-root.Mui-focused': {
+                                                                color: 'green', // Color del label cuando está enfocado
+                                                            },
+                                                        }}
+                                                        onBlur={handleSave}
+                                                    />
+                                                    :
+                                                    <Typography fontSize={15}>{row.nombre}</Typography>
+                                                }
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <Typography fontSize={15}>{dayjs.utc(row.created_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <Typography fontSize={15}>{dayjs.utc(row.updated_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <TablePagination
+                    sx={{ backgroundColor: 'primary.main' }}
+                    rowsPerPageOptions={[5, 10, 15]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={(e, page) => handleChangePage(e, page)}
+                    onRowsPerPageChange={(e) => handleChangeRowsPerPage(e)}
+                />
             </Grid>
+            <ModalConfirmDelete />
         </Grid>
     )
 }

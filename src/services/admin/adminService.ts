@@ -75,6 +75,24 @@ export const getWorkshops = async () => {
     }
 }
 
+export const getCategories = async () => {
+    try {
+        const res: AxiosResponse = await jornadasApi.get(`/api/admin/categories`);
+        return res.data;
+    } catch (err: unknown) {
+        return [];
+    }
+}
+
+export const createCategory = async (nombre: string) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.post(`/api/admin/createCategory`, { nombre });
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
+
 export const createEdition = async (payload: PropsCreateEdition) => {
     try {
         const res: AxiosResponse = await jornadasApi.post(`/api/admin/createEdition`, { ...payload });
@@ -105,6 +123,24 @@ export const editModule = async (payload: { id: number, nombre: string }) => {
 export const deleteModule = async (id: number) => {
     try {
         const res: AxiosResponse = await jornadasApi.put(`/api/admin/deleteModule/${id}`);
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
+
+export const editCategory = async (payload: { id: number, nombre: string }) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.put(`/api/admin/editCategory`, { ...payload });
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
+
+export const deleteCategory = async (id: number) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.put(`/api/admin/deleteCategory/${id}`);
         return res.data;
     } catch (err: unknown) {
         return { error: err };

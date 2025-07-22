@@ -1,4 +1,4 @@
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Typography } from "@mui/material"
+import { Box, Dialog, DialogContent, DialogTitle, Stack, Typography } from "@mui/material"
 import { useContext } from "react";
 import { PropsUIContext } from "../../interfaces/context/IUIContext";
 import UIContext from "../../context/UIContext";
@@ -38,11 +38,6 @@ export const Modal = () => {
                     <Typography fontSize={'14px'} sx={{ color: 'gray' }}>{modalAdminData.description}</Typography>
                     {modalAdminData?.Component && <modalAdminData.Component />}
                 </DialogContent>
-                <DialogActions sx={{ p: 0, m: 0 }}>
-                    {/* <Button onClick={handleClose} size="small" variant="outlined" color="success" autoFocus>
-                        Cerrar
-                    </Button> */}
-                </DialogActions>
             </Stack>
         </Dialog>
     )

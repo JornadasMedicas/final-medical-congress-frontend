@@ -9,6 +9,8 @@ export interface PropsModalAdmin extends PropsModalImg {
     Icon?: any;
     description?: string;
     width?: string;
+    id?: number;
+    deleteType?: string; 
 }
 
 export interface PropsUIContext {
@@ -20,6 +22,8 @@ export interface PropsUIContext {
     setModalProgramData: React.Dispatch<React.SetStateAction<PropsModalImg>>;
     modalAdminData: PropsModalAdmin;
     setModalAdminData: React.Dispatch<React.SetStateAction<PropsModalAdmin>>;
+    modalConfirmDelete: PropsModalAdmin;
+    setModalConfirmDelete: React.Dispatch<React.SetStateAction<PropsModalAdmin>>;
     triggerRelocation: boolean;
     setTriggerRelocation: React.Dispatch<React.SetStateAction<boolean>>;
 }

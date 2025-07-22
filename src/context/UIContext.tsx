@@ -9,6 +9,8 @@ const UIContext = createContext<PropsUIContext>({
     setProgramTab: () => { },
     modalAdminData: { isOpen: false },
     setModalAdminData: () => { },
+    modalConfirmDelete: { isOpen: false },
+    setModalConfirmDelete: () => { },
     modalProgramData: { isOpen: false, img: '' },
     setModalProgramData: () => { },
     triggerRelocation: false,
@@ -19,7 +21,8 @@ export const UIContextProvider = ({ children: Component }: { children: ReactNode
     const [activeSection, setActiveSection] = useState<string>('Inicio');
     const [programTab, setProgramTab] = useState<number>(programaTabs[programaTabs.length - 1].id);
     const [modalProgramData, setModalProgramData] = useState<PropsModalImg>({ isOpen: false, img: '' });
-    const [modalAdminData, setModalAdminData] = useState<PropsModalAdmin>({ isOpen: false, img: '' });
+    const [modalAdminData, setModalAdminData] = useState<PropsModalAdmin>({ isOpen: false });
+    const [modalConfirmDelete, setModalConfirmDelete] = useState<PropsModalAdmin>({ isOpen: false });
     const [triggerRelocation, setTriggerRelocation] = useState<boolean>(false);
 
     return (
@@ -31,6 +34,8 @@ export const UIContextProvider = ({ children: Component }: { children: ReactNode
             modalProgramData,
             setModalProgramData,
             modalAdminData,
+            modalConfirmDelete,
+            setModalConfirmDelete,
             setModalAdminData,
             triggerRelocation,
             setTriggerRelocation
