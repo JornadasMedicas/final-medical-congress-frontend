@@ -4,7 +4,7 @@ export interface WorkshopsFormInterface {
 }
 
 export interface RegistFormInterface {
-    categoria: string;
+    categoria: number;
     acronimo: string;
     nombre: string;
     apellidos: string;
@@ -13,7 +13,7 @@ export interface RegistFormInterface {
     tel: string;
     ciudad: string;
     dependencia?: string;
-    modulo?: string | null;
+    modulo?: number | null;
     t1: WorkshopsFormInterface;
     t2: WorkshopsFormInterface;
     t3: WorkshopsFormInterface;

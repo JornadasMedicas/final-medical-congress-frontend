@@ -75,6 +75,24 @@ export const getWorkshops = async () => {
     }
 }
 
+export const editWorkshop = async (payload: { id: number, nombre: string }) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.put(`/api/admin/editWorkshop`, { ...payload });
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
+
+export const deleteWorkshop = async (id: number) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.put(`/api/admin/deleteWorkshop/${id}`);
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
+
 export const getCategories = async () => {
     try {
         const res: AxiosResponse = await jornadasApi.get(`/api/admin/categories`);

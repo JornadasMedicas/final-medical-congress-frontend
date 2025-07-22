@@ -2,7 +2,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider
 import { useContext, useState } from "react";
 import { PropsUIContext } from "../../../interfaces/context/IUIContext";
 import UIContext from "../../../context/UIContext";
-import { deleteCategory, deleteModule } from "../../../services/admin/adminService";
+import { deleteCategory, deleteModule, deleteWorkshop } from "../../../services/admin/adminService";
 import { useSnackbar } from "notistack";
 
 export const ModalConfirmDelete = () => {
@@ -35,6 +35,17 @@ export const ModalConfirmDelete = () => {
 
                     if (!res.error) {
                         enqueueSnackbar('Módulo eliminado correctamente.', { variant: 'success' });
+                        setModalConfirmDelete({ isOpen: false });
+                    } else {
+                        enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
+                    }
+                    break;
+
+                case 'workshop':
+                    res = await deleteWorkshop(modalConfirmDelete.id);
+
+                    if (!res.error) {
+                        enqueueSnackbar('Taller eliminado correctamente.', { variant: 'success' });
                         setModalConfirmDelete({ isOpen: false });
                     } else {
                         enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });

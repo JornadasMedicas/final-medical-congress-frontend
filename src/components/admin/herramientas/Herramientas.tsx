@@ -45,11 +45,11 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             id: 2,
             Icon: VaccinesTwoToneIcon,
             title: 'Talleres',
-            description: 'Agregar talleres del programa',
+            description: 'Agregar, editar y eliminar talleres del programa',
             label: 'Talleres Activos',
             registries: catalogs.talleres,
             Cmp: Talleres,
-            width: '650px'
+            width: '800px'
         },
         {
             id: 3,

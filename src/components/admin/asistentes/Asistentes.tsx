@@ -4,7 +4,7 @@ import { getAssitants, getAssitantsAutocomplete, getEventEditions, getModules, g
 import { DataGrid } from '@mui/x-data-grid';
 import AsistentesPaginationTable from './AsistentesPaginationTable';
 import AdminContext from '../../../context/AdminContext';
-import { assistantsRows, columns } from '../../../helpers/admin/asistantsTable';
+import { assistantsRows, columns } from '../../../helpers/admin/assistantsTable';
 import { ReqAssistants, ReqAssistantsAutocomplete, ReqAssistantsAutocompleteInterface, ReqAssistantsTableData, ReqAssistantsTotalCount, ReqEventEditions, ReqGenCatalogs } from '../../../interfaces/admin/IAdmin';
 
 export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
