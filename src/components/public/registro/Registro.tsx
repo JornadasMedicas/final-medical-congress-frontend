@@ -21,7 +21,7 @@ const Registro = () => {
 
     const handleSubmit = () => {
         console.log('ok');
-        
+
     }
 
     useEffect(() => {
