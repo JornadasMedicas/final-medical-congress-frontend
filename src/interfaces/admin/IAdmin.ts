@@ -20,11 +20,25 @@ export interface PropsGetAssistantsFilters extends PropsTableAssistantsFilters {
     page: number;
 }
 
+export interface Jrn_modulo {
+    id: number;
+    nombre: string;
+}
+
+export interface Jrn_edicion {
+    id: number;
+    edicion: string;
+}
+
 export interface ReqGenCatalogs {
     id: number;
     nombre: string;
+    fecha: string;
     created_at?: string;
     updated_at?: string;
+    borderStyle?: string;
+    jrn_modulo?: Jrn_modulo;
+    jrn_edicion?: Jrn_edicion;
 }
 
 export interface ReqAssistantsTableData {

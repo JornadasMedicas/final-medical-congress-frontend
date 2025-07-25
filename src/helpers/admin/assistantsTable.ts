@@ -1,8 +1,5 @@
 import { GridColDef } from '@mui/x-data-grid';
 import dayjs from "dayjs";
-import utc from 'dayjs/plugin/utc';
-import localizedFormat from "dayjs/plugin/localizedFormat";
-import timezone from "dayjs/plugin/timezone";
 import 'dayjs/locale/es';
 import { PropsGetAssistantsInterface } from '../../interfaces/admin/IAdmin';
 
@@ -21,10 +18,6 @@ export const columns: GridColDef[] = [
 ];
 
 export const assistantsRows = (assistants: PropsGetAssistantsInterface[]) => {
-    dayjs.extend(utc);
-    dayjs.extend(localizedFormat);
-    dayjs.extend(timezone);
-    dayjs.locale('es');
 
     const rows = assistants.map((data: PropsGetAssistantsInterface) => {
 

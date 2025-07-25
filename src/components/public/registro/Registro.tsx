@@ -1,4 +1,4 @@
-import { Autocomplete, Divider, FormControl, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, useMediaQuery } from "@mui/material";
+import { Autocomplete, Button, Checkbox, Divider, FormControl, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, useMediaQuery } from "@mui/material";
 import { navBarHeigth, navBarHeigthResponsive } from "../../../pages/HomePage";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
@@ -8,12 +8,21 @@ import { regexCiudad, regexMailPre, regexReg, regexTel } from "../../../helpers/
 import { initValuesFormJornadas, initValuesFormJornadasErrors } from "../../../helpers/registro/initValues";
 import { JornadasValuesInterface, RegistFormInterface } from "../../../interfaces/registro/IRegistForm";
 import { regexRFC } from "../../admin/Login";
+import dayjs from "dayjs";
+import { formatWorkshops } from "../../../helpers/registro/formatWorkshops";
 
 const Registro = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const [catalogs, setCatalogs] = useState<{ categories: ReqGenCatalogs[], modules: ReqGenCatalogs[], workshops: ReqGenCatalogs[] }>({ categories: [], modules: [], workshops: [] });
     const [payload, setPayload] = useState<RegistFormInterface>(initValuesFormJornadas);
     const [errors, setErrors] = useState<JornadasValuesInterface>(initValuesFormJornadasErrors);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [disabled, setDisabled] = useState<boolean>(false);
+
+    const handleSubmit = () => {
+        console.log('ok');
+        
+    }
 
     useEffect(() => {
         getCategories().then(((res: ReqGenCatalogs[]) => {
@@ -25,7 +34,8 @@ const Registro = () => {
         }));
 
         getWorkshops().then(((res: ReqGenCatalogs[]) => {
-            setCatalogs(prev => ({ ...prev, workshops: res }));
+            const data = formatWorkshops(res);
+            setCatalogs(prev => ({ ...prev, workshops: data }));
         }));
     }, []);
 
@@ -37,7 +47,7 @@ const Registro = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.85, ease: 'easeInOut' }}
                 viewport={{ once: true }}
-                sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '30px', color: 'secondary.main', width: responsive ? '80%' : '30%', m: 'auto' }}>
+                sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '30px', color: 'secondary.main', width: responsive ? '80%' : '30%', m: 'auto', mb: 3 }}>
                 REGISTRO
             </Divider>
             <Grid container sx={{ width: responsive ? '95%' : '47%', m: 'auto', borderRadius: 5, p: 3, boxShadow: '0 7px 10px 3px rgba(1,18,38, 0.1)', gap: 3 }}>
@@ -299,6 +309,29 @@ const Registro = () => {
                             />
                         )}
                     />
+                </Grid>
+                <Grid size={12}>
+                    {
+                        catalogs.workshops.map((workshop: ReqGenCatalogs) => (
+                            <fieldset style={{ border: workshop.borderStyle, borderRadius: '20px', marginBottom: '15px' }}>
+                                <legend style={{ margin: 'auto', fontSize: responsive ? 24 : 25, paddingLeft: '1rem', paddingRight: '1rem' }}>Talleres {workshop.jrn_modulo?.nombre}</legend>
+                                <Grid sx={{ textAlign: 'left', paddingLeft: 2, paddingBottom: 2 }}>
+                                    <Checkbox
+                                        sx={{ '&.Mui-checked': { color: '#2a7dd3' } }}
+                                    /* disabled={disableCheckboxes}
+                                    checked={values.t1.checked}
+                                    onChange={(e) => setValues({ ...values, t1: { ...values.t1, checked: e.target.checked } })} */
+                                    />
+                                    <b>{dayjs(workshop.fecha).format('DD') + ' de ' + dayjs(workshop.fecha).format('MMMM')}</b> - {workshop.nombre} {/* - <b style={{ color: 'red' }}>cupos agotados</b> */}
+                                </Grid>
+                            </fieldset>
+                        ))
+                    }
+                </Grid>
+                <Grid size={12} textAlign={'center'}>
+                    <Button disabled={disabled} variant='contained' onClick={handleSubmit} sx={{ backgroundColor: "text.secondary", ":hover": { backgroundColor: '#b09a6b' }, color: 'primary.main' }}>
+                        Enviar
+                    </Button>
                 </Grid>
             </Grid>
         </Stack>
