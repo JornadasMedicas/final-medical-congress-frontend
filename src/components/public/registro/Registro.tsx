@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { formatWorkshops } from "../../../helpers/registro/formatWorkshops";
 import { validateJornadasFields } from "../../../helpers/registro/validateRegistForm";
 import Swal from 'sweetalert2';
+import { postRegistMail } from "../../../services/registro/registroService";
 
 const Registro = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -22,22 +23,35 @@ const Registro = () => {
     const [disabled, setDisabled] = useState<boolean>(false);
     const [selectedItem, setSelectedItem] = useState<number[]>([]);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const { isOk, errors } = validateJornadasFields(payload);
 
         if (isOk) {
             setLoading(true);
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                html: 'Su pase de entrada (código QR) se enviará a su correo electrónico en breve. <hr><b>No olvide llevarlo consigo pues será su registro de asistencia.<b>',
-                confirmButtonColor: '#d3c19b'
-            });
 
-            setPayload(initValuesFormJornadas);
+            const res = await postRegistMail(payload);
+
+            if (res.data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    html: 'Su pase de entrada (código QR) se enviará a su correo electrónico en breve. <hr><b>No olvide llevarlo consigo pues será su registro de asistencia.<b>',
+                    confirmButtonColor: '#d3c19b'
+                });
+
+                setPayload(initValuesFormJornadas);
+            } else if (res.error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: res.error.response ? res.error.response.data.msg : 'No se ha podido procesar su solicitud. Intente más tarde',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#d37c6b'
+                });
+            }
+
             setErrors(initValuesFormJornadasErrors);
-
-            setLoading(true);
+            setLoading(false);
         } else {
             setErrors(errors);
             Swal.fire({
@@ -46,10 +60,6 @@ const Registro = () => {
                 text: 'Verifica los campos e intenta de nuevo',
             });
         }
-
-        setTimeout(() => {
-            setLoading(false);
-        }, 500);
     }
 
     const handleCheckboxes = (isChecked: boolean, workshop: ReqGenCatalogs) => {
@@ -135,7 +145,7 @@ const Registro = () => {
                         label='Acrónimo * (C. / Dr. / L.E. / Q.C. /  Q.F.B. / Lic. / C.D. / etc - será utilizado para su constancia)'
                         autoComplete="off"
                         value={payload.acronimo}
-                        onChange={(e) => setPayload({ ...payload, acronimo: e.target.value })}
+                        onChange={(e) => setPayload({ ...payload, acronimo: e.target.value.toUpperCase() })}
                         sx={{
                             '& .MuiOutlinedInput-root.Mui-focused': {
                                 '& fieldset': {
@@ -361,7 +371,7 @@ const Registro = () => {
                 </Grid>
                 <Grid size={12}>
                     {
-                        catalogs.workshops.map((workshop: ReqGenCatalogs, index1: number) => (
+                        catalogs.workshops.map((workshop: ReqGenCatalogs) => (
                             <fieldset key={workshop.id} style={{ border: workshop.borderStyle, borderRadius: '20px', marginBottom: '15px' }}>
                                 <legend style={{ margin: 'auto', fontSize: responsive ? 24 : 25, paddingLeft: '1rem', paddingRight: '1rem' }}>Talleres {workshop.jrn_modulo?.nombre}</legend>
                                 <Grid sx={{ textAlign: 'left', paddingLeft: 2, paddingBottom: 2 }}>
