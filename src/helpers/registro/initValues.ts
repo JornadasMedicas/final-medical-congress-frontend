@@ -54,7 +54,8 @@ export const initValuesFormJornadas: RegistFormInterface = { //!IMPORTANT CHANGE
     ciudad: '',
     dependencia: '',
     modulo: 0,
-    t1: {
+    talleres: []
+    /* t1: {
         checked: false,
         name: 'Estrategias Integradas'
     },
@@ -69,5 +70,5 @@ export const initValuesFormJornadas: RegistFormInterface = { //!IMPORTANT CHANGE
     t4: {
         checked: false,
         name: 'taller4'
-    }
+    } */
 }

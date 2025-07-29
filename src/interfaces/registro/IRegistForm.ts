@@ -3,6 +3,12 @@ export interface WorkshopsFormInterface {
     name: string;
 }
 
+export interface PropsTalleresInterface {
+    asistio: boolean;
+    constancia_enviada: boolean;
+    id_taller: number;
+}
+
 export interface RegistFormInterface {
     categoria: number;
     acronimo: string;
@@ -14,10 +20,7 @@ export interface RegistFormInterface {
     ciudad: string;
     dependencia?: string;
     modulo?: number | null;
-    t1: WorkshopsFormInterface;
-    t2: WorkshopsFormInterface;
-    t3: WorkshopsFormInterface;
-    t4: WorkshopsFormInterface;
+    talleres?: PropsTalleresInterface[]
 }
 
 export interface JornadasGeneralErrorsInterface {

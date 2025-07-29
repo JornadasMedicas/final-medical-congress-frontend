@@ -36,7 +36,7 @@ export const formatWorkshops = (data: ReqGenCatalogs[]) => {
             default:
                 return {
                     ...item,
-                    borderStyle: '2px inset rgba(205, 112, 248, 0.7)',
+                    borderStyle: '2px inset rgba(248, 191, 112, 0.7)',
                 }
         }
     });

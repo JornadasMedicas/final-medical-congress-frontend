@@ -6,10 +6,12 @@ import { getCategories, getModules, getWorkshops } from "../../../services/admin
 import { ReqGenCatalogs } from "../../../interfaces/admin/IAdmin";
 import { regexCiudad, regexMailPre, regexReg, regexTel } from "../../../helpers/registro/regex";
 import { initValuesFormJornadas, initValuesFormJornadasErrors } from "../../../helpers/registro/initValues";
-import { JornadasValuesInterface, RegistFormInterface } from "../../../interfaces/registro/IRegistForm";
+import { JornadasValuesInterface, PropsTalleresInterface, RegistFormInterface } from "../../../interfaces/registro/IRegistForm";
 import { regexRFC } from "../../admin/Login";
 import dayjs from "dayjs";
 import { formatWorkshops } from "../../../helpers/registro/formatWorkshops";
+import { validateJornadasFields } from "../../../helpers/registro/validateRegistForm";
+import Swal from 'sweetalert2';
 
 const Registro = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -18,10 +20,57 @@ const Registro = () => {
     const [errors, setErrors] = useState<JornadasValuesInterface>(initValuesFormJornadasErrors);
     const [loading, setLoading] = useState<boolean>(false);
     const [disabled, setDisabled] = useState<boolean>(false);
+    const [selectedItem, setSelectedItem] = useState<number[]>([]);
 
     const handleSubmit = () => {
-        console.log('ok');
+        const { isOk, errors } = validateJornadasFields(payload);
 
+        if (isOk) {
+            setLoading(true);
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                html: 'Su pase de entrada (código QR) se enviará a su correo electrónico en breve. <hr><b>No olvide llevarlo consigo pues será su registro de asistencia.<b>',
+                confirmButtonColor: '#d3c19b'
+            });
+
+            setPayload(initValuesFormJornadas);
+            setErrors(initValuesFormJornadasErrors);
+
+            setLoading(true);
+        } else {
+            setErrors(errors);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Verifica los campos e intenta de nuevo',
+            });
+        }
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 500);
+    }
+
+    const handleCheckboxes = (isChecked: boolean, workshop: ReqGenCatalogs) => {
+        let formatWorkshop: PropsTalleresInterface = {
+            asistio: false,
+            constancia_enviada: false,
+            id_taller: workshop.id
+        }
+
+        if (isChecked) {
+            setPayload({ ...payload, talleres: [...(payload.talleres || []), formatWorkshop] });
+            setSelectedItem([...selectedItem, workshop.id]);
+        } else {
+            setPayload({
+                ...payload,
+                talleres: (payload.talleres || []).filter(
+                    (taller) => taller.id_taller !== workshop.id
+                )
+            });
+            setSelectedItem(selectedItem.filter((id: number) => id != workshop.id));
+        }
     }
 
     useEffect(() => {
@@ -50,7 +99,7 @@ const Registro = () => {
                 sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '30px', color: 'secondary.main', width: responsive ? '80%' : '30%', m: 'auto', mb: 3 }}>
                 REGISTRO
             </Divider>
-            <Grid container sx={{ width: responsive ? '95%' : '47%', m: 'auto', borderRadius: 5, p: 3, boxShadow: '0 7px 10px 3px rgba(1,18,38, 0.1)', gap: 3 }}>
+            <Grid container sx={{ width: responsive ? '95%' : '850px', m: 'auto', borderRadius: 5, p: 3, boxShadow: '0 7px 10px 3px rgba(1,18,38, 0.1)', gap: 3 }}>
                 <Grid size={12}>
                     <FormControl fullWidth>
                         <InputLabel
@@ -312,15 +361,15 @@ const Registro = () => {
                 </Grid>
                 <Grid size={12}>
                     {
-                        catalogs.workshops.map((workshop: ReqGenCatalogs) => (
-                            <fieldset style={{ border: workshop.borderStyle, borderRadius: '20px', marginBottom: '15px' }}>
+                        catalogs.workshops.map((workshop: ReqGenCatalogs, index1: number) => (
+                            <fieldset key={workshop.id} style={{ border: workshop.borderStyle, borderRadius: '20px', marginBottom: '15px' }}>
                                 <legend style={{ margin: 'auto', fontSize: responsive ? 24 : 25, paddingLeft: '1rem', paddingRight: '1rem' }}>Talleres {workshop.jrn_modulo?.nombre}</legend>
                                 <Grid sx={{ textAlign: 'left', paddingLeft: 2, paddingBottom: 2 }}>
                                     <Checkbox
                                         sx={{ '&.Mui-checked': { color: '#2a7dd3' } }}
-                                    /* disabled={disableCheckboxes}
-                                    checked={values.t1.checked}
-                                    onChange={(e) => setValues({ ...values, t1: { ...values.t1, checked: e.target.checked } })} */
+                                        /*  disabled={disableCheckboxes} */
+                                        checked={selectedItem.includes(workshop.id)}
+                                        onChange={(e) => handleCheckboxes(e.target.checked, workshop)}
                                     />
                                     <b>{dayjs(workshop.fecha).format('DD') + ' de ' + dayjs(workshop.fecha).format('MMMM')}</b> - {workshop.nombre} {/* - <b style={{ color: 'red' }}>cupos agotados</b> */}
                                 </Grid>
@@ -329,7 +378,7 @@ const Registro = () => {
                     }
                 </Grid>
                 <Grid size={12} textAlign={'center'}>
-                    <Button disabled={disabled} variant='contained' onClick={handleSubmit} sx={{ backgroundColor: "text.secondary", ":hover": { backgroundColor: '#b09a6b' }, color: 'primary.main' }}>
+                    <Button loading={loading} disabled={disabled} variant='contained' onClick={handleSubmit} sx={{ backgroundColor: "text.secondary", ":hover": { backgroundColor: '#b09a6b' }, color: 'primary.main' }}>
                         Enviar
                     </Button>
                 </Grid>
