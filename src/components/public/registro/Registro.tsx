@@ -39,7 +39,7 @@ const Registro = () => {
                     confirmButtonColor: '#d3c19b'
                 });
 
-                /* setPayload(initValuesFormJornadas); */
+                setPayload(initValuesFormJornadas);
             } else if (res.error) {
                 Swal.fire({
                     icon: "error",

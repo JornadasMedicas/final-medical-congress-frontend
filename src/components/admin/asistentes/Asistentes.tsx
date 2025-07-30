@@ -12,8 +12,11 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
     const [tableData, setTableData] = useState<ReqAssistantsTableData>({ rows: [], totalRows: 0, editions, modulos: [], talleres: [] });
     const [options, setOptions] = useState<ReqAssistantsAutocompleteInterface[]>([]);
     const { assistantsTable, setAssistantsTableAction } = useContext(AdminContext);
+    const [filterValue, setfilterValue] = useState<number | string>(0);
 
     const handleFilters = (value: string | number) => {
+        setfilterValue(value);
+
         if (value.toString() === '0') {
             setAssistantsTableAction({ ...assistantsTable, filters: { ...assistantsTable.filters, module: '', workshop: '' } });
         } else if (value.toString().length > 1) {
@@ -37,7 +40,7 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
 
     const searchAssistant = async (value: string) => {
         if (value !== '') {
-            const asistente: ReqAssistantsAutocomplete = await getAssitantsAutocomplete(value);
+            const asistente: ReqAssistantsAutocomplete = await getAssitantsAutocomplete(value, assistantsTable.filters.year);
             setOptions(asistente.data);
         } else {
             setOptions([]);
@@ -85,10 +88,17 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
 
         getWorkshops().then(((res: ReqGenCatalogs[]) => {
             if (res.length > 0) {
-                setTableData(prev => ({ ...prev, talleres: res }));
+                const talleresActuales = res.filter((taller) => taller.jrn_edicion?.edicion === assistantsTable.filters.year);
+                setTableData(prev => ({ ...prev, talleres: talleresActuales }));
             }
         }));
-    }, [assistantsTable.tablePage, assistantsTable.filters.email, assistantsTable.filters.module, assistantsTable.filters.workshop, assistantsTable.filters.year, setAssistantsTableAction]);
+
+    }, [assistantsTable.tablePage, assistantsTable.filters.year, setAssistantsTableAction, filterValue]);
+
+    useEffect(() => {
+        setfilterValue(0);
+        setAssistantsTableAction({ ...assistantsTable, filters: { ...assistantsTable.filters, module: '', workshop: '', email: '' } });
+    }, [assistantsTable.filters.year]);
 
     return (
         <>
@@ -116,7 +126,7 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
                                             variant='outlined'
                                             size='small'
                                             native
-                                            defaultValue={0}
+                                            value={filterValue}
                                             id="grouped-native-select"
                                             onChange={(e) => handleFilters(e.target.value)}
                                             label="Filtros"

@@ -21,9 +21,9 @@ export const getAssitants = async ({ ...params }: PropsGetAssistantsFilters) => 
     }
 }
 
-export const getAssitantsAutocomplete = async (filter: string) => {
+export const getAssitantsAutocomplete = async (filter: string, edicion: string) => {
     try {
-        const res: AxiosResponse = await jornadasApi.get(`/api/assistants/filter`, { params: { filter: filter } });
+        const res: AxiosResponse = await jornadasApi.get(`/api/assistants/filter`, { params: { filter: filter, edicion: edicion } });
         return res.data;
     } catch (err: unknown) {
         return { error: err };
