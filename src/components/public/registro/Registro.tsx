@@ -1,9 +1,9 @@
-import { Autocomplete, Button, Checkbox, Divider, FormControl, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, useMediaQuery } from "@mui/material";
+import { Autocomplete, Button, Checkbox, Divider, FormControl, FormHelperText, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, useMediaQuery } from "@mui/material";
 import { navBarHeigth, navBarHeigthResponsive } from "../../../pages/HomePage";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { getCategories, getModules, getWorkshops } from "../../../services/admin/adminService";
-import { ReqGenCatalogs } from "../../../interfaces/admin/IAdmin";
+import { getCategories, getEventEditions, getModules, getWorkshops } from "../../../services/admin/adminService";
+import { ReqGenCatalogs, ReqEventEditions } from '../../../interfaces/admin/IAdmin';
 import { regexCiudad, regexMailPre, regexReg, regexTel } from "../../../helpers/registro/regex";
 import { initValuesFormJornadas, initValuesFormJornadasErrors } from "../../../helpers/registro/initValues";
 import { JornadasValuesInterface, PropsTalleresInterface, RegistFormInterface } from "../../../interfaces/registro/IRegistForm";
@@ -16,7 +16,7 @@ import { postRegistMail } from "../../../services/registro/registroService";
 
 const Registro = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const [catalogs, setCatalogs] = useState<{ categories: ReqGenCatalogs[], modules: ReqGenCatalogs[], workshops: ReqGenCatalogs[] }>({ categories: [], modules: [], workshops: [] });
+    const [catalogs, setCatalogs] = useState<{ categories: ReqGenCatalogs[], modules: ReqGenCatalogs[], workshops: ReqGenCatalogs[], editions: ReqEventEditions[] }>({ categories: [], modules: [], workshops: [], editions: [] });
     const [payload, setPayload] = useState<RegistFormInterface>(initValuesFormJornadas);
     const [errors, setErrors] = useState<JornadasValuesInterface>(initValuesFormJornadasErrors);
     const [loading, setLoading] = useState<boolean>(false);
@@ -39,7 +39,7 @@ const Registro = () => {
                     confirmButtonColor: '#d3c19b'
                 });
 
-                setPayload(initValuesFormJornadas);
+                /* setPayload(initValuesFormJornadas); */
             } else if (res.error) {
                 Swal.fire({
                     icon: "error",
@@ -96,7 +96,18 @@ const Registro = () => {
             const data = formatWorkshops(res);
             setCatalogs(prev => ({ ...prev, workshops: data }));
         }));
+
+        getEventEditions().then(((res: ReqEventEditions[]) => {
+            setCatalogs(prev => ({ ...prev, editions: res }));
+        }));
     }, []);
+
+    useEffect(() => {
+        const currentYear: string = dayjs.utc().format('YYYY');
+        const currentEdition: ReqEventEditions[] = catalogs.editions.filter((edition: ReqEventEditions) => edition.edicion === currentYear);
+
+        setPayload({ ...payload, edicion: currentEdition[0]?.id });
+    }, [catalogs.editions]);
 
     return (
         <Stack sx={{ pt: responsive ? `${navBarHeigthResponsive}px` : `${navBarHeigth}px`, mt: 3, mb: 4 }}>
@@ -117,7 +128,8 @@ const Registro = () => {
                             sx={{
                                 '&.Mui-focused': {
                                     color: 'black',
-                                }
+                                },
+                                color: '#2b3b37'
                             }}>
                             Categoría *
                         </InputLabel>
@@ -132,11 +144,16 @@ const Registro = () => {
                                 }
                             }}
                             onChange={(e) => setPayload({ ...payload, categoria: e.target.value })}
+                            error={errors.categoria.error}
                         >
                             {catalogs.categories.map((cat: ReqGenCatalogs) =>
-                                <MenuItem key={cat.id} value={cat.id}>{cat.nombre}</MenuItem>
+                                <MenuItem key={cat.id} value={cat.nombre}>{cat.nombre}</MenuItem>
                             )}
                         </Select>
+                        {
+                            errors.categoria.error &&
+                            <FormHelperText sx={{ color: '#d04847' }}>{errors.categoria.msg}</FormHelperText>
+                        }
                     </FormControl>
                 </Grid>
                 <Grid size={12}>

@@ -44,7 +44,7 @@ export const initValuesFormJornadasErrors: JornadasValuesInterface = {
 }
 
 export const initValuesFormJornadas: RegistFormInterface = { //!IMPORTANT CHANGE WORKSHOPS INFO EVERY EDITION
-    categoria: 1,
+    categoria: '',
     acronimo: '',
     nombre: '',
     apellidos: '',
@@ -54,21 +54,6 @@ export const initValuesFormJornadas: RegistFormInterface = { //!IMPORTANT CHANGE
     ciudad: '',
     dependencia: '',
     modulo: 0,
+    edicion: 0,
     talleres: []
-    /* t1: {
-        checked: false,
-        name: 'Estrategias Integradas'
-    },
-    t2: {
-        checked: false,
-        name: 'Uso de ROTEM'
-    },
-    t3: {
-        checked: false,
-        name: 'taller3'
-    },
-    t4: {
-        checked: false,
-        name: 'taller4'
-    } */
 }

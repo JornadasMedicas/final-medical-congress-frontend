@@ -22,6 +22,10 @@ export const validateJornadasFields = ({ ...data }: RegistFormInterface) => {
     let errors: JornadasValuesInterface = initValuesFormJornadasErrors;
     let isOk: boolean = true;
 
+    if (data.categoria === "") {
+        errors = { ...errors, categoria: { ...errors.nombre, error: true } }
+    }
+
     if (data.acronimo === "") {
         errors = { ...errors, acronimo: { ...errors.acronimo, error: true } }
     } else if (!data.acronimo.trim().endsWith('.')) {

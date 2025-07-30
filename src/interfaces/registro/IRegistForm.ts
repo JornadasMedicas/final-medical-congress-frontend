@@ -10,7 +10,7 @@ export interface PropsTalleresInterface {
 }
 
 export interface RegistFormInterface {
-    categoria: number;
+    categoria: string;
     acronimo: string;
     nombre: string;
     apellidos: string;
@@ -20,6 +20,7 @@ export interface RegistFormInterface {
     ciudad: string;
     dependencia?: string;
     modulo?: number | null;
+    edicion: number;
     talleres?: PropsTalleresInterface[]
 }
 
