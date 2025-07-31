@@ -1,6 +1,5 @@
-import { Autocomplete, Button, Checkbox, Divider, FormControl, FormHelperText, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, useMediaQuery } from "@mui/material";
+import { Autocomplete, Box, Button, Checkbox, FormControl, FormHelperText, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, Typography, useMediaQuery } from "@mui/material";
 import { navBarHeigth, navBarHeigthResponsive } from "../../../pages/HomePage";
-import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { getCategories, getEventEditions, getModules, getWorkshops } from "../../../services/admin/adminService";
 import { ReqGenCatalogs, ReqEventEditions } from '../../../interfaces/admin/IAdmin';
@@ -13,6 +12,7 @@ import { formatWorkshops } from "../../../helpers/registro/formatWorkshops";
 import { validateJornadasFields } from "../../../helpers/registro/validateRegistForm";
 import Swal from 'sweetalert2';
 import { postRegistMail } from "../../../services/registro/registroService";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const Registro = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -122,304 +122,303 @@ const Registro = () => {
     }, [catalogs.editions]);
 
     return (
-        <Stack sx={{ pt: responsive ? `${navBarHeigthResponsive}px` : `${navBarHeigth}px`, mt: 3, mb: 4 }}>
-            <Divider
-                component={motion.div}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, ease: 'easeInOut' }}
-                viewport={{ once: true }}
-                sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '30px', color: 'secondary.main', width: responsive ? '80%' : '30%', m: 'auto', mb: 3 }}>
-                REGISTRO
-            </Divider>
-            <Grid container sx={{ width: responsive ? '95%' : '850px', m: 'auto', borderRadius: 5, p: 3, boxShadow: '0 7px 10px 3px rgba(1,18,38, 0.1)', gap: 3 }}>
-                <Grid size={12}>
-                    <FormControl fullWidth>
-                        <InputLabel
-                            id='cat-select'
-                            sx={{
-                                '&.Mui-focused': {
-                                    color: 'black',
-                                },
-                                color: '#2b3b37'
-                            }}>
-                            Categoría *
-                        </InputLabel>
-                        <Select
-                            labelId='cat-select'
-                            label='Categoría --'
-                            fullWidth
-                            value={payload.categoria}
-                            sx={{
-                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: 'text.secondary'
-                                }
-                            }}
-                            onChange={(e) => setPayload({ ...payload, categoria: e.target.value })}
-                            error={errors.categoria.error}
-                        >
-                            {catalogs.categories.map((cat: ReqGenCatalogs) =>
-                                <MenuItem key={cat.id} value={cat.nombre}>{cat.nombre}</MenuItem>
-                            )}
-                        </Select>
-                        {
-                            errors.categoria.error &&
-                            <FormHelperText sx={{ color: '#d04847' }}>{errors.categoria.msg}</FormHelperText>
-                        }
-                    </FormControl>
+        <Stack sx={{ pt: responsive ? `${navBarHeigthResponsive}px` : `${navBarHeigth}px`, mt: 5, mb: 6 }}>
+            <Grid container sx={{ width: responsive ? '95%' : '850px', m: 'auto', borderRadius: 5, boxShadow: '0 7px 10px 3px rgba(1,18,38, 0.1)', gap: 0 }}>
+                <Grid size={12} sx={{ height: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'linear-gradient(90deg, rgba(83,115,109,1) 0%, rgba(19,50,44,1) 48%, rgba(36,70,63,0.8) 100%);', borderTopLeftRadius: 18, borderTopRightRadius: 15, pt: 4, pb: 4, flexDirection: 'column' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+                        <PersonAddIcon sx={{ width: 'auto', height: '30px', color: 'white' }} />
+                        <Typography sx={{ color: 'primary.main', fontWeight: 'bold', fontSize: responsive ? '23px' : '23px' }}>REGISTRO</Typography>
+                    </Box>
                 </Grid>
-                <Grid size={12}>
-                    <TextField
-                        fullWidth
-                        label='Acrónimo * (C. / Dr. / L.E. / Q.C. /  Q.F.B. / Lic. / C.D. / etc - será utilizado para su constancia)'
-                        autoComplete="off"
-                        value={payload.acronimo}
-                        onChange={(e) => setPayload({ ...payload, acronimo: e.target.value.toUpperCase() })}
-                        sx={{
-                            '& .MuiOutlinedInput-root.Mui-focused': {
-                                '& fieldset': {
-                                    borderColor: 'text.secondary', // Cambia el color del borde
-                                }
-                            },
-                            "& label": {
-                                color: 'background.default'
-                            },
-                            "& label.Mui-focused": {
-                                color: 'black'
-                            }
-                        }}
-                        error={errors.acronimo.error}
-                        helperText={errors.acronimo.error ? errors.acronimo.msg : ''}
-                    />
-                </Grid>
-                <Grid size={12}>
-                    <TextField
-                        label='Nombre (s) *'
-                        fullWidth
-                        autoComplete='off'
-                        value={payload.nombre}
-                        sx={{
-                            '& .MuiOutlinedInput-root.Mui-focused': {
-                                '& fieldset': {
-                                    borderColor: 'text.secondary', // Cambia el color del borde
-                                }
-                            },
-                            "& label": {
-                                color: 'background.default'
-                            },
-                            "& label.Mui-focused": {
-                                color: 'black'
-                            }
-                        }}
-                        onChange={(e) => setPayload({ ...payload, nombre: regexReg.test(e.target.value) ? e.target.value.toUpperCase() : payload.nombre })}
-                        error={errors.nombre.error}
-                        helperText={errors.nombre.error ? errors.nombre.msg : ''}
-                    />
-                </Grid>
-                <Grid size={12}>
-                    <TextField
-                        label='Apellidos *'
-                        fullWidth
-                        autoComplete='off'
-                        value={payload.apellidos}
-                        sx={{
-                            '& .MuiOutlinedInput-root.Mui-focused': {
-                                '& fieldset': {
-                                    borderColor: 'text.secondary', // Cambia el color del borde
-                                }
-                            },
-                            "& label": {
-                                color: 'background.default'
-                            },
-                            "& label.Mui-focused": {
-                                color: 'black'
-                            }
-                        }}
-                        onChange={(e) => setPayload({ ...payload, apellidos: regexReg.test(e.target.value) ? e.target.value.toUpperCase() : payload.apellidos })}
-                        error={errors.apellidos.error}
-                        helperText={errors.apellidos.error ? errors.apellidos.msg : ''}
-                    />
-                </Grid>
-                <Grid size={12}>
-                    <TextField
-                        label='RFC (opcional)'
-                        fullWidth
-                        autoComplete='off'
-                        value={payload.rfc}
-                        sx={{
-                            '& .MuiOutlinedInput-root.Mui-focused': {
-                                '& fieldset': {
-                                    borderColor: 'text.secondary', // Cambia el color del borde
-                                }
-                            },
-                            "& label": {
-                                color: 'background.default'
-                            },
-                            "& label.Mui-focused": {
-                                color: 'black'
-                            }
-                        }}
-                        slotProps={{
-                            htmlInput: { maxLength: 13 }
-                        }}
-                        onChange={(e) => setPayload({ ...payload, rfc: regexRFC.test(e.target.value) ? e.target.value.toUpperCase() : payload.rfc })}
-                        error={errors.rfc.error}
-                        helperText={errors.rfc.error ? errors.rfc.msg : ''}
-                    />
-                </Grid>
-                <Grid size={12}>
-                    <TextField
-                        label='Correo Electrónico *'
-                        fullWidth
-                        autoComplete='off'
-                        value={payload.correo}
-                        sx={{
-                            '& .MuiOutlinedInput-root.Mui-focused': {
-                                '& fieldset': {
-                                    borderColor: 'text.secondary', // Cambia el color del borde
-                                }
-                            },
-                            "& label": {
-                                color: 'background.default'
-                            },
-                            "& label.Mui-focused": {
-                                color: 'black'
-                            }
-                        }}
-                        onChange={(e) => setPayload({ ...payload, correo: regexMailPre.test(e.target.value) ? e.target.value : payload.correo })}
-                        error={errors.correo.error}
-                        helperText={errors.correo.error ? errors.correo.msg : ''}
-                    />
-                </Grid>
-                <Grid size={12}>
-                    <TextField
-                        label='No. Teléfono *'
-                        fullWidth
-                        autoComplete='off'
-                        value={payload.tel}
-                        sx={{
-                            '& .MuiOutlinedInput-root.Mui-focused': {
-                                '& fieldset': {
-                                    borderColor: 'text.secondary', // Cambia el color del borde
-                                }
-                            },
-                            "& label": {
-                                color: 'background.default'
-                            },
-                            "& label.Mui-focused": {
-                                color: 'black'
-                            }
-                        }}
-                        onChange={(e) => setPayload({ ...payload, tel: regexTel.test(e.target.value) ? e.target.value : payload.tel })}
-                        error={errors.tel.error}
-                        helperText={errors.tel.error ? errors.tel.msg : ''}
-                    />
-                </Grid>
-                <Grid size={12}>
-                    <TextField
-                        label='Ciudad de Procedencia *'
-                        fullWidth
-                        autoComplete='off'
-                        value={payload.ciudad}
-                        sx={{
-                            '& .MuiOutlinedInput-root.Mui-focused': {
-                                '& fieldset': {
-                                    borderColor: 'text.secondary', // Cambia el color del borde
-                                }
-                            },
-                            "& label": {
-                                color: 'background.default'
-                            },
-                            "& label.Mui-focused": {
-                                color: 'black'
-                            }
-                        }}
-                        onChange={(e) => setPayload({ ...payload, ciudad: regexCiudad.test(e.target.value) ? e.target.value.toUpperCase() : payload.ciudad })}
-                        error={errors.ciudad.error}
-                        helperText={errors.ciudad.error ? errors.ciudad.msg : ''}
-                    />
-                </Grid>
-                <Grid size={12}>
-                    <TextField
-                        label='Escuela, Institución o Dependencia (opcional)'
-                        fullWidth
-                        autoComplete='off'
-                        value={payload.dependencia}
-                        sx={{
-                            '& .MuiOutlinedInput-root.Mui-focused': {
-                                '& fieldset': {
-                                    borderColor: 'text.secondary', // Cambia el color del borde
-                                }
-                            },
-                            "& label": {
-                                color: 'background.default'
-                            },
-                            "& label.Mui-focused": {
-                                color: 'black'
-                            }
-                        }}
-                        onChange={(e) => setPayload({ ...payload, dependencia: regexCiudad.test(e.target.value) ? e.target.value.toUpperCase() : payload.dependencia })}
-                        error={errors.dependencia.error}
-                        helperText={errors.dependencia.error ? errors.dependencia.msg : ''}
-                    />
-                </Grid>
-                <Grid size={12}>
-                    <Autocomplete
-                        id='select-modulo'
-                        options={catalogs.modules}
-                        getOptionLabel={option => option.nombre}
-                        value={catalogs.modules.find(modulo => modulo.id === payload.modulo) || null}
-                        onChange={(_e, value) => setPayload({ ...payload, modulo: value ? value.id : null })}
-                        renderOption={(props, options) => (
-                            <MenuItem {...props}>
-                                <ListItemText key={options.id} primary={options.nombre} />
-                            </MenuItem>
-                        )}
-                        renderInput={params => (
-                            <TextField
-                                {...params}
-                                label='Módulo al que asiste (opcional)'
+                <Grid container sx={{ width: '100%', p: 4 }} spacing={3}>
+                    <Grid size={12}>
+                        <FormControl fullWidth>
+                            <InputLabel
+                                id='cat-select'
                                 sx={{
-                                    '& .MuiOutlinedInput-root.Mui-focused': {
-                                        '& fieldset': {
-                                            borderColor: 'text.secondary', // Cambia el color del borde
-                                        }
+                                    '&.Mui-focused': {
+                                        color: 'black',
                                     },
-                                    "& label": {
-                                        color: 'background.default'
-                                    },
-                                    "& label.Mui-focused": {
-                                        color: 'black'
+                                    color: '#2b3b37'
+                                }}>
+                                Categoría *
+                            </InputLabel>
+                            <Select
+                                labelId='cat-select'
+                                label='Categoría --'
+                                fullWidth
+                                value={payload.categoria}
+                                sx={{
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'text.secondary'
                                     }
                                 }}
-                                error={errors.modulo.error}
-                                helperText={errors.modulo.error ? errors.modulo.msg : ''}
-                            />
-                        )}
-                    />
-                </Grid>
-                <Grid size={12}>
-                    {
-                        catalogs.workshops.map((workshop: ReqGenCatalogs) => (
-                            <fieldset key={workshop.id} style={{ border: workshop.borderStyle, borderRadius: '20px', marginBottom: '15px' }}>
-                                <legend style={{ margin: 'auto', fontSize: responsive ? 24 : 25, paddingLeft: '1rem', paddingRight: '1rem' }}>Talleres {workshop.jrn_modulo?.nombre}</legend>
-                                <Grid sx={{ textAlign: 'left', paddingLeft: 2, paddingBottom: 2 }}>
-                                    <Checkbox
-                                        sx={{ '&.Mui-checked': { color: '#2a7dd3' } }}
-                                        /*  disabled={disableCheckboxes} */
-                                        checked={selectedItem.includes(workshop.id)}
-                                        onChange={(e) => handleCheckboxes(e.target.checked, workshop)}
-                                    />
-                                    <b>{dayjs(workshop.fecha).format('DD') + ' de ' + dayjs(workshop.fecha).format('MMMM')}</b> - {workshop.nombre} {/* - <b style={{ color: 'red' }}>cupos agotados</b> */}
-                                </Grid>
-                            </fieldset>
-                        ))
-                    }
-                </Grid>
-                <Grid size={12} textAlign={'center'}>
-                    <Button loading={loading} disabled={disabled} variant='contained' onClick={handleSubmit} sx={{ backgroundColor: "text.secondary", ":hover": { backgroundColor: '#b09a6b' }, color: 'primary.main' }}>
-                        Enviar
-                    </Button>
+                                onChange={(e) => setPayload({ ...payload, categoria: e.target.value })}
+                                error={errors.categoria.error}
+                            >
+                                {catalogs.categories.map((cat: ReqGenCatalogs) =>
+                                    <MenuItem key={cat.id} value={cat.nombre}>{cat.nombre}</MenuItem>
+                                )}
+                            </Select>
+                            {
+                                errors.categoria.error &&
+                                <FormHelperText sx={{ color: '#d04847' }}>{errors.categoria.msg}</FormHelperText>
+                            }
+                        </FormControl>
+                    </Grid>
+                    <Grid size={12}>
+                        <TextField
+                            fullWidth
+                            label='Acrónimo * (C. / Dr. / L.E. / Q.C. /  Q.F.B. / Lic. / C.D. / etc - será utilizado para su constancia)'
+                            autoComplete="off"
+                            value={payload.acronimo}
+                            onChange={(e) => setPayload({ ...payload, acronimo: e.target.value.toUpperCase() })}
+                            sx={{
+                                '& .MuiOutlinedInput-root.Mui-focused': {
+                                    '& fieldset': {
+                                        borderColor: 'text.secondary', // Cambia el color del borde
+                                    }
+                                },
+                                "& label": {
+                                    color: 'background.default'
+                                },
+                                "& label.Mui-focused": {
+                                    color: 'black'
+                                }
+                            }}
+                            error={errors.acronimo.error}
+                            helperText={errors.acronimo.error ? errors.acronimo.msg : ''}
+                        />
+                    </Grid>
+                    <Grid size={12}>
+                        <TextField
+                            label='Nombre (s) *'
+                            fullWidth
+                            autoComplete='off'
+                            value={payload.nombre}
+                            sx={{
+                                '& .MuiOutlinedInput-root.Mui-focused': {
+                                    '& fieldset': {
+                                        borderColor: 'text.secondary', // Cambia el color del borde
+                                    }
+                                },
+                                "& label": {
+                                    color: 'background.default'
+                                },
+                                "& label.Mui-focused": {
+                                    color: 'black'
+                                }
+                            }}
+                            onChange={(e) => setPayload({ ...payload, nombre: regexReg.test(e.target.value) ? e.target.value.toUpperCase() : payload.nombre })}
+                            error={errors.nombre.error}
+                            helperText={errors.nombre.error ? errors.nombre.msg : ''}
+                        />
+                    </Grid>
+                    <Grid size={12}>
+                        <TextField
+                            label='Apellidos *'
+                            fullWidth
+                            autoComplete='off'
+                            value={payload.apellidos}
+                            sx={{
+                                '& .MuiOutlinedInput-root.Mui-focused': {
+                                    '& fieldset': {
+                                        borderColor: 'text.secondary', // Cambia el color del borde
+                                    }
+                                },
+                                "& label": {
+                                    color: 'background.default'
+                                },
+                                "& label.Mui-focused": {
+                                    color: 'black'
+                                }
+                            }}
+                            onChange={(e) => setPayload({ ...payload, apellidos: regexReg.test(e.target.value) ? e.target.value.toUpperCase() : payload.apellidos })}
+                            error={errors.apellidos.error}
+                            helperText={errors.apellidos.error ? errors.apellidos.msg : ''}
+                        />
+                    </Grid>
+                    <Grid size={12}>
+                        <TextField
+                            label='RFC (opcional)'
+                            fullWidth
+                            autoComplete='off'
+                            value={payload.rfc}
+                            sx={{
+                                '& .MuiOutlinedInput-root.Mui-focused': {
+                                    '& fieldset': {
+                                        borderColor: 'text.secondary', // Cambia el color del borde
+                                    }
+                                },
+                                "& label": {
+                                    color: 'background.default'
+                                },
+                                "& label.Mui-focused": {
+                                    color: 'black'
+                                }
+                            }}
+                            slotProps={{
+                                htmlInput: { maxLength: 13 }
+                            }}
+                            onChange={(e) => setPayload({ ...payload, rfc: regexRFC.test(e.target.value) ? e.target.value.toUpperCase() : payload.rfc })}
+                            error={errors.rfc.error}
+                            helperText={errors.rfc.error ? errors.rfc.msg : ''}
+                        />
+                    </Grid>
+                    <Grid size={12}>
+                        <TextField
+                            label='Correo Electrónico *'
+                            fullWidth
+                            autoComplete='off'
+                            value={payload.correo}
+                            sx={{
+                                '& .MuiOutlinedInput-root.Mui-focused': {
+                                    '& fieldset': {
+                                        borderColor: 'text.secondary', // Cambia el color del borde
+                                    }
+                                },
+                                "& label": {
+                                    color: 'background.default'
+                                },
+                                "& label.Mui-focused": {
+                                    color: 'black'
+                                }
+                            }}
+                            onChange={(e) => setPayload({ ...payload, correo: regexMailPre.test(e.target.value) ? e.target.value : payload.correo })}
+                            error={errors.correo.error}
+                            helperText={errors.correo.error ? errors.correo.msg : ''}
+                        />
+                    </Grid>
+                    <Grid size={12}>
+                        <TextField
+                            label='No. Teléfono *'
+                            fullWidth
+                            autoComplete='off'
+                            value={payload.tel}
+                            sx={{
+                                '& .MuiOutlinedInput-root.Mui-focused': {
+                                    '& fieldset': {
+                                        borderColor: 'text.secondary', // Cambia el color del borde
+                                    }
+                                },
+                                "& label": {
+                                    color: 'background.default'
+                                },
+                                "& label.Mui-focused": {
+                                    color: 'black'
+                                }
+                            }}
+                            onChange={(e) => setPayload({ ...payload, tel: regexTel.test(e.target.value) ? e.target.value : payload.tel })}
+                            error={errors.tel.error}
+                            helperText={errors.tel.error ? errors.tel.msg : ''}
+                        />
+                    </Grid>
+                    <Grid size={12}>
+                        <TextField
+                            label='Ciudad de Procedencia *'
+                            fullWidth
+                            autoComplete='off'
+                            value={payload.ciudad}
+                            sx={{
+                                '& .MuiOutlinedInput-root.Mui-focused': {
+                                    '& fieldset': {
+                                        borderColor: 'text.secondary', // Cambia el color del borde
+                                    }
+                                },
+                                "& label": {
+                                    color: 'background.default'
+                                },
+                                "& label.Mui-focused": {
+                                    color: 'black'
+                                }
+                            }}
+                            onChange={(e) => setPayload({ ...payload, ciudad: regexCiudad.test(e.target.value) ? e.target.value.toUpperCase() : payload.ciudad })}
+                            error={errors.ciudad.error}
+                            helperText={errors.ciudad.error ? errors.ciudad.msg : ''}
+                        />
+                    </Grid>
+                    <Grid size={12}>
+                        <TextField
+                            label='Escuela, Institución o Dependencia (opcional)'
+                            fullWidth
+                            autoComplete='off'
+                            value={payload.dependencia}
+                            sx={{
+                                '& .MuiOutlinedInput-root.Mui-focused': {
+                                    '& fieldset': {
+                                        borderColor: 'text.secondary', // Cambia el color del borde
+                                    }
+                                },
+                                "& label": {
+                                    color: 'background.default'
+                                },
+                                "& label.Mui-focused": {
+                                    color: 'black'
+                                }
+                            }}
+                            onChange={(e) => setPayload({ ...payload, dependencia: regexCiudad.test(e.target.value) ? e.target.value.toUpperCase() : payload.dependencia })}
+                            error={errors.dependencia.error}
+                            helperText={errors.dependencia.error ? errors.dependencia.msg : ''}
+                        />
+                    </Grid>
+                    <Grid size={12}>
+                        <Autocomplete
+                            id='select-modulo'
+                            options={catalogs.modules}
+                            getOptionLabel={option => option.nombre}
+                            value={catalogs.modules.find(modulo => modulo.id === payload.modulo) || null}
+                            onChange={(_e, value) => setPayload({ ...payload, modulo: value ? value.id : null })}
+                            renderOption={(props, options) => (
+                                <MenuItem {...props}>
+                                    <ListItemText key={options.id} primary={options.nombre} />
+                                </MenuItem>
+                            )}
+                            renderInput={params => (
+                                <TextField
+                                    {...params}
+                                    label='Módulo al que asiste (opcional)'
+                                    sx={{
+                                        '& .MuiOutlinedInput-root.Mui-focused': {
+                                            '& fieldset': {
+                                                borderColor: 'text.secondary', // Cambia el color del borde
+                                            }
+                                        },
+                                        "& label": {
+                                            color: 'background.default'
+                                        },
+                                        "& label.Mui-focused": {
+                                            color: 'black'
+                                        }
+                                    }}
+                                    error={errors.modulo.error}
+                                    helperText={errors.modulo.error ? errors.modulo.msg : ''}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid size={12}>
+                        {
+                            catalogs.workshops.map((workshop: ReqGenCatalogs) => (
+                                <fieldset key={workshop.id} style={{ border: workshop.borderStyle, borderRadius: '20px', marginBottom: '15px' }}>
+                                    <legend style={{ margin: 'auto', fontSize: responsive ? 24 : 25, paddingLeft: '1rem', paddingRight: '1rem' }}>Talleres {workshop.jrn_modulo?.nombre}</legend>
+                                    <Grid sx={{ textAlign: 'left', paddingLeft: 2, paddingBottom: 2 }}>
+                                        <Checkbox
+                                            sx={{ '&.Mui-checked': { color: '#2a7dd3' } }}
+                                            /*  disabled={disableCheckboxes} */
+                                            checked={selectedItem.includes(workshop.id)}
+                                            onChange={(e) => handleCheckboxes(e.target.checked, workshop)}
+                                        />
+                                        <b>{dayjs(workshop.fecha).format('DD') + ' de ' + dayjs(workshop.fecha).format('MMMM')}</b> - {workshop.nombre} {/* - <b style={{ color: 'red' }}>cupos agotados</b> */}
+                                    </Grid>
+                                </fieldset>
+                            ))
+                        }
+                    </Grid>
+                    <Grid size={12} textAlign={'center'}>
+                        <Button loading={loading} variant='contained' onClick={handleSubmit} sx={{ backgroundColor: "text.secondary", ":hover": { backgroundColor: '#b09a6b' }, color: 'primary.main' }}>
+                            Enviar
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
         </Stack>
