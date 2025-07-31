@@ -26,10 +26,22 @@ const Registro = () => {
     const handleSubmit = async () => {
         const { isOk, errors } = validateJornadasFields(payload);
 
-        if (isOk) {
-            setLoading(true);
+        if (!isOk) {
+            setErrors(errors);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Verifica los campos e intenta de nuevo',
+            });
+            return;
+        }
 
-            const res = await postRegistMail(payload);
+        setLoading(true);
+
+        try {
+            const recaptchaToken = await window.grecaptcha.execute(import.meta.env.VITE_APP_SITE_KEY, { action: 'submit' });
+
+            const res = await postRegistMail(payload, recaptchaToken);
 
             if (res.data) {
                 Swal.fire({
@@ -49,16 +61,16 @@ const Registro = () => {
                     confirmButtonColor: '#d37c6b'
                 });
             }
-
+        } catch (err) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: 'No se ha podido procesar su solicitud. Intente más tarde',
+                confirmButtonColor: '#d37c6b'
+            });
+        } finally {
             setErrors(initValuesFormJornadasErrors);
             setLoading(false);
-        } else {
-            setErrors(errors);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Verifica los campos e intenta de nuevo',
-            });
         }
     }
 
