@@ -1,7 +1,7 @@
-import { AppBar, Box, Button, Container, Divider, IconButton, Menu, MenuItem, Toolbar, Typography, useMediaQuery } from '@mui/material'
+import { AppBar, Box, Button, Container, Divider, IconButton, Link, Menu, MenuItem, Toolbar, Typography, useMediaQuery } from '@mui/material'
 import React, { useContext, useState } from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
-import { NavLink } from 'react-router-dom';
+import { NavigateFunction, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { PropsUIContext } from '../../interfaces/context/IUIContext';
 import UIContext from '../../context/UIContext';
 
@@ -10,13 +10,15 @@ const navItem = [
     { name: 'Programa' },
     { name: 'Sedes' },
     { name: 'Contacto' },
-    /* { name: 'Registro', pathTo: 'register' } */
+    { name: 'Registro' }
 ];
 
 export const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const { activeSection, setActiveSection, setTriggerRelocation } = useContext<PropsUIContext>(UIContext);
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
+    const navigate: NavigateFunction = useNavigate();
+    const location = useLocation();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -27,9 +29,19 @@ export const Navbar = () => {
     };
 
     const goToSection = (pathTo: string) => {
-        setAnchorElNav(null);
+
         setActiveSection(pathTo);
         setTriggerRelocation(true);
+
+        if (location.pathname !== 'Registro' && pathTo === 'Registro') {
+            navigate(`/registro`, { replace: true });
+        } else if (location.pathname !== 'Registro' && pathTo !== 'Registro') {
+            navigate(`/`, { replace: true });
+            setTriggerRelocation(true);
+        }
+
+        setActiveSection(pathTo);
+        setAnchorElNav(null);
     };
 
     return (
@@ -64,6 +76,7 @@ export const Navbar = () => {
                             <Button onClick={() => goToSection(item.name)} key={item.name} sx={{ color: activeSection === item.name ? 'text.secondary' : '#ffffff', fontWeight: 600, textTransform: 'capitalize', fontSize: '16px', transition: 'all 0.5s ease' }}>
                                 {item.name}
                             </Button>
+
                         ))}
                     </Box>
 

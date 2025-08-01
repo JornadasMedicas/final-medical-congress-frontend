@@ -12,31 +12,31 @@ export const formatWorkshops = (data: ReqGenCatalogs[]) => {
             case 1:
                 return {
                     ...item,
-                    borderStyle: '2px inset rgba(59, 167, 248, 0.7)'
+                    borderStyle: 'rgba(59, 167, 248, 0.7)'
                 }
 
             case 2:
                 return {
                     ...item,
-                    borderStyle: '2px inset rgba(166, 214, 206, 0.7)'
+                    borderStyle: 'rgba(166, 214, 206, 0.7)'
                 }
 
             case 3:
                 return {
                     ...item,
-                    borderStyle: '2px inset rgba(117, 186, 117, 0.9)',
+                    borderStyle: 'rgba(117, 186, 117, 0.9)',
                 }
 
             case 4:
                 return {
                     ...item,
-                    borderStyle: '2px inset rgba(214, 192, 155, 1)',
+                    borderStyle: 'rgba(214, 192, 155, 1)',
                 }
 
             default:
                 return {
                     ...item,
-                    borderStyle: '2px inset rgba(248, 191, 112, 0.7)',
+                    borderStyle: 'rgba(248, 191, 112, 0.7)',
                 }
         }
     });

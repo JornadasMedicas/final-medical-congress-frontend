@@ -6,7 +6,7 @@ export const Footer = () => {
     return (
         <>
             <Grid sx={{ backgroundColor: 'text.secondary' }}>
-                <Container maxWidth='xl' sx={{ padding: '20px' }}>
+                <Container maxWidth='xl' sx={{ padding: '10px' }}>
                     <Grid container sx={{ justifyContent: { xs: 'center' }, display: 'flex', gap: { md: 4, xs: 1 } }}>
                         <Grid sx={{ display: 'flex', textAlign: 'center' }}>
                             <img loading='lazy' src={`${import.meta.env.VITE_APP_BASE_ROUTE}/gob_ver.webp`} alt="Gob" width="auto" height="55px" />

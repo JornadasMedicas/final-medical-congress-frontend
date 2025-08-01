@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Checkbox, FormControl, FormHelperText, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, Typography, useMediaQuery } from "@mui/material";
+import { Autocomplete, Box, Button, Card, Checkbox, FormControl, FormHelperText, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import { navBarHeigth, navBarHeigthResponsive } from "../../../pages/HomePage";
 import { useEffect, useState } from "react";
 import { getCategories, getEventEditions, getModules, getWorkshops } from "../../../services/admin/adminService";
@@ -13,6 +13,11 @@ import { validateJornadasFields } from "../../../helpers/registro/validateRegist
 import Swal from 'sweetalert2';
 import { postRegistMail } from "../../../services/registro/registroService";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { motion } from "motion/react";
+import MedicalServicesTwoToneIcon from '@mui/icons-material/MedicalServicesTwoTone';
+import InfoOutlineTwoToneIcon from '@mui/icons-material/InfoOutlineTwoTone';
+import _ from 'lodash';
+import MasksIcon from '@mui/icons-material/Masks';
 
 const Registro = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -22,6 +27,7 @@ const Registro = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [disabled, setDisabled] = useState<boolean>(false);
     const [selectedItem, setSelectedItem] = useState<number[]>([]);
+    const groupedWorkshops = _.groupBy(catalogs.workshops, 'jrn_modulo.nombre');
 
     const handleSubmit = async () => {
         const { isOk, errors } = validateJornadasFields(payload);
@@ -121,17 +127,39 @@ const Registro = () => {
         setPayload({ ...payload, edicion: currentEdition[0]?.id });
     }, [catalogs.editions]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <Stack sx={{ pt: responsive ? `${navBarHeigthResponsive}px` : `${navBarHeigth}px`, mt: 5, mb: 6 }}>
-            <Grid container sx={{ width: responsive ? '95%' : '850px', m: 'auto', borderRadius: 5, boxShadow: '0 7px 10px 3px rgba(1,18,38, 0.1)', gap: 0 }}>
+            <Grid
+                container
+                component={motion.div}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: 'easeOut' }}
+                viewport={{ once: true }}
+                sx={{
+                    width: responsive ? '95%' : '850px',
+                    m: 'auto',
+                    borderRadius: 5,
+                    boxShadow: '0 7px 10px 3px rgba(1,18,38, 0.1)',
+                    gap: 0
+                }}
+            >
                 <Grid size={12} sx={{ height: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'linear-gradient(90deg, rgba(83,115,109,1) 0%, rgba(19,50,44,1) 48%, rgba(36,70,63,0.8) 100%);', borderTopLeftRadius: 18, borderTopRightRadius: 15, pt: 4, pb: 4, flexDirection: 'column' }}>
                     <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
                         <PersonAddIcon sx={{ width: 'auto', height: '30px', color: 'white' }} />
                         <Typography sx={{ color: 'primary.main', fontWeight: 'bold', fontSize: responsive ? '23px' : '23px' }}>REGISTRO</Typography>
                     </Box>
                 </Grid>
-                <Grid container sx={{ width: '100%', p: 4 }} spacing={3}>
+                <Grid container sx={{ width: '100%', p: responsive ? 3 : 4 }} spacing={3}>
                     <Grid size={12}>
+                        <Box sx={{ display: 'flex', mb: 1, gap: 0.7 }}>
+                            <MasksIcon sx={{ width: 'auto', height: '23px', color: 'background.default' }} />
+                            <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Información Personal</Typography>
+                        </Box>
                         <FormControl fullWidth>
                             <InputLabel
                                 id='cat-select'
@@ -397,23 +425,50 @@ const Registro = () => {
                         />
                     </Grid>
                     <Grid size={12}>
-                        {
-                            catalogs.workshops.map((workshop: ReqGenCatalogs) => (
-                                <fieldset key={workshop.id} style={{ border: workshop.borderStyle, borderRadius: '20px', marginBottom: '15px' }}>
-                                    <legend style={{ margin: 'auto', fontSize: responsive ? 24 : 25, paddingLeft: '1rem', paddingRight: '1rem' }}>Talleres {workshop.jrn_modulo?.nombre}</legend>
-                                    <Grid sx={{ textAlign: 'left', paddingLeft: 2, paddingBottom: 2 }}>
-                                        <Checkbox
-                                            sx={{ '&.Mui-checked': { color: '#2a7dd3' } }}
-                                            /*  disabled={disableCheckboxes} */
-                                            checked={selectedItem.includes(workshop.id)}
-                                            onChange={(e) => handleCheckboxes(e.target.checked, workshop)}
-                                        />
-                                        <b>{dayjs(workshop.fecha).format('DD') + ' de ' + dayjs(workshop.fecha).format('MMMM')}</b> - {workshop.nombre} {/* - <b style={{ color: 'red' }}>cupos agotados</b> */}
+                        <Box sx={{ display: 'flex', mb: 0, gap: 0.7 }}>
+                            <MedicalServicesTwoToneIcon sx={{ width: 'auto', height: '23px', color: 'background.default' }} />
+                            <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Talleres</Typography>
+                        </Box>
+                        <Box sx={{ mb: 1 }}>
+                            <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione los talleres a los que desea asistir. Debe elegir al menos un módulo o taller.</Typography>
+                        </Box>
+                        {Object.entries(groupedWorkshops).map(([categoria, workshops], index: number) => (
+                            <Card
+                                key={categoria}
+                                sx={{
+                                    borderTop: `4px solid ${workshops[0].borderStyle}`,
+                                    borderRadius: 3,
+                                    mb: index === Object.entries(groupedWorkshops).length - 1 ? 0 : 3,
+                                    paddingBottom: 2
+                                }}
+                            >
+                                <legend style={{ margin: 'auto', fontSize: responsive ? 24 : 25, paddingLeft: '1rem', paddingRight: '1rem', marginTop: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'center' }}>
+                                    {categoria}
+                                </legend>
+
+                                {workshops.map((workshop) => (
+                                    <Grid
+                                        key={workshop.id}
+                                        sx={{ textAlign: 'left', paddingLeft: '20px' }}
+                                    >
+                                        <Box sx={{ display: 'flex' }}>
+                                            <Checkbox
+                                                sx={{ '&.Mui-checked': { color: '#2a7dd3' } }}
+                                                checked={selectedItem.includes(workshop.id)}
+                                                onChange={(e) => handleCheckboxes(e.target.checked, workshop)}
+                                            />
+                                            <Typography sx={{ mt: 1.2 }}>
+                                                <b>{dayjs(workshop.fecha).format('DD')} de {dayjs(workshop.fecha).format('MMMM')}</b> - {workshop.nombre}
+                                            </Typography>
+                                        </Box>
                                     </Grid>
-                                </fieldset>
-                            ))
-                        }
+                                ))}
+                            </Card>
+                        ))}
                     </Grid>
+                    {/* <fieldset key={workshop.id} style={{ border: workshop.borderStyle, borderRadius: '20px', marginBottom: '15px' }}>
+                                    
+                                </fieldset> */}
                     <Grid size={12} textAlign={'center'}>
                         <Button loading={loading} variant='contained' onClick={handleSubmit} sx={{ backgroundColor: "text.secondary", ":hover": { backgroundColor: '#b09a6b' }, color: 'primary.main' }}>
                             Enviar
