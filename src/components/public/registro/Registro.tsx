@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Card, Checkbox, FormControl, FormHelperText, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, Tooltip, Typography, useMediaQuery } from "@mui/material";
+import { Autocomplete, Box, Button, Card, Checkbox, Divider, FormControl, FormHelperText, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import { navBarHeigth, navBarHeigthResponsive } from "../../../pages/HomePage";
 import { useEffect, useState } from "react";
 import { getCategories, getEventEditions, getModules, getWorkshops } from "../../../services/admin/adminService";
@@ -15,9 +15,8 @@ import { postRegistMail } from "../../../services/registro/registroService";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { motion } from "motion/react";
 import MedicalServicesTwoToneIcon from '@mui/icons-material/MedicalServicesTwoTone';
-import InfoOutlineTwoToneIcon from '@mui/icons-material/InfoOutlineTwoTone';
+import ContactEmergencyTwoToneIcon from '@mui/icons-material/ContactEmergencyTwoTone';
 import _ from 'lodash';
-import MasksIcon from '@mui/icons-material/Masks';
 
 const Registro = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -157,7 +156,7 @@ const Registro = () => {
                 <Grid container sx={{ width: '100%', p: responsive ? 3 : 4 }} spacing={3}>
                     <Grid size={12}>
                         <Box sx={{ display: 'flex', mb: 1, gap: 0.7 }}>
-                            <MasksIcon sx={{ width: 'auto', height: '23px', color: 'background.default' }} />
+                            <ContactEmergencyTwoToneIcon sx={{ width: 'auto', height: '23px', color: 'background.default' }} />
                             <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Información Personal</Typography>
                         </Box>
                         <FormControl fullWidth>
@@ -390,47 +389,50 @@ const Registro = () => {
                         />
                     </Grid>
                     <Grid size={12}>
-                        <Autocomplete
-                            id='select-modulo'
-                            options={catalogs.modules}
-                            getOptionLabel={option => option.nombre}
-                            value={catalogs.modules.find(modulo => modulo.id === payload.modulo) || null}
-                            onChange={(_e, value) => setPayload({ ...payload, modulo: value ? value.id : null })}
-                            renderOption={(props, options) => (
-                                <MenuItem {...props}>
-                                    <ListItemText key={options.id} primary={options.nombre} />
-                                </MenuItem>
-                            )}
-                            renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    label='Módulo al que asiste (opcional)'
-                                    sx={{
-                                        '& .MuiOutlinedInput-root.Mui-focused': {
-                                            '& fieldset': {
-                                                borderColor: 'text.secondary', // Cambia el color del borde
-                                            }
-                                        },
-                                        "& label": {
-                                            color: 'background.default'
-                                        },
-                                        "& label.Mui-focused": {
-                                            color: 'black'
-                                        }
-                                    }}
-                                    error={errors.modulo.error}
-                                    helperText={errors.modulo.error ? errors.modulo.msg : ''}
-                                />
-                            )}
-                        />
+                        <Divider sx={{ mt: 2, ml: 2, mr: 2 }} />
                     </Grid>
                     <Grid size={12}>
                         <Box sx={{ display: 'flex', mb: 0, gap: 0.7 }}>
                             <MedicalServicesTwoToneIcon sx={{ width: 'auto', height: '23px', color: 'background.default' }} />
-                            <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Talleres</Typography>
+                            <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Módulos y Talleres</Typography>
                         </Box>
                         <Box sx={{ mb: 1 }}>
-                            <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione los talleres a los que desea asistir. Debe elegir al menos un módulo o taller.</Typography>
+                            <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione los eventos a los que desea asistir. Debe elegir al menos un módulo o taller.</Typography>
+                        </Box>
+                        <Box sx={{ mb: 3 }}>
+                            <Autocomplete
+                                id='select-modulo'
+                                options={catalogs.modules}
+                                getOptionLabel={option => option.nombre}
+                                value={catalogs.modules.find(modulo => modulo.id === payload.modulo) || null}
+                                onChange={(_e, value) => setPayload({ ...payload, modulo: value ? value.id : null })}
+                                renderOption={(props, options) => (
+                                    <MenuItem {...props}>
+                                        <ListItemText key={options.id} primary={options.nombre} />
+                                    </MenuItem>
+                                )}
+                                renderInput={params => (
+                                    <TextField
+                                        {...params}
+                                        label='Módulo al que asiste'
+                                        sx={{
+                                            '& .MuiOutlinedInput-root.Mui-focused': {
+                                                '& fieldset': {
+                                                    borderColor: 'text.secondary', // Cambia el color del borde
+                                                }
+                                            },
+                                            "& label": {
+                                                color: 'background.default'
+                                            },
+                                            "& label.Mui-focused": {
+                                                color: 'black'
+                                            }
+                                        }}
+                                        error={errors.modulo.error}
+                                        helperText={errors.modulo.error ? errors.modulo.msg : ''}
+                                    />
+                                )}
+                            />
                         </Box>
                         {Object.entries(groupedWorkshops).map(([categoria, workshops], index: number) => (
                             <Card
@@ -442,7 +444,7 @@ const Registro = () => {
                                     paddingBottom: 2
                                 }}
                             >
-                                <legend style={{ margin: 'auto', fontSize: responsive ? 24 : 25, paddingLeft: '1rem', paddingRight: '1rem', marginTop: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'center' }}>
+                                <legend style={{ margin: 'auto', fontSize: responsive ? 24 : 25, paddingLeft: '1rem', paddingRight: '1rem', marginTop: '8px', marginBottom: '8px', display: 'flex', justifyContent: 'center' }}>
                                     {categoria}
                                 </legend>
 
