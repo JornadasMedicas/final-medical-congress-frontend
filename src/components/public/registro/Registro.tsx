@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Card, Checkbox, Divider, FormControl, FormHelperText, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, Tooltip, Typography, useMediaQuery } from "@mui/material";
+import { Autocomplete, Box, Button, Card, Checkbox, Divider, FormControl, FormHelperText, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, Typography, useMediaQuery } from "@mui/material";
 import { navBarHeigth, navBarHeigthResponsive } from "../../../pages/HomePage";
 import { useEffect, useState } from "react";
 import { getCategories, getEventEditions, getModules, getWorkshops } from "../../../services/admin/adminService";
@@ -24,7 +24,6 @@ const Registro = () => {
     const [payload, setPayload] = useState<RegistFormInterface>(initValuesFormJornadas);
     const [errors, setErrors] = useState<JornadasValuesInterface>(initValuesFormJornadasErrors);
     const [loading, setLoading] = useState<boolean>(false);
-    const [disabled, setDisabled] = useState<boolean>(false);
     const [selectedItem, setSelectedItem] = useState<number[]>([]);
     const groupedWorkshops = _.groupBy(catalogs.workshops, 'jrn_modulo.nombre');
 
@@ -155,7 +154,7 @@ const Registro = () => {
                 </Grid>
                 <Grid container sx={{ width: '100%', p: responsive ? 3 : 4 }} spacing={3}>
                     <Grid size={12}>
-                        <Box sx={{ display: 'flex', mb: 1, gap: 0.7 }}>
+                        <Box sx={{ display: 'flex', mb: 2, gap: 0.7 }}>
                             <ContactEmergencyTwoToneIcon sx={{ width: 'auto', height: '23px', color: 'background.default' }} />
                             <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Información Personal</Typography>
                         </Box>
@@ -396,7 +395,7 @@ const Registro = () => {
                             <MedicalServicesTwoToneIcon sx={{ width: 'auto', height: '23px', color: 'background.default' }} />
                             <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Módulos y Talleres</Typography>
                         </Box>
-                        <Box sx={{ mb: 1 }}>
+                        <Box sx={{ mb: 2 }}>
                             <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione los eventos a los que desea asistir. Debe elegir al menos un módulo o taller.</Typography>
                         </Box>
                         <Box sx={{ mb: 3 }}>
@@ -409,6 +408,7 @@ const Registro = () => {
                                 renderOption={(props, options) => (
                                     <MenuItem {...props}>
                                         <ListItemText key={options.id} primary={options.nombre} />
+                                        <Typography sx={{ color: 'gray' }}>{options.cupos} cupos disponibles</Typography>
                                     </MenuItem>
                                 )}
                                 renderInput={params => (
@@ -460,7 +460,7 @@ const Registro = () => {
                                                 onChange={(e) => handleCheckboxes(e.target.checked, workshop)}
                                             />
                                             <Typography sx={{ mt: 1.2 }}>
-                                                <b>{dayjs(workshop.fecha).format('DD')} de {dayjs(workshop.fecha).format('MMMM')}</b> - {workshop.nombre}
+                                                <b>{dayjs(workshop.fecha).format('DD')} de {dayjs(workshop.fecha).format('MMMM')}</b> ─ {workshop.nombre} <span style={{ color: 'gray' }}>{`(${workshop.cupos} cupos disponibles)`}</span>
                                             </Typography>
                                         </Box>
                                     </Grid>
@@ -468,9 +468,6 @@ const Registro = () => {
                             </Card>
                         ))}
                     </Grid>
-                    {/* <fieldset key={workshop.id} style={{ border: workshop.borderStyle, borderRadius: '20px', marginBottom: '15px' }}>
-                                    
-                                </fieldset> */}
                     <Grid size={12} textAlign={'center'}>
                         <Button loading={loading} variant='contained' onClick={handleSubmit} sx={{ backgroundColor: "text.secondary", ":hover": { backgroundColor: '#b09a6b' }, color: 'primary.main' }}>
                             Enviar

@@ -16,10 +16,10 @@ import UIContext from "../../../context/UIContext";
 
 dayjs.extend(utc);
 
-const initialState = { nombre: '', fecha: '', hora_inicio: '', hora_fin: '', modulo: 0, edicion: 0 };
+const initialState = { nombre: '', fecha: '', cupos: 0, hora_inicio: '', hora_fin: '', modulo: 0, edicion: 0 };
 
 interface Column {
-    field: 'acciones' | 'nombre' | 'created_at' | 'updated_at';
+    field: 'acciones' | 'nombre' | 'cupos' | 'created_at' | 'updated_at';
     headerName: string;
     headerAlign?: 'left' | 'center';
     align?: string;
@@ -32,6 +32,7 @@ interface Column {
 const columns: Column[] = [
     { field: 'acciones', headerName: 'Acciones', flex: 1, headerAlign: 'left', align: 'left', sortable: false },
     { field: 'nombre', headerName: 'Talleres', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
+    { field: 'cupos', headerName: 'Cupos', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
     { field: 'created_at', headerName: 'Fecha Alta', flex: 2, headerAlign: 'center', align: 'center', sortable: false },
     { field: 'updated_at', headerName: 'Fecha Actualización', flex: 1, headerAlign: 'center', align: 'center', sortable: false }
 ];
@@ -41,7 +42,7 @@ export const Talleres = () => {
     const { setModalConfirmDelete } = useContext<PropsUIContext>(UIContext);
     const [catModules, setCatModules] = useState<ReqGenCatalogs[]>([]);
     const [catEditions, setCatEditions] = useState<ReqEventEditions[]>([]);
-    const [editData, setEditData] = useState<{ id: number, nombre: string }>({ id: 0, nombre: '' });
+    const [editData, setEditData] = useState<{ id: number, nombre: string, cupos: number | string }>({ id: 0, nombre: '', cupos: 0 });
     const [rows, setRows] = useState<ReqGenCatalogs[]>([]);
     const [payload, setPayload] = useState<PayloadWorkshops>(initialState);
     const [loading, setLoading] = useState<boolean>(false);
@@ -82,7 +83,7 @@ export const Talleres = () => {
 
     const handleEdit = (row: ReqGenCatalogs | null) => {
         if (!row) return;
-        setEditData({ id: row.id, nombre: row.nombre });
+        setEditData({ id: row.id, nombre: row.nombre, cupos: row.cupos ? row.cupos : 0 });
         handleClose();
     }
 
@@ -92,12 +93,12 @@ export const Talleres = () => {
     }
 
     const handleSave = async () => {
-        if (editData.nombre === rows.filter((item) => item.id === editData.id)[0].nombre) {
-            setEditData({ id: 0, nombre: '' });
+        if (editData.nombre === rows.filter((item) => item.id === editData.id)[0].nombre && editData.cupos === rows.filter((item) => item.id === editData.id)[0].cupos) {
+            setEditData({ id: 0, nombre: '', cupos: 0 });
             return;
         };
 
-        const res = await editWorkshop({ id: editData.id, nombre: editData.nombre });
+        const res = await editWorkshop({ id: editData.id, nombre: editData.nombre, cupos: editData.cupos });
 
         if (!res.error) {
             enqueueSnackbar('Taller editado correctamente.', { variant: 'success' });
@@ -105,7 +106,7 @@ export const Talleres = () => {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
 
-        setEditData({ id: 0, nombre: '' });
+        setEditData({ id: 0, nombre: '', cupos: 0 });
     };
 
     const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
@@ -133,7 +134,7 @@ export const Talleres = () => {
 
     return (
         <Grid container sx={{ mt: 2 }} spacing={2}>
-            <Grid size={responsive ? 12 : 7}>
+            <Grid size={responsive ? 12 : 6}>
                 <Typography fontSize={'15px'}>Nombre</Typography>
                 <TextField
                     variant="outlined"
@@ -152,7 +153,7 @@ export const Talleres = () => {
                     helperText={(errors.nombre && payload.nombre === '') && "Campo necesario"}
                 />
             </Grid>
-            <Grid size={responsive ? 12 : 5}>
+            <Grid size={responsive ? 12 : 3}>
                 <Typography fontSize={'15px'}>Fecha</Typography>
                 <TextField
                     variant="outlined"
@@ -170,6 +171,24 @@ export const Talleres = () => {
                     }}
                     error={(errors.fecha && payload.fecha === '') && true}
                     helperText={(errors.fecha && payload.fecha === '') && "Campo necesario"}
+                />
+            </Grid>
+            <Grid size={responsive ? 12 : 3}>
+                <Typography fontSize={'15px'}>Cupos</Typography>
+                <TextField
+                    variant="outlined"
+                    size="small"
+                    value={payload.cupos}
+                    onChange={(e) => setPayload({ ...payload, cupos: parseInt(e.target.value) >= 0 ? parseInt(e.target.value) : '' })}
+                    fullWidth
+                    type="number"
+                    sx={{
+                        '& .MuiOutlinedInput-root': {
+                            '&.Mui-focused fieldset': {
+                                border: '1px solid green'
+                            },
+                        },
+                    }}
                 />
             </Grid>
             <Grid size={responsive ? 12 : 3}>
@@ -351,6 +370,28 @@ export const Talleres = () => {
                                                     />
                                                     :
                                                     <Typography fontSize={15}>{row.nombre}</Typography>
+                                                }
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                {editData.id === row.id ?
+                                                    <TextField
+                                                        variant="standard"
+                                                        value={editData.cupos}
+                                                        onChange={(e) => setEditData({ ...editData, cupos: parseInt(e.target.value) >= 0 ? parseInt(e.target.value) : '' })}
+                                                        size="small"
+                                                        type="number"
+                                                        sx={{
+                                                            '& .MuiInputBase-root:after': {
+                                                                borderBottom: '2px solid green', // Línea inferior cuando está enfocado
+                                                            },
+                                                            '& .MuiInputLabel-root.Mui-focused': {
+                                                                color: 'green', // Color del label cuando está enfocado
+                                                            },
+                                                        }}
+                                                        onBlur={handleSave}
+                                                    />
+                                                    :
+                                                    <Typography fontSize={15}>{row.cupos}</Typography>
                                                 }
                                             </TableCell>
                                             <TableCell align="center">

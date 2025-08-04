@@ -38,7 +38,7 @@ export const Modulos = () => {
     const { setModalConfirmDelete } = useContext<PropsUIContext>(UIContext);
     const [rows, setRows] = useState<ReqGenCatalogs[]>([]);
     const [selectedRow, setSelectedRow] = useState<ReqGenCatalogs | null>(null);
-    const [editData, setEditData] = useState<{ id: number, nombre: string, cupos: number }>({ id: 0, nombre: '', cupos: 0 });
+    const [editData, setEditData] = useState<{ id: number, nombre: string, cupos: number | string }>({ id: 0, nombre: '', cupos: 0 });
     const [payload, setPayload] = useState<string>('');
     const [isSent, setIsSent] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
@@ -228,7 +228,7 @@ export const Modulos = () => {
                                                             variant="standard"
                                                             type="number"
                                                             value={editData.cupos}
-                                                            onChange={(e) => setEditData({ ...editData, cupos: parseInt(e.target.value) >= 0 ? parseInt(e.target.value) : 0 })}
+                                                            onChange={(e) => setEditData({ ...editData, cupos: parseInt(e.target.value) >= 0 ? parseInt(e.target.value) : '' })}
                                                             size="small"
                                                             sx={{
                                                                 '& .MuiInputBase-root:after': {

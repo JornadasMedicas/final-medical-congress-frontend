@@ -142,6 +142,7 @@ export interface PropsCreateEdition {
 export interface PayloadWorkshops {
     nombre: string;
     fecha: string;
+    cupos: number | string;
     hora_inicio: string;
     hora_fin: string;
     modulo: number;

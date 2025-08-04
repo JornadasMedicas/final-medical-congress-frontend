@@ -75,7 +75,7 @@ export const getWorkshops = async () => {
     }
 }
 
-export const editWorkshop = async (payload: { id: number, nombre: string }) => {
+export const editWorkshop = async (payload: { id: number, nombre: string, cupos: number | string }) => {
     try {
         const res: AxiosResponse = await jornadasApi.put(`/api/admin/editWorkshop`, { ...payload });
         return res.data;
@@ -129,7 +129,7 @@ export const createModule = async (nombre: string) => {
     }
 }
 
-export const editModule = async (payload: { id: number, nombre: string, cupos: number }) => {
+export const editModule = async (payload: { id: number, nombre: string, cupos: number | string }) => {
     try {
         const res: AxiosResponse = await jornadasApi.put(`/api/admin/editModule`, { ...payload });
         return res.data;
