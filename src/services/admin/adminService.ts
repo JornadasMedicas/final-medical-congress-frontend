@@ -129,7 +129,7 @@ export const createModule = async (nombre: string) => {
     }
 }
 
-export const editModule = async (payload: { id: number, nombre: string }) => {
+export const editModule = async (payload: { id: number, nombre: string, cupos: number }) => {
     try {
         const res: AxiosResponse = await jornadasApi.put(`/api/admin/editModule`, { ...payload });
         return res.data;

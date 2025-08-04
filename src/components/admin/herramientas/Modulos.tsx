@@ -15,7 +15,7 @@ import UIContext from "../../../context/UIContext";
 dayjs.extend(utc);
 
 interface Column {
-    field: 'acciones' | 'nombre' | 'created_at' | 'updated_at';
+    field: 'acciones' | 'nombre' | 'cupos' | 'created_at' | 'updated_at';
     headerName: string;
     headerAlign?: 'left' | 'center';
     align?: string;
@@ -28,6 +28,7 @@ interface Column {
 const columns: Column[] = [
     { field: 'acciones', headerName: 'Acciones', flex: 1, headerAlign: 'left', align: 'left', sortable: false },
     { field: 'nombre', headerName: 'Módulo', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
+    { field: 'cupos', headerName: 'Cupos', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
     { field: 'created_at', headerName: 'Fecha Alta', flex: 2, headerAlign: 'center', align: 'center', sortable: false },
     { field: 'updated_at', headerName: 'Fecha Actualización', flex: 1, headerAlign: 'center', align: 'center', sortable: false }
 ];
@@ -37,7 +38,7 @@ export const Modulos = () => {
     const { setModalConfirmDelete } = useContext<PropsUIContext>(UIContext);
     const [rows, setRows] = useState<ReqGenCatalogs[]>([]);
     const [selectedRow, setSelectedRow] = useState<ReqGenCatalogs | null>(null);
-    const [editData, setEditData] = useState<{ id: number, nombre: string }>({ id: 0, nombre: '' });
+    const [editData, setEditData] = useState<{ id: number, nombre: string, cupos: number }>({ id: 0, nombre: '', cupos: 0 });
     const [payload, setPayload] = useState<string>('');
     const [isSent, setIsSent] = useState<boolean>(false);
     const [page, setPage] = useState<number>(0);
@@ -57,7 +58,7 @@ export const Modulos = () => {
 
     const handleEdit = (row: ReqGenCatalogs | null) => {
         if (!row) return;
-        setEditData({ id: row.id, nombre: row.nombre });
+        setEditData({ id: row.id, nombre: row.nombre, cupos: row.cupos ? row.cupos : 0 });
         handleClose();
     }
 
@@ -67,12 +68,12 @@ export const Modulos = () => {
     }
 
     const handleSave = async () => {
-        if (editData.nombre === rows.filter((item) => item.id === editData.id)[0].nombre) {
-            setEditData({ id: 0, nombre: '' });
+        if (editData.nombre === rows.filter((item) => item.id === editData.id)[0].nombre && editData.cupos === rows.filter((item) => item.id === editData.id)[0].cupos) {
+            setEditData({ id: 0, nombre: '', cupos: 0 });
             return;
         };
 
-        const res = await editModule({ id: editData.id, nombre: editData.nombre.charAt(0).toUpperCase() + editData.nombre.slice(1).toLowerCase() });
+        const res = await editModule({ id: editData.id, nombre: editData.nombre.charAt(0).toUpperCase() + editData.nombre.slice(1).toLowerCase(), cupos: editData.cupos });
 
         if (!res.error) {
             enqueueSnackbar('Módulo editado correctamente.', { variant: 'success' });
@@ -80,7 +81,7 @@ export const Modulos = () => {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
 
-        setEditData({ id: 0, nombre: '' });
+        setEditData({ id: 0, nombre: '', cupos: 0 });
     };
 
     const handleRegistry = async () => {
@@ -212,11 +213,36 @@ export const Modulos = () => {
                                                             '& .MuiInputLabel-root.Mui-focused': {
                                                                 color: 'green', // Color del label cuando está enfocado
                                                             },
+                                                            width: 'auto'
                                                         }}
                                                         onBlur={handleSave}
                                                     />
                                                     :
                                                     <Typography fontSize={15}>{row.nombre}</Typography>
+                                                }
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                {
+                                                    editData.id === row.id ?
+                                                        <TextField
+                                                            variant="standard"
+                                                            type="number"
+                                                            value={editData.cupos}
+                                                            onChange={(e) => setEditData({ ...editData, cupos: parseInt(e.target.value) >= 0 ? parseInt(e.target.value) : 0 })}
+                                                            size="small"
+                                                            sx={{
+                                                                '& .MuiInputBase-root:after': {
+                                                                    borderBottom: '2px solid green', // Línea inferior cuando está enfocado
+                                                                },
+                                                                '& .MuiInputLabel-root.Mui-focused': {
+                                                                    color: 'green', // Color del label cuando está enfocado
+                                                                },
+                                                                width: 'auto'
+                                                            }}
+                                                            onBlur={handleSave}
+                                                        />
+                                                        :
+                                                        <Typography fontSize={15}>{row.cupos}</Typography>
                                                 }
                                             </TableCell>
                                             <TableCell align="center">

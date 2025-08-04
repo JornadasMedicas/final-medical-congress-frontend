@@ -34,6 +34,7 @@ export interface ReqGenCatalogs {
     id: number;
     nombre: string;
     fecha: string;
+    cupos?: number;
     created_at?: string;
     updated_at?: string;
     borderStyle?: string;
