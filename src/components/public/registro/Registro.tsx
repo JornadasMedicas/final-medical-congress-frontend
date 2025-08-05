@@ -1,6 +1,6 @@
 import { Autocomplete, Box, Button, Card, Checkbox, Divider, FormControl, FormHelperText, Grid, InputLabel, ListItemText, MenuItem, Select, Stack, TextField, Typography, useMediaQuery } from "@mui/material";
 import { navBarHeigth, navBarHeigthResponsive } from "../../../pages/HomePage";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getCategories, getEventEditions, getModules, getWorkshops } from "../../../services/admin/adminService";
 import { ReqGenCatalogs, ReqEventEditions } from '../../../interfaces/admin/IAdmin';
 import { regexCiudad, regexMailPre, regexReg, regexTel } from "../../../helpers/registro/regex";
@@ -17,6 +17,7 @@ import { motion } from "motion/react";
 import MedicalServicesTwoToneIcon from '@mui/icons-material/MedicalServicesTwoTone';
 import ContactEmergencyTwoToneIcon from '@mui/icons-material/ContactEmergencyTwoTone';
 import _ from 'lodash';
+import { SocketContext } from "../../../context/SocketContext";
 
 const Registro = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -26,6 +27,7 @@ const Registro = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [selectedItem, setSelectedItem] = useState<number[]>([]);
     const groupedWorkshops = _.groupBy(catalogs.workshops, 'jrn_modulo.nombre');
+    const { socket } = useContext(SocketContext);
 
     const handleSubmit = async () => {
         const { isOk, errors } = validateJornadasFields(payload);
@@ -55,6 +57,7 @@ const Registro = () => {
                     confirmButtonColor: '#d3c19b'
                 });
 
+                socket?.emit('isValidRegistry');
                 setPayload(initValuesFormJornadas);
             } else if (res.error) {
                 Swal.fire({
@@ -117,6 +120,16 @@ const Registro = () => {
             setCatalogs(prev => ({ ...prev, editions: res }));
         }));
     }, []);
+
+    useEffect(() => {
+
+        //PENDING: TO VERIFY UNCHECK CHECKBOXES WHEN SENDING VALID POST REQUEST / SUBTRACT COUNTER ON SELECTED EVENT
+        socket?.on('updateCounters', (data: { modules: ReqGenCatalogs[], workshops: ReqGenCatalogs[] }) => {
+            const processedWorkshops = formatWorkshops(data.workshops);
+            setCatalogs(prev => ({ ...prev, modules: data.modules, workshops: processedWorkshops }));
+        });
+
+    }, [socket]);
 
     useEffect(() => {
         const currentYear: string = dayjs.utc().format('YYYY');
