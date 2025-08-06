@@ -57,8 +57,9 @@ const Registro = () => {
                     confirmButtonColor: '#d3c19b'
                 });
 
-                socket?.emit('isValidRegistry');
-                setPayload(initValuesFormJornadas);
+                socket?.emit('isValidRegistry', payload);
+                /* setSelectedItem([]);
+                setPayload(initValuesFormJornadas); */
             } else if (res.error) {
                 Swal.fire({
                     icon: "error",
@@ -123,10 +124,18 @@ const Registro = () => {
 
     useEffect(() => {
 
-        //PENDING: TO VERIFY UNCHECK CHECKBOXES WHEN SENDING VALID POST REQUEST / SUBTRACT COUNTER ON SELECTED EVENT
         socket?.on('updateCounters', (data: { modules: ReqGenCatalogs[], workshops: ReqGenCatalogs[] }) => {
-            const processedWorkshops = formatWorkshops(data.workshops);
-            setCatalogs(prev => ({ ...prev, modules: data.modules, workshops: processedWorkshops }));
+            if (data.modules.length !== 0) {
+                //PENDING: FIX BUG HERE
+                console.log(data.modules);
+                
+                setCatalogs(prev => ({ ...prev, modules: data.modules }));
+            }
+
+            if (data.workshops.length !== 0) {
+                const processedWorkshops = formatWorkshops(data.workshops);
+                setCatalogs(prev => ({ ...prev, workshops: processedWorkshops }));
+            }
         });
 
     }, [socket]);
@@ -418,12 +427,15 @@ const Registro = () => {
                                 getOptionLabel={option => option.nombre}
                                 value={catalogs.modules.find(modulo => modulo.id === payload.modulo) || null}
                                 onChange={(_e, value) => setPayload({ ...payload, modulo: value ? value.id : null })}
-                                renderOption={(props, options) => (
-                                    <MenuItem {...props}>
-                                        <ListItemText key={options.id} primary={options.nombre} />
-                                        <Typography sx={{ color: 'gray' }}>{options.cupos} cupos disponibles</Typography>
-                                    </MenuItem>
-                                )}
+                                renderOption={(props, option) => {
+                                    const { key, ...rest } = props;
+                                    return (
+                                        <MenuItem key={key} {...rest}>
+                                            <ListItemText primary={option.nombre} />
+                                            <Typography sx={{ color: 'gray' }}>{option.cupos} cupos disponibles</Typography>
+                                        </MenuItem>
+                                    )
+                                }}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
