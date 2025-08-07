@@ -58,8 +58,8 @@ const Registro = () => {
                 });
 
                 socket?.emit('isValidRegistry', payload);
-                /* setSelectedItem([]);
-                setPayload(initValuesFormJornadas); */
+                setSelectedItem([]);
+                setPayload(initValuesFormJornadas);
             } else if (res.error) {
                 Swal.fire({
                     icon: "error",
@@ -83,11 +83,15 @@ const Registro = () => {
     }
 
     const handleModuleSelect = (id: number | null) => {
-        setPayload({ ...payload, modulo: id });
-    }
+        const selectedModule = catalogs.modules.find(mod => mod ? mod.id === id : null);
 
-    console.log(payload);
-    
+        if (selectedModule?.cupos === 0 && payload.modulo === selectedModule.id) {
+            setPayload(prevPayload => ({ ...prevPayload, modulo: 0 }));
+        } else {
+            setPayload({ ...payload, modulo: id });
+        }
+
+    }
 
     const handleCheckboxes = (isChecked: boolean, workshop: ReqGenCatalogs) => {
         let formatWorkshop: PropsTalleresInterface = {
@@ -100,7 +104,6 @@ const Registro = () => {
             setPayload({ ...payload, talleres: [...(payload.talleres || []), formatWorkshop] });
             setSelectedItem([...selectedItem, workshop.id]);
         } else {
-
             setPayload(prevPayload => ({
                 ...prevPayload,
                 talleres: (prevPayload.talleres || []).filter(
@@ -153,18 +156,28 @@ const Registro = () => {
         setPayload({ ...payload, edicion: currentEdition[0]?.id });
     }, [catalogs.editions]);
 
-    //limpiar talleres del payload que queden seleccionados al acabarse los cupos (en los clientes)
+    //limpiar talleres del payload en cada cliente que quede seleccionado al acabarse los cupos
     useEffect(() => {
 
         catalogs.workshops.map((workshop) => {
             if (workshop.cupos === 0) {
                 handleCheckboxes(false, workshop);
             }
-        })
+        });
 
     }, [catalogs.workshops]);
 
-    /*  console.log(payload); */
+    //limpiar modulo del payload en cada cliente que quede seleccionado al acabarse los cupos
+    useEffect(() => {
+
+        catalogs.modules.map((mod) => {
+            if (mod.cupos === 0 && payload.modulo === mod.id) {
+                handleModuleSelect(mod.id);
+            }
+
+        });
+
+    }, [catalogs.modules]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -449,9 +462,14 @@ const Registro = () => {
                                 renderOption={(props, option) => {
                                     const { key, ...rest } = props;
                                     return (
-                                        <MenuItem key={key} {...rest}>
+                                        <MenuItem key={key} {...rest} disabled={option.cupos === 0}>
                                             <ListItemText primary={option.nombre} />
-                                            <Typography sx={{ color: 'gray' }}>{option.cupos} cupos disponibles</Typography>
+                                            {
+                                                option.cupos !== 0 ?
+                                                    <Typography sx={{ color: 'gray' }}>{option.cupos} cupos disponibles</Typography>
+                                                    :
+                                                    <Typography sx={{ color: '#c53933', fontWeight: 'bold' }}>cupos agotados</Typography>
+                                            }
                                         </MenuItem>
                                     )
                                 }}
@@ -506,7 +524,7 @@ const Registro = () => {
                                             />
                                             <Typography sx={{ mt: 1.2 }}>
                                                 <b>{dayjs(workshop.fecha).format('DD')} de {dayjs(workshop.fecha).format('MMMM')}</b> ─ {workshop.nombre}
-                                                <span style={{ color: workshop.cupos !== 0 ? 'gray' : 'red' }}>
+                                                <span style={{ color: workshop.cupos !== 0 ? 'gray' : '#c53933', fontWeight: workshop.cupos !== 0 ? 'normal' : 'bold' }}>
                                                     {workshop.cupos !== 0 ?
                                                         ` (${workshop.cupos} cupos disponibles)`
                                                         :
