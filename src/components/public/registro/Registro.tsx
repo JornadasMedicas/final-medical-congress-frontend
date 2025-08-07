@@ -82,6 +82,13 @@ const Registro = () => {
         }
     }
 
+    const handleModuleSelect = (id: number | null) => {
+        setPayload({ ...payload, modulo: id });
+    }
+
+    console.log(payload);
+    
+
     const handleCheckboxes = (isChecked: boolean, workshop: ReqGenCatalogs) => {
         let formatWorkshop: PropsTalleresInterface = {
             asistio: false,
@@ -93,12 +100,14 @@ const Registro = () => {
             setPayload({ ...payload, talleres: [...(payload.talleres || []), formatWorkshop] });
             setSelectedItem([...selectedItem, workshop.id]);
         } else {
-            setPayload({
-                ...payload,
-                talleres: (payload.talleres || []).filter(
+
+            setPayload(prevPayload => ({
+                ...prevPayload,
+                talleres: (prevPayload.talleres || []).filter(
                     (taller) => taller.id_taller !== workshop.id
                 )
-            });
+            }));
+
             setSelectedItem(selectedItem.filter((id: number) => id != workshop.id));
         }
     }
@@ -126,9 +135,6 @@ const Registro = () => {
 
         socket?.on('updateCounters', (data: { modules: ReqGenCatalogs[], workshops: ReqGenCatalogs[] }) => {
             if (data.modules.length !== 0) {
-                //PENDING: FIX BUG HERE
-                console.log(data.modules);
-                
                 setCatalogs(prev => ({ ...prev, modules: data.modules }));
             }
 
@@ -146,6 +152,19 @@ const Registro = () => {
 
         setPayload({ ...payload, edicion: currentEdition[0]?.id });
     }, [catalogs.editions]);
+
+    //limpiar talleres del payload que queden seleccionados al acabarse los cupos (en los clientes)
+    useEffect(() => {
+
+        catalogs.workshops.map((workshop) => {
+            if (workshop.cupos === 0) {
+                handleCheckboxes(false, workshop);
+            }
+        })
+
+    }, [catalogs.workshops]);
+
+    /*  console.log(payload); */
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -426,7 +445,7 @@ const Registro = () => {
                                 options={catalogs.modules}
                                 getOptionLabel={option => option.nombre}
                                 value={catalogs.modules.find(modulo => modulo.id === payload.modulo) || null}
-                                onChange={(_e, value) => setPayload({ ...payload, modulo: value ? value.id : null })}
+                                onChange={(_e, value) => handleModuleSelect(value ? value.id : null)}
                                 renderOption={(props, option) => {
                                     const { key, ...rest } = props;
                                     return (
@@ -481,11 +500,19 @@ const Registro = () => {
                                         <Box sx={{ display: 'flex' }}>
                                             <Checkbox
                                                 sx={{ '&.Mui-checked': { color: '#2a7dd3' } }}
-                                                checked={selectedItem.includes(workshop.id)}
+                                                disabled={workshop.cupos === 0}
+                                                checked={workshop.cupos !== 0 && selectedItem.includes(workshop.id)}
                                                 onChange={(e) => handleCheckboxes(e.target.checked, workshop)}
                                             />
                                             <Typography sx={{ mt: 1.2 }}>
-                                                <b>{dayjs(workshop.fecha).format('DD')} de {dayjs(workshop.fecha).format('MMMM')}</b> ─ {workshop.nombre} <span style={{ color: 'gray' }}>{`(${workshop.cupos} cupos disponibles)`}</span>
+                                                <b>{dayjs(workshop.fecha).format('DD')} de {dayjs(workshop.fecha).format('MMMM')}</b> ─ {workshop.nombre}
+                                                <span style={{ color: workshop.cupos !== 0 ? 'gray' : 'red' }}>
+                                                    {workshop.cupos !== 0 ?
+                                                        ` (${workshop.cupos} cupos disponibles)`
+                                                        :
+                                                        ` (cupos agotados)`
+                                                    }
+                                                </span>
                                             </Typography>
                                         </Box>
                                     </Grid>
