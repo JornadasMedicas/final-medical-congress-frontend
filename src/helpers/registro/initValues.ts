@@ -43,7 +43,7 @@ export const initValuesFormJornadasErrors: JornadasValuesInterface = {
     }
 }
 
-export const initValuesFormJornadas: RegistFormInterface = { //!IMPORTANT CHANGE WORKSHOPS INFO EVERY EDITION
+export const initValuesFormJornadas: RegistFormInterface = {
     categoria: '',
     acronimo: '',
     nombre: '',

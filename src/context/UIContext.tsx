@@ -14,7 +14,9 @@ const UIContext = createContext<PropsUIContext>({
     modalProgramData: { isOpen: false, img: '' },
     setModalProgramData: () => { },
     triggerRelocation: false,
-    setTriggerRelocation: () => { }
+    setTriggerRelocation: () => { },
+    refetch: false,
+    setRefetch: () => {}
 });
 
 export const UIContextProvider = ({ children: Component }: { children: ReactNode }) => {
@@ -24,6 +26,7 @@ export const UIContextProvider = ({ children: Component }: { children: ReactNode
     const [modalAdminData, setModalAdminData] = useState<PropsModalAdmin>({ isOpen: false });
     const [modalConfirmDelete, setModalConfirmDelete] = useState<PropsModalAdmin>({ isOpen: false });
     const [triggerRelocation, setTriggerRelocation] = useState<boolean>(false);
+    const [refetch, setRefetch] = useState<boolean>(false);
 
     return (
         <UIContext value={{
@@ -38,7 +41,9 @@ export const UIContextProvider = ({ children: Component }: { children: ReactNode
             setModalConfirmDelete,
             setModalAdminData,
             triggerRelocation,
-            setTriggerRelocation
+            setTriggerRelocation,
+            refetch,
+            setRefetch
         }}>
             {Component}
         </UIContext>

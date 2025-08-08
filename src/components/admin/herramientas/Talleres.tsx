@@ -31,7 +31,7 @@ interface Column {
 
 const columns: Column[] = [
     { field: 'acciones', headerName: 'Acciones', flex: 1, headerAlign: 'left', align: 'left', sortable: false },
-    { field: 'nombre', headerName: 'Talleres', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
+    { field: 'nombre', headerName: 'Taller', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
     { field: 'cupos', headerName: 'Cupos', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
     { field: 'created_at', headerName: 'Fecha Alta', flex: 2, headerAlign: 'center', align: 'center', sortable: false },
     { field: 'updated_at', headerName: 'Fecha Actualización', flex: 1, headerAlign: 'center', align: 'center', sortable: false }
@@ -39,7 +39,7 @@ const columns: Column[] = [
 
 export const Talleres = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const { setModalConfirmDelete } = useContext<PropsUIContext>(UIContext);
+    const { setModalConfirmDelete, refetch, setRefetch } = useContext<PropsUIContext>(UIContext);
     const [catModules, setCatModules] = useState<ReqGenCatalogs[]>([]);
     const [catEditions, setCatEditions] = useState<ReqEventEditions[]>([]);
     const [editData, setEditData] = useState<{ id: number, nombre: string, cupos: number | string }>({ id: 0, nombre: '', cupos: 0 });
@@ -65,6 +65,7 @@ export const Talleres = () => {
         if (!res.error) {
             enqueueSnackbar('Taller creado correctamente.', { variant: 'success' });
             setPayload(initialState);
+            setRefetch(true);
         } else {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
@@ -102,6 +103,7 @@ export const Talleres = () => {
 
         if (!res.error) {
             enqueueSnackbar('Taller editado correctamente.', { variant: 'success' });
+            setRefetch(true);
         } else {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
@@ -131,6 +133,17 @@ export const Talleres = () => {
             setRows(res);
         }));
     }, []);
+
+    useEffect(() => {
+        if (refetch) {
+            
+            getWorkshops().then(((res: ReqGenCatalogs[]) => {
+                setRows(res);
+            }));
+
+            setRefetch(false);
+        }
+    }, [refetch]);
 
     return (
         <Grid container sx={{ mt: 2 }} spacing={2}>
@@ -356,7 +369,7 @@ export const Talleres = () => {
                                                     <TextField
                                                         variant="standard"
                                                         value={editData.nombre}
-                                                        onChange={(e) => setEditData({ ...editData, nombre: e.target.value })}
+                                                        onChange={(e) => setEditData({ ...editData, nombre: e.target.value.toUpperCase() })}
                                                         size="small"
                                                         sx={{
                                                             '& .MuiInputBase-root:after': {

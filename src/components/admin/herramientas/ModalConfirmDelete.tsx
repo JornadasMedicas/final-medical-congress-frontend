@@ -6,7 +6,7 @@ import { deleteCategory, deleteModule, deleteWorkshop } from "../../../services/
 import { useSnackbar } from "notistack";
 
 export const ModalConfirmDelete = () => {
-    const { modalConfirmDelete, setModalConfirmDelete } = useContext<PropsUIContext>(UIContext);
+    const { modalConfirmDelete, setModalConfirmDelete, setRefetch } = useContext<PropsUIContext>(UIContext);
     const [loading, setLoading] = useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -25,6 +25,7 @@ export const ModalConfirmDelete = () => {
                     if (!res.error) {
                         enqueueSnackbar('Categoría eliminada correctamente', { variant: 'success' });
                         setModalConfirmDelete({ isOpen: false });
+                        setRefetch(true);
                     } else {
                         enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
                     }
@@ -36,6 +37,7 @@ export const ModalConfirmDelete = () => {
                     if (!res.error) {
                         enqueueSnackbar('Módulo eliminado correctamente.', { variant: 'success' });
                         setModalConfirmDelete({ isOpen: false });
+                        setRefetch(true);
                     } else {
                         enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
                     }
@@ -47,6 +49,7 @@ export const ModalConfirmDelete = () => {
                     if (!res.error) {
                         enqueueSnackbar('Taller eliminado correctamente.', { variant: 'success' });
                         setModalConfirmDelete({ isOpen: false });
+                        setRefetch(true);
                     } else {
                         enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
                     }

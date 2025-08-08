@@ -35,7 +35,7 @@ const columns: Column[] = [
 
 export const Modulos = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const { setModalConfirmDelete } = useContext<PropsUIContext>(UIContext);
+    const { setModalConfirmDelete, refetch, setRefetch } = useContext<PropsUIContext>(UIContext);
     const [rows, setRows] = useState<ReqGenCatalogs[]>([]);
     const [selectedRow, setSelectedRow] = useState<ReqGenCatalogs | null>(null);
     const [editData, setEditData] = useState<{ id: number, nombre: string, cupos: number | string }>({ id: 0, nombre: '', cupos: 0 });
@@ -77,6 +77,7 @@ export const Modulos = () => {
 
         if (!res.error) {
             enqueueSnackbar('Módulo editado correctamente.', { variant: 'success' });
+            setRefetch(true);
         } else {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
@@ -95,6 +96,7 @@ export const Modulos = () => {
             enqueueSnackbar('Módulo creado correctamente.', { variant: 'success' });
             setPayload('');
             setIsSent(false);
+            setRefetch(true);
         } else {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
@@ -114,6 +116,17 @@ export const Modulos = () => {
             setRows(res);
         }));
     }, []);
+
+    useEffect(() => {
+        if (refetch) {
+            
+            getModules().then(((res: ReqGenCatalogs[]) => {
+                setRows(res);
+            }));
+
+            setRefetch(false);
+        }
+    }, [refetch]);
 
     return (
         <Grid container sx={{ mt: 2 }} spacing={2}>

@@ -26,4 +26,6 @@ export interface PropsUIContext {
     setModalConfirmDelete: React.Dispatch<React.SetStateAction<PropsModalAdmin>>;
     triggerRelocation: boolean;
     setTriggerRelocation: React.Dispatch<React.SetStateAction<boolean>>;
+    refetch: boolean;
+    setRefetch:  React.Dispatch<React.SetStateAction<boolean>>;
 }

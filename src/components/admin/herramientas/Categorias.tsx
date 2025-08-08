@@ -27,14 +27,14 @@ interface Column {
 
 const columns: Column[] = [
     { field: 'acciones', headerName: 'Acciones', flex: 1, headerAlign: 'left', align: 'left', sortable: false },
-    { field: 'nombre', headerName: 'Módulo', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
+    { field: 'nombre', headerName: 'Categoría', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
     { field: 'created_at', headerName: 'Fecha Alta', flex: 2, headerAlign: 'center', align: 'center', sortable: false },
     { field: 'updated_at', headerName: 'Fecha Actualización', flex: 1, headerAlign: 'center', align: 'center', sortable: false }
 ];
 
 export const Categorias = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const { setModalConfirmDelete } = useContext<PropsUIContext>(UIContext);
+    const { setModalConfirmDelete, refetch, setRefetch } = useContext<PropsUIContext>(UIContext);
     const [rows, setRows] = useState<ReqGenCatalogs[]>([]);
     const [selectedRow, setSelectedRow] = useState<ReqGenCatalogs | null>(null);
     const [editData, setEditData] = useState<{ id: number, nombre: string }>({ id: 0, nombre: '' });
@@ -76,6 +76,7 @@ export const Categorias = () => {
 
         if (!res.error) {
             enqueueSnackbar('Categoría editada correctamente.', { variant: 'success' });
+            setRefetch(true);
         } else {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
@@ -94,6 +95,7 @@ export const Categorias = () => {
             enqueueSnackbar('Categoria creada correctamente', { variant: 'success' });
             setPayload('');
             setIsSent(false);
+            setRefetch(true);
         } else {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
@@ -113,6 +115,17 @@ export const Categorias = () => {
             setRows(res);
         }));
     }, []);
+
+    useEffect(() => {
+        if (refetch) {
+
+            getCategories().then(((res: ReqGenCatalogs[]) => {
+                setRows(res);
+            }));
+
+            setRefetch(false);
+        }
+    }, [refetch]);
 
     return (
         <Grid container sx={{ mt: 2 }} spacing={2}>
