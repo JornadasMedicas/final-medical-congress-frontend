@@ -184,7 +184,7 @@ const Registro = () => {
     }, []);
 
     return (
-        <Stack sx={{ pt: responsive ? `${navBarHeigthResponsive}px` : `${navBarHeigth}px`, mt: 5, mb: 6 }}>
+        <Stack sx={{ pt: responsive ? `${navBarHeigthResponsive}px` : `${navBarHeigth}px`, mt: 3, mb: 4 }}>
             <Grid
                 container
                 component={motion.div}
