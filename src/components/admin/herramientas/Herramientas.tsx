@@ -91,7 +91,7 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
                     <LinearProgress color='inherit' sx={{ width: '100%', color: 'text.secondary', position: 'absolute', top: 0 }} />
                     :
                     <Stack direction={'column'} sx={{ width: '100%', height: '100%' }}>
-                        <Grid container className='animate__animated animate__fadeIn' spacing={responsive ? 5 : 3} columns={12} sx={{ width: '100%', height: '100%', p: responsive ? 2 : 2, display: 'flex' }}>
+                        <Grid container className='animate__animated animate__fadeIn' spacing={responsive ? 5 : 3} columns={12} sx={{ width: '100%', height: '100%', p: 2, display: 'flex' }}>
                             {
                                 items.map((item) => (
                                     <Grid key={item.id} size={responsive ? 12 : 3}>

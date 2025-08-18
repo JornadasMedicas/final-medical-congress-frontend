@@ -13,6 +13,7 @@ import { Asistentes } from './asistentes/Asistentes';
 import { getEventEditions } from '../../services/admin/adminService';
 import { ReqEventEditions } from '../../interfaces/admin/IAdmin';
 import { Herramientas } from './herramientas/Herramientas';
+import { Asistencia } from './asistencia/Asistencia';
 
 const Admin = () => {
     const { setActiveSection } = useContext(UIContext);
@@ -54,7 +55,7 @@ const Admin = () => {
                     <Login />
                     :
                     <Grid container sx={{ pt: responsive ? `${navBarHeigthResponsive}px` : `${navBarHeigth}px`, mt: 3, mb: 3 }}>
-                        <Grid size={12} sx={{ mb: responsive ? 0 : tab === '3' ? '25vh' : 0 }}>
+                        <Grid size={12}>
                             <TabContext value={tab}>
                                 <TabList
                                     slotProps={{ indicator: { style: { backgroundColor: "#bd4f2b" } } }}
@@ -69,9 +70,9 @@ const Admin = () => {
                                     <Tab icon={<Groups2Icon color="action" />} iconPosition='start' sx={{ fontWeight: 'bold', paddingTop: 0 }} label={<span style={{ color: tab === '2' ? 'black' : 'gray' }}>Asistentes</span>} value="2" />
                                     <Tab icon={<ConstructionIcon color="action" />} iconPosition='start' sx={{ fontWeight: 'bold', paddingTop: 0 }} label={<span style={{ color: tab === '3' ? 'black' : 'gray' }}>Herramientas</span>} value="3" />
                                 </TabList>
-                                <Box sx={{ borderRadius: 3, boxShadow: 4, marginTop: 3, width: responsive ? '95%' : '90%', height: 'auto', ml: 'auto', mr: 'auto', position: 'relative' }}>
-                                    <TabPanel value="1" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', justifyContent: 'end' }}>
-                                        {/* <Asistencia editions={editions} /> */}
+                                <Box sx={{ borderRadius: 3, boxShadow: tab === '2' ? 4 : 0, marginTop: 3, width: responsive ? '95%' : '90%', height: 'auto', ml: 'auto', mr: 'auto', position: 'relative' }}>
+                                    <TabPanel value="1" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'column', justifyContent: 'end', backgroundColor: 'transparent' }}>
+                                        <Asistencia editions={editions} />
                                     </TabPanel>
                                     <TabPanel value="2" sx={{ m: 0, p: 0, display: 'flex', flexDirection: 'row', justifyContent: 'end' }}>
                                         <Asistentes editions={editions} />
