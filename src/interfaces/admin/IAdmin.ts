@@ -68,7 +68,6 @@ export interface ReqAssistantsTotalCount {
     data: number
 }
 
-
 export interface PropsGetAssistants {
     limit: string;
     page: string;
@@ -85,28 +84,36 @@ export interface PropsGetAssistantInfo {
     correo: string;
     nombre: string;
     tel: string;
-    jrn_evento: PropsJrnEventoTable[]
+    jrn_inscritos_modulos: PropsInscritosModulos[];
+    jrn_inscritos_talleres: PropsInscritosTalleres[];
 }
 
-export interface PropsJrnEventoTable {
-    modulo: string;
-    isRegisteredT1: boolean;
-    isRegisteredT2: boolean;
-    isRegisteredT3: boolean;
-    isRegisteredT4: boolean;
-    isAssistDay1: boolean;
-    isAssistDay2: boolean;
-    isAssistDay3: boolean;
-    isAssistT1: boolean;
-    isAssistT2: boolean;
-    isAssistT3: boolean;
-    isAssistT4: boolean;
+export interface PropsInscritosModulos {
+    asistioDia1: boolean;
+    asistioDia2: boolean;
+    asistioDia3: boolean;
+    jrn_modulo: Jrn_modulo;
+}
+
+export interface PropsInscritosTalleres {
+    asistio: boolean;
+    jrn_taller: Jrn_taller;
+}
+
+export interface Jrn_taller {
+    id: number;
+    nombre: string;
+}
+
+export interface PropsAssitance {
+    emaildata: string;
+    assistantInfo: PropsGetAssistantInfo | null;
 }
 
 export interface ReqAssistantInfo {
     msg: string;
     ok: boolean;
-    data: PropsGetAssistantInfo;
+    data: PropsGetAssistantInfo | null;
 }
 
 export interface ReqEventEditions {
