@@ -7,7 +7,8 @@ import SendIcon from '@mui/icons-material/Send';
 import HubSharpIcon from '@mui/icons-material/HubSharp';
 import InfoOutlineRoundedIcon from '@mui/icons-material/InfoOutlineRounded';
 import { useState } from 'react';
-import { getAssitantInfo } from '../../../services/admin/adminService';
+import { getAssitantInfo, putRegistAssistance } from '../../../services/admin/adminService';
+import Swal from 'sweetalert2';
 
 export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -16,13 +17,36 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
     const [info, setInfo] = useState<PropsAssitance>({ emaildata: '', assistantInfo: null });
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
 
-    const manualAssistance = () => {
+    const fetchInfo = () => {
 
         getAssitantInfo(info.emaildata).then((res: ReqAssistantInfo) =>
-            setInfo({ ...info, assistantInfo: res.data })).catch((err) => console.log(err)
-        );
+            setInfo({ ...info, assistantInfo: res.data })
+        ).catch((err) => console.log(err));
 
         setOpenModal(true);
+    }
+
+    const manualAssistance = () => {
+        putRegistAssistance(moduleValues.emaildata).then((res: any) => {
+            if (res.error) {
+                if (res.error.status === 400 || res.error.status === 404) {                    
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: res.error.response.data.msg,
+                        confirmButtonColor: '#13322c'
+                    });
+                }
+            } else {
+                Swal.fire({
+                    icon: "success",
+                    title: "Éxito",
+                    text: "Asistencia registrada correctamente.",
+                    confirmButtonColor: '#13322c',
+                    timer: 1000
+                });
+            }
+        }).catch((err) => console.log(err));
     }
 
     return (
@@ -32,204 +56,210 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
                     <LinearProgress color='inherit' sx={{ width: '100%', color: 'text.secondary', position: 'absolute', top: 0 }} />
                     :
                     <Grid container size={12} spacing={4}>
-                        <Grid size={responsive ? 12 : 6} sx={{ display: 'flex', m: 'auto', borderRadius: 2, boxShadow: 1, flexDirection: 'column' }}>
-                            <Grid gap={1} sx={{ backgroundColor: 'background.default', height: '10%', width: '100%', borderTopLeftRadius: 4, borderTopRightRadius: 4, p: 2, display: 'flex', justifyContent: 'center' }}>
-                                <Diversity3SharpIcon sx={{ color: 'white', width: 'auto', height: '27px' }} />
-                                <Typography sx={{ color: 'white', fontWeight: 'bold', marginTop: '3.5px' }}>
-                                    CONGRESO
-                                </Typography>
-                            </Grid>
-                            <Grid sx={{ display: 'flex', justifyContent: 'center', width: responsive ? '100%' : '100%', p: 3 }}>
-                                <TextField
-                                    label='Registro QR'
-                                    autoComplete='off'
-                                    name='qrdata'
-                                    value={moduleValues.qrdata}
-                                    onChange={(e) => setModuleValues({ ...moduleValues, qrdata: e.target.value })}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <QrCodeScannerIcon />
-                                                </InputAdornment>
-                                            )
-                                        }
-                                    }}
-                                    sx={{
-                                        "& label.Mui-focused": {
-                                            color: "#b7402a"
-                                        },
-                                        "& .MuiInput-underline:after": {
-                                            borderBottomColor: "#b7402a"
-                                        },
-                                        width: '300px'
-                                    }}
-                                    variant="standard"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid sx={{ display: 'flex', justifyContent: 'center', width: '100%', p: 3 }}>
-                                <TextField
-                                    label='Registro Manual (email)'
-                                    autoComplete='off'
-                                    placeholder='asistente@ejemplo.com'
-                                    name='email'
-                                    value={moduleValues.emaildata}
-                                    onChange={(e) => setModuleValues({ ...moduleValues, emaildata: e.target.value })}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <PersonAddAlt1Icon />
-                                                </InputAdornment>
-                                            )
-                                        }
-                                    }}
-                                    sx={{
-                                        "& label.Mui-focused": {
-                                            color: "#b7402a"
-                                        },
-                                        "& .MuiInput-underline:after": {
-                                            borderBottomColor: "#b7402a"
-                                        },
-                                        width: '250px'
-                                    }}
-                                    variant="standard"
-                                    fullWidth
-                                />
-                                <Button
-                                    disabled={moduleValues.emaildata === '' ? true : false}
-                                    endIcon={<SendIcon />}
-                                    variant='contained'
-                                    /* onClick={manualAssistance} */
-                                    sx={{ color: 'primary.main', backgroundColor: "background.default", ":hover": { backgroundColor: 'primary.main', color: "background.default" }, marginBottom: 0, marginTop: 2, marginLeft: 1, width: '95px', height: '30px' }}
-                                >
-                                    Enviar
-                                </Button>
-                            </Grid>
+                        <Grid size={12} sx={{ display: 'flex', m: 'auto', flexDirection: 'column' }}>
+                            <Box sx={{ width: responsive ? '100%' : '70%', m: 'auto', borderRadius: 2, boxShadow: 1, }}>
+                                <Grid gap={1} sx={{ backgroundColor: 'background.default', height: '10%', width: '100%', borderTopLeftRadius: 4, borderTopRightRadius: 4, p: 2, display: 'flex', justifyContent: 'center' }}>
+                                    <Diversity3SharpIcon sx={{ color: 'white', width: 'auto', height: '27px' }} />
+                                    <Typography sx={{ color: 'white', fontWeight: 'bold', marginTop: '3.5px' }}>
+                                        CONGRESO
+                                    </Typography>
+                                </Grid>
+                                <Grid sx={{ display: 'flex', justifyContent: 'center', width: responsive ? '100%' : '100%', p: 3 }}>
+                                    <TextField
+                                        label='Registro QR'
+                                        autoComplete='off'
+                                        name='qrdata'
+                                        value={moduleValues.qrdata}
+                                        onChange={(e) => setModuleValues({ ...moduleValues, qrdata: e.target.value })}
+                                        slotProps={{
+                                            input: {
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <QrCodeScannerIcon />
+                                                    </InputAdornment>
+                                                )
+                                            }
+                                        }}
+                                        sx={{
+                                            "& label.Mui-focused": {
+                                                color: "#b7402a"
+                                            },
+                                            "& .MuiInput-underline:after": {
+                                                borderBottomColor: "#b7402a"
+                                            },
+                                            width: '300px'
+                                        }}
+                                        variant="standard"
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid sx={{ display: 'flex', justifyContent: 'center', width: '100%', p: 3 }}>
+                                    <TextField
+                                        label='Registro Manual (email)'
+                                        autoComplete='off'
+                                        placeholder='asistente@ejemplo.com'
+                                        name='email'
+                                        value={moduleValues.emaildata}
+                                        onChange={(e) => setModuleValues({ ...moduleValues, emaildata: e.target.value })}
+                                        slotProps={{
+                                            input: {
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <PersonAddAlt1Icon />
+                                                    </InputAdornment>
+                                                )
+                                            }
+                                        }}
+                                        sx={{
+                                            "& label.Mui-focused": {
+                                                color: "#b7402a"
+                                            },
+                                            "& .MuiInput-underline:after": {
+                                                borderBottomColor: "#b7402a"
+                                            },
+                                            width: '250px'
+                                        }}
+                                        variant="standard"
+                                        fullWidth
+                                    />
+                                    <Button
+                                        disabled={moduleValues.emaildata === '' ? true : false}
+                                        endIcon={<SendIcon />}
+                                        variant='contained'
+                                        onClick={manualAssistance}
+                                        sx={{ color: 'primary.main', backgroundColor: "background.default", ":hover": { backgroundColor: 'primary.main', color: "background.default" }, marginBottom: 0, marginTop: 2, marginLeft: 1, width: '95px', height: '30px' }}
+                                    >
+                                        Enviar
+                                    </Button>
+                                </Grid>
+                            </Box>
                         </Grid>
-                        <Grid size={responsive ? 12 : 6} sx={{ display: 'flex', m: 'auto', borderRadius: 2, boxShadow: 1, flexDirection: 'column' }}>
-                            <Grid gap={1} sx={{ backgroundColor: 'background.default', height: '10%', width: '100%', borderTopLeftRadius: 4, borderTopRightRadius: 4, p: 2, display: 'flex', justifyContent: 'center' }}>
-                                <HubSharpIcon sx={{ color: 'white', width: 'auto', height: '27px' }} />
-                                <Typography sx={{ color: 'white', fontWeight: 'bold', marginTop: '3.5px' }}>
-                                    TALLERES
-                                </Typography>
-                            </Grid>
-                            <Grid sx={{ display: 'flex', justifyContent: 'center', width: responsive ? '100%' : '100%', p: 3 }}>
-                                <TextField
-                                    label='Registro QR'
-                                    autoComplete='off'
-                                    name='qrdata'
-                                    value={moduleValues.qrdata}
-                                    onChange={(e) => setModuleValues({ ...moduleValues, qrdata: e.target.value })}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <QrCodeScannerIcon />
-                                                </InputAdornment>
-                                            )
-                                        }
-                                    }}
-                                    sx={{
-                                        "& label.Mui-focused": {
-                                            color: "#b7402a"
-                                        },
-                                        "& .MuiInput-underline:after": {
-                                            borderBottomColor: "#b7402a"
-                                        },
-                                        width: '300px'
-                                    }}
-                                    variant="standard"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid size={4} sx={{ display: 'flex', justifyContent: 'center', width: '100%', p: 3 }}>
-                                <TextField
-                                    label='Registro Manual (email)'
-                                    autoComplete='off'
-                                    placeholder='asistente@ejemplo.com'
-                                    name='email'
-                                    value={workshopValues.emaildata}
-                                    onChange={(e) => setWorkshopValues({ ...moduleValues, emaildata: e.target.value })}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <PersonAddAlt1Icon />
-                                                </InputAdornment>
-                                            )
-                                        }
-                                    }}
-                                    sx={{
-                                        "& label.Mui-focused": {
-                                            color: "#b7402a"
-                                        },
-                                        "& .MuiInput-underline:after": {
-                                            borderBottomColor: "#b7402a"
-                                        },
-                                        width: '250px'
-                                    }}
-                                    variant="standard"
-                                    fullWidth
-                                />
-                                <Button
-                                    disabled={workshopValues.emaildata === '' ? true : false}
-                                    endIcon={<SendIcon />}
-                                    variant='contained'
-                                    /* onClick={manualAssistance} */
-                                    sx={{ color: 'primary.main', backgroundColor: "background.default", ":hover": { backgroundColor: 'primary.main', color: "background.default" }, marginBottom: 0, marginTop: 2, marginLeft: 1, width: '95px', height: '30px' }}
-                                >
-                                    Enviar
-                                </Button>
-                            </Grid>
+                        <Grid size={12} sx={{ display: 'flex', m: 'auto', flexDirection: 'column' }}>
+                            <Box sx={{ width: responsive ? '100%' : '70%', m: 'auto', borderRadius: 2, boxShadow: 1, }}>
+                                <Grid gap={1} sx={{ backgroundColor: 'background.default', height: '10%', width: '100%', borderTopLeftRadius: 4, borderTopRightRadius: 4, p: 2, display: 'flex', justifyContent: 'center' }}>
+                                    <HubSharpIcon sx={{ color: 'white', width: 'auto', height: '27px' }} />
+                                    <Typography sx={{ color: 'white', fontWeight: 'bold', marginTop: '3.5px' }}>
+                                        TALLERES
+                                    </Typography>
+                                </Grid>
+                                <Grid sx={{ display: 'flex', justifyContent: 'center', width: responsive ? '100%' : '100%', p: 3 }}>
+                                    <TextField
+                                        label='Registro QR'
+                                        autoComplete='off'
+                                        name='qrdata'
+                                        value={moduleValues.qrdata}
+                                        onChange={(e) => setModuleValues({ ...moduleValues, qrdata: e.target.value })}
+                                        slotProps={{
+                                            input: {
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <QrCodeScannerIcon />
+                                                    </InputAdornment>
+                                                )
+                                            }
+                                        }}
+                                        sx={{
+                                            "& label.Mui-focused": {
+                                                color: "#b7402a"
+                                            },
+                                            "& .MuiInput-underline:after": {
+                                                borderBottomColor: "#b7402a"
+                                            },
+                                            width: '300px'
+                                        }}
+                                        variant="standard"
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid size={4} sx={{ display: 'flex', justifyContent: 'center', width: '100%', p: 3 }}>
+                                    <TextField
+                                        label='Registro Manual (email)'
+                                        autoComplete='off'
+                                        placeholder='asistente@ejemplo.com'
+                                        name='email'
+                                        value={workshopValues.emaildata}
+                                        onChange={(e) => setWorkshopValues({ ...moduleValues, emaildata: e.target.value })}
+                                        slotProps={{
+                                            input: {
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <PersonAddAlt1Icon />
+                                                    </InputAdornment>
+                                                )
+                                            }
+                                        }}
+                                        sx={{
+                                            "& label.Mui-focused": {
+                                                color: "#b7402a"
+                                            },
+                                            "& .MuiInput-underline:after": {
+                                                borderBottomColor: "#b7402a"
+                                            },
+                                            width: '250px'
+                                        }}
+                                        variant="standard"
+                                        fullWidth
+                                    />
+                                    <Button
+                                        disabled={workshopValues.emaildata === '' ? true : false}
+                                        endIcon={<SendIcon />}
+                                        variant='contained'
+                                        /* onClick={manualAssistance} */
+                                        sx={{ color: 'primary.main', backgroundColor: "background.default", ":hover": { backgroundColor: 'primary.main', color: "background.default" }, marginBottom: 0, marginTop: 2, marginLeft: 1, width: '95px', height: '30px' }}
+                                    >
+                                        Enviar
+                                    </Button>
+                                </Grid>
+                            </Box>
                         </Grid>
-                        <Grid size={responsive ? 12 : 6} sx={{ display: 'flex', m: 'auto', borderRadius: 2, boxShadow: 1, flexDirection: 'column' }}>
-                            <Grid gap={1} sx={{ backgroundColor: 'background.default', height: '10%', width: '100%', borderTopLeftRadius: 4, borderTopRightRadius: 4, p: 2, display: 'flex', justifyContent: 'center' }}>
-                                <InfoOutlineRoundedIcon sx={{ color: 'white', width: 'auto', height: '27px' }} />
-                                <Typography sx={{ color: 'white', fontWeight: 'bold', marginTop: '3.5px' }}>
-                                    CONSULTAR INFORMACIÓN
-                                </Typography>
-                            </Grid>
-                            <Grid size={4} sx={{ display: 'flex', justifyContent: 'center', width: '100%', p: 3 }}>
-                                <TextField
-                                    label='Captura Manual (email)'
-                                    autoComplete='off'
-                                    placeholder='asistente@ejemplo.com'
-                                    name='email'
-                                    value={info.emaildata}
-                                    onChange={(e) => setInfo({ ...info, emaildata: e.target.value })}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <PersonAddAlt1Icon />
-                                                </InputAdornment>
-                                            )
-                                        }
-                                    }}
-                                    sx={{
-                                        "& label.Mui-focused": {
-                                            color: "#b7402a"
-                                        },
-                                        "& .MuiInput-underline:after": {
-                                            borderBottomColor: "#b7402a"
-                                        },
-                                        width: '250px'
-                                    }}
-                                    variant="standard"
-                                    fullWidth
-                                />
-                                <Button
-                                    disabled={info.emaildata === '' ? true : false}
-                                    endIcon={<SendIcon />}
-                                    variant='contained'
-                                    onClick={manualAssistance}
-                                    sx={{ color: 'primary.main', backgroundColor: "background.default", ":hover": { backgroundColor: 'primary.main', color: "background.default" }, marginBottom: 0, marginTop: 2, marginLeft: 1, width: '95px', height: '30px' }}
-                                >
-                                    Enviar
-                                </Button>
-                            </Grid>
+                        <Grid size={12} sx={{ display: 'flex', m: 'auto', flexDirection: 'column' }}>
+                            <Box sx={{ width: responsive ? '100%' : '70%', m: 'auto', borderRadius: 2, boxShadow: 1, }}>
+                                <Grid gap={1} sx={{ backgroundColor: 'background.default', height: '10%', width: '100%', borderTopLeftRadius: 4, borderTopRightRadius: 4, p: 2, display: 'flex', justifyContent: 'center' }}>
+                                    <InfoOutlineRoundedIcon sx={{ color: 'white', width: 'auto', height: '27px' }} />
+                                    <Typography sx={{ color: 'white', fontWeight: 'bold', marginTop: '3.5px' }}>
+                                        CONSULTAR INFORMACIÓN
+                                    </Typography>
+                                </Grid>
+                                <Grid size={4} sx={{ display: 'flex', justifyContent: 'center', width: '100%', p: 3 }}>
+                                    <TextField
+                                        label='Captura Manual (email)'
+                                        autoComplete='off'
+                                        placeholder='asistente@ejemplo.com'
+                                        name='email'
+                                        value={info.emaildata}
+                                        onChange={(e) => setInfo({ ...info, emaildata: e.target.value })}
+                                        slotProps={{
+                                            input: {
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <PersonAddAlt1Icon />
+                                                    </InputAdornment>
+                                                )
+                                            }
+                                        }}
+                                        sx={{
+                                            "& label.Mui-focused": {
+                                                color: "#b7402a"
+                                            },
+                                            "& .MuiInput-underline:after": {
+                                                borderBottomColor: "#b7402a"
+                                            },
+                                            width: '250px'
+                                        }}
+                                        variant="standard"
+                                        fullWidth
+                                    />
+                                    <Button
+                                        disabled={info.emaildata === '' ? true : false}
+                                        endIcon={<SendIcon />}
+                                        variant='contained'
+                                        onClick={fetchInfo}
+                                        sx={{ color: 'primary.main', backgroundColor: "background.default", ":hover": { backgroundColor: 'primary.main', color: "background.default" }, marginBottom: 0, marginTop: 2, marginLeft: 1, width: '95px', height: '30px' }}
+                                    >
+                                        Enviar
+                                    </Button>
+                                </Grid>
+                            </Box>
                         </Grid>
                         <Dialog
                             open={openModal}
