@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import HubSharpIcon from '@mui/icons-material/HubSharp';
 import InfoOutlineRoundedIcon from '@mui/icons-material/InfoOutlineRounded';
 import { useState } from 'react';
-import { getAssitantInfo, putRegistAssistance } from '../../../services/admin/adminService';
+import { getAssitantInfo, putRegistAssistance, putRegistAssistanceWorkshops } from '../../../services/admin/adminService';
 import Swal from 'sweetalert2';
 
 export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
@@ -20,13 +20,16 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
     const fetchInfo = () => {
 
         getAssitantInfo(info.emaildata).then((res: ReqAssistantInfo) =>
-            setInfo({ ...info, assistantInfo: res.data })
-        ).catch((err) => console.log(err));
+            setInfo(prev => ({ ...prev, assistantInfo: res.data }))
+        ).catch((err) => console.log(err))
 
+        setInfo(prev => ({ ...prev, emaildata: '' }));
         setOpenModal(true);
     }
 
-    const manualAssistance = () => {
+    //rojeru.san1983@gmail.com|1|3,4
+
+    const manualModulesAssistance = () => {
         putRegistAssistance(moduleValues.emaildata).then((res: any) => {
             if (res.error) {
                 if (res.error.status === 400 || res.error.status === 404) {                    
@@ -46,6 +49,30 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
                     timer: 1000
                 });
             }
+        }).catch((err) => console.log(err));
+    }
+
+    const manualWorkshopsAssistance = () => {
+        putRegistAssistanceWorkshops(workshopValues.emaildata).then((res: any) => {
+            if (res.error) {
+                if (res.error.status === 400 || res.error.status === 404) {                    
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: res.error.response.data.msg,
+                        confirmButtonColor: '#13322c'
+                    });
+                }
+            } else {
+                Swal.fire({
+                    icon: "success",
+                    title: "Éxito",
+                    text: "Asistencia registrada correctamente.",
+                    confirmButtonColor: '#13322c',
+                    timer: 1000
+                });
+            }
+            
         }).catch((err) => console.log(err));
     }
 
@@ -126,7 +153,7 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
                                         disabled={moduleValues.emaildata === '' ? true : false}
                                         endIcon={<SendIcon />}
                                         variant='contained'
-                                        onClick={manualAssistance}
+                                        onClick={manualModulesAssistance}
                                         sx={{ color: 'primary.main', backgroundColor: "background.default", ":hover": { backgroundColor: 'primary.main', color: "background.default" }, marginBottom: 0, marginTop: 2, marginLeft: 1, width: '95px', height: '30px' }}
                                     >
                                         Enviar
@@ -204,7 +231,7 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
                                         disabled={workshopValues.emaildata === '' ? true : false}
                                         endIcon={<SendIcon />}
                                         variant='contained'
-                                        /* onClick={manualAssistance} */
+                                        onClick={manualWorkshopsAssistance}
                                         sx={{ color: 'primary.main', backgroundColor: "background.default", ":hover": { backgroundColor: 'primary.main', color: "background.default" }, marginBottom: 0, marginTop: 2, marginLeft: 1, width: '95px', height: '30px' }}
                                     >
                                         Enviar
