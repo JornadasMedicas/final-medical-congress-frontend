@@ -32,7 +32,7 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
     const manualModulesAssistance = () => {
         putRegistAssistance(moduleValues.emaildata).then((res: any) => {
             if (res.error) {
-                if (res.error.status === 400 || res.error.status === 404) {                    
+                if (res.error.status === 400 || res.error.status === 404) {
                     Swal.fire({
                         icon: "error",
                         title: "Error",
@@ -48,6 +48,7 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
                     confirmButtonColor: '#13322c',
                     timer: 1000
                 });
+                setModuleValues({ ...moduleValues, emaildata: '' });
             }
         }).catch((err) => console.log(err));
     }
@@ -55,7 +56,7 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
     const manualWorkshopsAssistance = () => {
         putRegistAssistanceWorkshops(workshopValues.emaildata).then((res: any) => {
             if (res.error) {
-                if (res.error.status === 400 || res.error.status === 404) {                    
+                if (res.error.status === 400 || res.error.status === 404) {
                     Swal.fire({
                         icon: "error",
                         title: "Error",
@@ -71,8 +72,9 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
                     confirmButtonColor: '#13322c',
                     timer: 1000
                 });
+                setWorkshopValues({ ...workshopValues, emaildata: '' });
             }
-            
+
         }).catch((err) => console.log(err));
     }
 
