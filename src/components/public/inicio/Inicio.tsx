@@ -5,10 +5,11 @@ import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import { SectionObserver } from "../../ui/SectionObserver";
+import dayjs from "dayjs";
 
 const cards = [
     {
-        title: '35 Años',
+        title: parseInt(dayjs().format('YYYY')) - 1989 + ' Años',
         subtitle: 'de Asistencia Médica',
         icon: <CalendarTodayTwoToneIcon sx={{ fontSize: 40, color: '#13322c' }} />,
         color: '#275e51'
