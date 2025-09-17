@@ -6,9 +6,9 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import SendIcon from '@mui/icons-material/Send';
 import HubSharpIcon from '@mui/icons-material/HubSharp';
 import InfoOutlineRoundedIcon from '@mui/icons-material/InfoOutlineRounded';
-import { useState } from 'react';
-import { getAssitantInfo, putRegistAssistance, putRegistAssistanceWorkshops } from '../../../services/admin/adminService';
-import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
+import { getAssitantInfo } from '../../../services/admin/adminService';
+import { globalAttendanceUpdate } from '../../../helpers/admin/updateAssistance';
 
 export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -27,55 +27,47 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
         setOpenModal(true);
     }
 
-    //rojeru.san1983@gmail.com|1|3,4
-
-    const manualModulesAssistance = () => {
-        putRegistAssistance(moduleValues.emaildata).then((res: any) => {
-            if (res.error) {
-                if (res.error.status === 400 || res.error.status === 404) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: res.error.response.data.msg,
-                        confirmButtonColor: '#13322c'
-                    });
-                }
-            } else {
-                Swal.fire({
-                    icon: "success",
-                    title: "Éxito",
-                    text: "Asistencia registrada correctamente.",
-                    confirmButtonColor: '#13322c',
-                    timer: 1000
-                });
-                setModuleValues({ ...moduleValues, emaildata: '' });
+    const qrModuleAssistance = async () => {
+        const dataQr = moduleValues.qrdata.split('|');
+        if (dataQr.length === 3) {
+            const success: boolean = await globalAttendanceUpdate(dataQr[0], 'congress');
+            if (success) {
+                setModuleValues({ ...moduleValues, qrdata: '' });
             }
-        }).catch((err) => console.log(err));
+        }
     }
 
-    const manualWorkshopsAssistance = () => {
-        putRegistAssistanceWorkshops(workshopValues.emaildata).then((res: any) => {
-            if (res.error) {
-                if (res.error.status === 400 || res.error.status === 404) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: res.error.response.data.msg,
-                        confirmButtonColor: '#13322c'
-                    });
-                }
-            } else {
-                Swal.fire({
-                    icon: "success",
-                    title: "Éxito",
-                    text: "Asistencia registrada correctamente.",
-                    confirmButtonColor: '#13322c',
-                    timer: 1000
-                });
-                setWorkshopValues({ ...workshopValues, emaildata: '' });
-            }
+    useEffect(() => {
+        qrModuleAssistance();
+    }, [moduleValues.qrdata]);
 
-        }).catch((err) => console.log(err));
+    const qrWorkshopAssistance = async () => {
+        const dataQr = workshopValues.qrdata.split('|');
+        if (dataQr.length === 3) {
+            const success: boolean = await globalAttendanceUpdate(dataQr[0], 'workshop');
+            if (success) {
+                setWorkshopValues({ ...moduleValues, qrdata: '' });
+            }
+        }
+    }
+
+    useEffect(() => {
+        qrWorkshopAssistance();
+    }, [workshopValues.qrdata]);
+    
+
+    const manualModulesAssistance = async () => {
+        const success: boolean = await globalAttendanceUpdate(moduleValues.emaildata, 'congress');
+        if (success) {
+            setModuleValues({ ...moduleValues, emaildata: '' });
+        }
+    }
+
+    const manualWorkshopsAssistance = async () => {
+        const success: boolean = await globalAttendanceUpdate(workshopValues.emaildata, 'workshop');
+        if (success) {
+            setWorkshopValues({ ...moduleValues, emaildata: '' });
+        }
     }
 
     return (
@@ -176,8 +168,8 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
                                         label='Registro QR'
                                         autoComplete='off'
                                         name='qrdata'
-                                        value={moduleValues.qrdata}
-                                        onChange={(e) => setModuleValues({ ...moduleValues, qrdata: e.target.value })}
+                                        value={workshopValues.qrdata}
+                                        onChange={(e) => setWorkshopValues({ ...moduleValues, qrdata: e.target.value })}
                                         slotProps={{
                                             input: {
                                                 startAdornment: (
