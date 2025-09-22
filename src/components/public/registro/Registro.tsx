@@ -523,7 +523,7 @@ const Registro = () => {
                                                 onChange={(e) => handleCheckboxes(e.target.checked, workshop)}
                                             />
                                             <Typography sx={{ mt: 1.2 }}>
-                                                <b>{dayjs(workshop.fecha).format('DD')} de {dayjs(workshop.fecha).format('MMMM')}</b> ─ {workshop.nombre}
+                                                <b>{dayjs.utc(workshop.fecha).format('DD')} de {dayjs(workshop.fecha).format('MMMM')}</b> ─ {workshop.nombre}
                                                 <span style={{ color: workshop.cupos !== 0 ? 'gray' : '#c53933', fontWeight: workshop.cupos !== 0 ? 'normal' : 'bold' }}>
                                                     {workshop.cupos !== 0 ?
                                                         ` (${workshop.cupos} cupos disponibles)`
