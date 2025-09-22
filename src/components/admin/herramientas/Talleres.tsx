@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography, useMediaQuery } from "@mui/material"
+import { Button, FormControl, FormHelperText, Grid, Menu, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography, useMediaQuery } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import { createWorkshop, editWorkshop, getEventEditions, getModules, getWorkshops } from "../../../services/admin/adminService";
@@ -19,7 +19,7 @@ dayjs.extend(utc);
 const initialState = { nombre: '', fecha: '', cupos: 0, hora_inicio: '', hora_fin: '', modulo: 0, edicion: 0 };
 
 interface Column {
-    field: 'acciones' | 'nombre' | 'cupos' | 'created_at' | 'updated_at';
+    field: 'acciones' | 'nombre' | 'cupos' | 'fecha' | 'created_at' | 'updated_at';
     headerName: string;
     headerAlign?: 'left' | 'center';
     align?: string;
@@ -33,7 +33,8 @@ const columns: Column[] = [
     { field: 'acciones', headerName: 'Acciones', flex: 1, headerAlign: 'left', align: 'left', sortable: false },
     { field: 'nombre', headerName: 'Taller', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
     { field: 'cupos', headerName: 'Cupos', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
-    { field: 'created_at', headerName: 'Fecha Alta', flex: 2, headerAlign: 'center', align: 'center', sortable: false },
+    { field: 'fecha', headerName: 'Fecha', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
+    { field: 'created_at', headerName: 'Fecha Alta', flex: 1, headerAlign: 'center', align: 'center', sortable: false },
     { field: 'updated_at', headerName: 'Fecha Actualización', flex: 1, headerAlign: 'center', align: 'center', sortable: false }
 ];
 
@@ -130,13 +131,14 @@ export const Talleres = () => {
         }));
 
         getWorkshops().then(((res: ReqGenCatalogs[]) => {
+            console.log(res);
             setRows(res);
         }));
     }, []);
 
     useEffect(() => {
         if (refetch) {
-            
+
             getWorkshops().then(((res: ReqGenCatalogs[]) => {
                 setRows(res);
             }));
@@ -406,6 +408,9 @@ export const Talleres = () => {
                                                     :
                                                     <Typography fontSize={15}>{row.cupos}</Typography>
                                                 }
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <Typography fontSize={15}>{dayjs.utc(row.fecha).format('YYYY-MM-DD')}</Typography>
                                             </TableCell>
                                             <TableCell align="center">
                                                 <Typography fontSize={15}>{dayjs.utc(row.created_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
