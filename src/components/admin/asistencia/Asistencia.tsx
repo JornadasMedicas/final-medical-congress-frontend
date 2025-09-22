@@ -1,5 +1,5 @@
 import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, Divider, Grid, InputAdornment, LinearProgress, TextField, Typography, useMediaQuery } from '@mui/material'
-import { PropsAssitance, ReqAssistantInfo, ReqEventEditions } from '../../../interfaces/admin/IAdmin';
+import { PropsAssitance, ReqEventEditions } from '../../../interfaces/admin/IAdmin';
 import Diversity3SharpIcon from '@mui/icons-material/Diversity3Sharp';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
@@ -9,6 +9,7 @@ import InfoOutlineRoundedIcon from '@mui/icons-material/InfoOutlineRounded';
 import { useEffect, useState } from 'react';
 import { getAssitantInfo } from '../../../services/admin/adminService';
 import { globalAttendanceUpdate } from '../../../helpers/admin/updateAssistance';
+import Swal from 'sweetalert2';
 
 export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -18,13 +19,23 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
 
     const fetchInfo = () => {
+        getAssitantInfo(info.emaildata).then((res: any) => {
+            if (res.error) {
+                if (res.error.status === 404) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: res.error.response.data.msg,
+                        confirmButtonColor: '#13322c'
+                    });
+                    setInfo(prev => ({ ...prev, emaildata: '' }));
+                }
+            } else {
+                setInfo(({ emaildata: '', assistantInfo: res.data }));
+                setOpenModal(true);
+            }
 
-        getAssitantInfo(info.emaildata).then((res: ReqAssistantInfo) =>
-            setInfo(prev => ({ ...prev, assistantInfo: res.data }))
-        ).catch((err) => console.log(err))
-
-        setInfo(prev => ({ ...prev, emaildata: '' }));
-        setOpenModal(true);
+        }).catch((err) => console.log(err))
     }
 
     const qrModuleAssistance = async () => {
@@ -54,7 +65,6 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
     useEffect(() => {
         qrWorkshopAssistance();
     }, [workshopValues.qrdata]);
-    
 
     const manualModulesAssistance = async () => {
         const success: boolean = await globalAttendanceUpdate(moduleValues.emaildata, 'congress');

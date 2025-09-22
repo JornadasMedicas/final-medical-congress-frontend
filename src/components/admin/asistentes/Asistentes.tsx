@@ -93,7 +93,7 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
             }
         }));
 
-    }, [assistantsTable.tablePage, assistantsTable.filters.year, setAssistantsTableAction, filterValue]);
+    }, [assistantsTable.tablePage, assistantsTable.filters.year, setAssistantsTableAction, filterValue, assistantsTable.filters.email]);
 
     useEffect(() => {
         setfilterValue(0);
