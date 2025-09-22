@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, Grid, Menu, MenuItem, Paper, Select, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography, useMediaQuery } from "@mui/material"
+import { Button, FormControl, FormHelperText, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography, useMediaQuery } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import { createWorkshop, editWorkshop, getEventEditions, getModules, getWorkshops } from "../../../services/admin/adminService";
