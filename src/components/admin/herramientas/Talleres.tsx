@@ -43,7 +43,7 @@ export const Talleres = () => {
     const { setModalConfirmDelete, refetch, setRefetch } = useContext<PropsUIContext>(UIContext);
     const [catModules, setCatModules] = useState<ReqGenCatalogs[]>([]);
     const [catEditions, setCatEditions] = useState<ReqEventEditions[]>([]);
-    const [editData, setEditData] = useState<{ id: number, nombre: string, cupos: number | string }>({ id: 0, nombre: '', cupos: 0 });
+    const [editData, setEditData] = useState<{ id: number, nombre: string, cupos: number | string, fecha: string }>({ id: 0, nombre: '', cupos: 0, fecha: '' });
     const [rows, setRows] = useState<ReqGenCatalogs[]>([]);
     const [payload, setPayload] = useState<PayloadWorkshops>(initialState);
     const [loading, setLoading] = useState<boolean>(false);
@@ -85,7 +85,7 @@ export const Talleres = () => {
 
     const handleEdit = (row: ReqGenCatalogs | null) => {
         if (!row) return;
-        setEditData({ id: row.id, nombre: row.nombre, cupos: row.cupos ? row.cupos : 0 });
+        setEditData({ id: row.id, nombre: row.nombre, cupos: row.cupos ? row.cupos : 0, fecha: dayjs.utc(row.fecha).format('YYYY-MM-DD') });
         handleClose();
     }
 
@@ -95,12 +95,12 @@ export const Talleres = () => {
     }
 
     const handleSave = async () => {
-        if (editData.nombre === rows.filter((item) => item.id === editData.id)[0].nombre && editData.cupos === rows.filter((item) => item.id === editData.id)[0].cupos) {
-            setEditData({ id: 0, nombre: '', cupos: 0 });
+        if (editData.nombre === rows.filter((item) => item.id === editData.id)[0].nombre && editData.cupos === rows.filter((item) => item.id === editData.id)[0].cupos && editData.fecha === dayjs.utc(rows.filter((item) => item.id === editData.id)[0].fecha).format('YYYY-MM-DD')) {
+            setEditData({ id: 0, nombre: '', cupos: 0, fecha: '' });
             return;
         };
 
-        const res = await editWorkshop({ id: editData.id, nombre: editData.nombre, cupos: editData.cupos });
+        const res = await editWorkshop({ id: editData.id, nombre: editData.nombre, cupos: editData.cupos, fecha: editData.fecha });
 
         if (!res.error) {
             enqueueSnackbar('Taller editado correctamente.', { variant: 'success' });
@@ -109,7 +109,7 @@ export const Talleres = () => {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
 
-        setEditData({ id: 0, nombre: '', cupos: 0 });
+        setEditData({ id: 0, nombre: '', cupos: 0, fecha: '' });
     };
 
     const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
@@ -379,6 +379,7 @@ export const Talleres = () => {
                                                             '& .MuiInputLabel-root.Mui-focused': {
                                                                 color: 'green', // Color del label cuando está enfocado
                                                             },
+                                                            width: '220px'
                                                         }}
                                                         onBlur={handleSave}
                                                     />
@@ -401,6 +402,7 @@ export const Talleres = () => {
                                                             '& .MuiInputLabel-root.Mui-focused': {
                                                                 color: 'green', // Color del label cuando está enfocado
                                                             },
+                                                            width: '80px'
                                                         }}
                                                         onBlur={handleSave}
                                                     />
@@ -409,7 +411,28 @@ export const Talleres = () => {
                                                 }
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Typography fontSize={15}>{dayjs.utc(row.fecha).format('YYYY-MM-DD')}</Typography>
+                                                {
+                                                    editData.id === row.id ?
+                                                        <TextField
+                                                            variant="standard"
+                                                            value={editData.fecha}
+                                                            onChange={(e) => setEditData({ ...editData, fecha: e.target.value })}
+                                                            size="small"
+                                                            type="date"
+                                                            sx={{
+                                                                '& .MuiInputBase-root:after': {
+                                                                    borderBottom: '2px solid green', // Línea inferior cuando está enfocado
+                                                                },
+                                                                '& .MuiInputLabel-root.Mui-focused': {
+                                                                    color: 'green', // Color del label cuando está enfocado
+                                                                },
+                                                                width: 'auto'
+                                                            }}
+                                                            onBlur={handleSave}
+                                                        />
+                                                        :
+                                                        <Typography fontSize={15}>{dayjs.utc(row.fecha).format('YYYY-MM-DD')}</Typography>
+                                                }
                                             </TableCell>
                                             <TableCell align="center">
                                                 <Typography fontSize={15}>{dayjs.utc(row.created_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>

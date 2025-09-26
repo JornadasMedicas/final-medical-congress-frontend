@@ -75,7 +75,7 @@ export const getWorkshops = async () => {
     }
 }
 
-export const editWorkshop = async (payload: { id: number, nombre: string, cupos: number | string }) => {
+export const editWorkshop = async (payload: { id: number, nombre: string, cupos: number | string, fecha: string }) => {
     try {
         const res: AxiosResponse = await jornadasApi.put(`/api/admin/editWorkshop`, { ...payload });
         return res.data;
