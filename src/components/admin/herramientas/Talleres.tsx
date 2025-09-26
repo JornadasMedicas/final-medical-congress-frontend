@@ -131,7 +131,6 @@ export const Talleres = () => {
         }));
 
         getWorkshops().then(((res: ReqGenCatalogs[]) => {
-            console.log(res);
             setRows(res);
         }));
     }, []);
