@@ -1,5 +1,17 @@
 import { PropsSedes } from "../../interfaces/sedes/ISedes";
 
+export const sedes2025: PropsSedes[] = [
+    {
+        id: 1,
+        title: 'CONGRESO GENERAL',
+        place: 'HOTEL XALAPA (SALÓN GOBERNADORES Y MARGARITAS)',
+        address: 'Guadalupe Victoria 163, Zona Centro, Centro, 91000 Xalapa-Enríquez, Ver.',
+        map: 'https://www.google.com/maps/place/Gran+Hotel+Xalapa/@19.5308982,-96.9301983,206m/data=!3m1!1e3!4m9!3m8!1s0x85db2e078654c40d:0xd479ebcae355883f!5m2!4m1!1i2!8m2!3d19.5314895!4d-96.9294777!16s%2Fg%2F1tcz_wlm?entry=ttu&g_ep=EgoyMDI1MTAwMS4wIKXMDSoASAFQAw%3D%3D',
+        location: [-96.92947807721428, 19.531518343354062],
+    }
+]
+
+
 export const sedes2024: PropsSedes[] = [
     {
         id: 1,

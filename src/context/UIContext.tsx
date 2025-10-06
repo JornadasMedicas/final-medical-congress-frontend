@@ -5,7 +5,7 @@ import { programaTabs } from "../helpers/programas/data";
 const UIContext = createContext<PropsUIContext>({
     activeSection: 'Inicio',
     setActiveSection: () => { },
-    programTab: programaTabs[programaTabs.length - 1].id,
+    programTab: programaTabs[programaTabs.length - 1],
     setProgramTab: () => { },
     modalAdminData: { isOpen: false },
     setModalAdminData: () => { },
@@ -21,7 +21,7 @@ const UIContext = createContext<PropsUIContext>({
 
 export const UIContextProvider = ({ children: Component }: { children: ReactNode }) => {
     const [activeSection, setActiveSection] = useState<string>('Inicio');
-    const [programTab, setProgramTab] = useState<number>(programaTabs[programaTabs.length - 1].id);
+    const [programTab, setProgramTab] = useState<{id: number, label: string}>(programaTabs[programaTabs.length - 1]);
     const [modalProgramData, setModalProgramData] = useState<PropsModalImg>({ isOpen: false, img: '' });
     const [modalAdminData, setModalAdminData] = useState<PropsModalAdmin>({ isOpen: false });
     const [modalConfirmDelete, setModalConfirmDelete] = useState<PropsModalAdmin>({ isOpen: false });

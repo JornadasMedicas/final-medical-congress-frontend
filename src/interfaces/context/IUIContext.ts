@@ -16,8 +16,8 @@ export interface PropsModalAdmin extends PropsModalImg {
 export interface PropsUIContext {
     activeSection: string;
     setActiveSection: React.Dispatch<React.SetStateAction<string>>;
-    programTab: number;
-    setProgramTab: React.Dispatch<React.SetStateAction<number>>;
+    programTab: { id: number, label: string };
+    setProgramTab: React.Dispatch<React.SetStateAction<{id: number, label: string}>>;
     modalProgramData: PropsModalImg;
     setModalProgramData: React.Dispatch<React.SetStateAction<PropsModalImg>>;
     modalAdminData: PropsModalAdmin;

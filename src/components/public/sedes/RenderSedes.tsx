@@ -1,12 +1,14 @@
 import { Box, Divider, Grid, Typography, useMediaQuery } from "@mui/material"
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { PropsSedes } from "../../../interfaces/sedes/ISedes";
 import mapboxgl from 'mapbox-gl';
 import { SectionObserver } from "../../ui/SectionObserver";
 import { motion } from "motion/react";
+import UIContext from "../../../context/UIContext";
 
 export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
+    const { programTab } = useContext(UIContext);
     const [selectedItem, setSelectedItem] = useState<number>(0);
     const itemData: PropsSedes[] = useMemo(() => sedes.filter((_item: PropsSedes, index: number) => index === selectedItem), [selectedItem]);
     const mapContainer = useRef(''); // Ref para el contenedor del mapa
@@ -58,7 +60,7 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
                     viewport={{ once: true }}
                     sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: responsive ? '80%' : '50%', m: 'auto' }}
                 >
-                    SEDES
+                    SEDES {programTab.label}
                 </Divider>
             </Grid>
             <Grid container size={12}>

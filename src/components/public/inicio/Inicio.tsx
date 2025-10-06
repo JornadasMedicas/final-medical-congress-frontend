@@ -95,7 +95,7 @@ export const Inicio = () => {
                             borderRadius: 5,
                             width: responsive ? 'auto' : '60%',
                             m: 'auto',
-                            p: responsive ? 2 : 5,
+                            p: responsive ? 2 : '20px 40px 20px 40px',
                             gap: 3,
                             borderLeft: ''
                         }}>
@@ -141,7 +141,7 @@ export const Inicio = () => {
                                 color: 'secondary.main',
                                 fontSize: responsive ? '18px' : '20px'
                             }}>
-                            A lo largo de estos 35 años, hemos enfrentado numerosos desafíos, pero también hemos alcanzado metas significativas gracias al esfuerzo y dedicación de cada uno de ustedes. Este congreso es un testimonio de nuestro <b style={{ color: '#322118' }}>compromiso continuo con la excelencia y la innovación</b>.
+                            A lo largo de estos {parseInt(dayjs.utc().format('YYYY')) - 1989} años, hemos enfrentado numerosos desafíos, pero también hemos alcanzado metas significativas gracias al esfuerzo y dedicación de cada uno de ustedes. Este congreso es un testimonio de nuestro <b style={{ color: '#322118' }}>compromiso continuo con la excelencia y la innovación</b>.
                         </Typography>
                         <Typography
                             fontFamily={'sans-serif'}

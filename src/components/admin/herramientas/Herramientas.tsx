@@ -68,7 +68,7 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             description: 'Enviar constancias de participación',
             label: 'Constancias Enviadas',
             registries: 0,
-            Cmp: Ediciones,
+            Cmp: null,
             width: '1000px'
         }
     ]

@@ -50,7 +50,7 @@ export const Proximamente = () => {
                         whileInView={{ opacity: 1 }}
                         transition={{ delay: 0.1, duration: 0.5, ease: 'easeOut' }}
                         viewport={{ once: true }}
-                        sx={{ zIndex: 2 }}
+                        sx={{ zIndex: 2, position: 'relative', display: 'flex', justifyContent: 'center' }}
                     >
                         <Box
                             component="img"
@@ -61,7 +61,8 @@ export const Proximamente = () => {
                                 width: 'auto',
                                 overflow: 'hidden',
                                 filter: 'drop-shadow(0px 0px 9px grey)',
-                                mt: 2
+                                mt: 2,
+                                position: 'absolute'
                             }}
                         />
                     </Box>

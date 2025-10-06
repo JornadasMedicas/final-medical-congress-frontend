@@ -390,7 +390,7 @@ export const Talleres = () => {
                                                             '& .MuiInputLabel-root.Mui-focused': {
                                                                 color: 'green', // Color del label cuando está enfocado
                                                             },
-                                                            width: '220px'
+                                                            width: '200px'
                                                         }}
                                                         onBlur={handleSave}
                                                     />

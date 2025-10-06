@@ -15,7 +15,11 @@ export const Programa = () => {
     const { programTab, setProgramTab } = useContext(UIContext);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-        setProgramTab(newValue);
+        const selectedTab = programaTabs.find(tab => tab.id === newValue);
+        
+        if (selectedTab) {
+            setProgramTab(selectedTab);
+        }
     };
 
     return (
@@ -34,7 +38,7 @@ export const Programa = () => {
             </Grid>
             <Grid size={12} sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
                 <Tabs
-                    value={programTab}
+                    value={programTab.id}
                     onChange={handleChange}
                     variant="fullWidth"
                     scrollButtons="auto"
@@ -66,13 +70,13 @@ export const Programa = () => {
             </Grid>
             <Grid size={12} sx={{ mt: 2, height: '100%' }}>
                 {
-                    programTab === 0 && <RenderProgramas programas={programa2023} />
+                    programTab.id === 0 && <RenderProgramas programas={programa2023} />
                 }
                 {
-                    programTab === 1 && <RenderProgramas programas={programa2024} />
+                    programTab.id === 1 && <RenderProgramas programas={programa2024} />
                 }
                 {
-                    programTab === 2 && <Proximamente />
+                    programTab.id === 2 && <Proximamente />
                 }
             </Grid>
             <ModalImagen />
