@@ -2,7 +2,7 @@ import { Button, FormControl, FormHelperText, Grid, Menu, MenuItem, Paper, Selec
 import { useContext, useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import { createWorkshop, editWorkshop, getEventEditions, getModules, getWorkshops } from "../../../services/admin/adminService";
-import { ModuleErrors, PayloadWorkshops, ReqEventEditions, ReqGenCatalogs } from "../../../interfaces/admin/IAdmin";
+import { EditWorkshops, ModuleErrors, PayloadWorkshops, ReqEventEditions, ReqGenCatalogs } from "../../../interfaces/admin/IAdmin";
 import { moduleErrors, validateForm } from '../../../helpers/admin/formErrors';
 import MenuSharpIcon from '@mui/icons-material/MenuSharp';
 import { useSnackbar } from "notistack";
@@ -19,7 +19,7 @@ dayjs.extend(utc);
 const initialState = { nombre: '', fecha: '', cupos: 0, hora_inicio: '', hora_fin: '', modulo: 0, edicion: 0 };
 
 interface Column {
-    field: 'acciones' | 'nombre' | 'cupos' | 'fecha' | 'created_at' | 'updated_at';
+    field: 'acciones' | 'nombre' | 'cupos' | 'fecha' | 'hora_inicio' | 'hora_fin' | 'created_at' | 'updated_at';
     headerName: string;
     headerAlign?: 'left' | 'center';
     align?: string;
@@ -34,6 +34,8 @@ const columns: Column[] = [
     { field: 'nombre', headerName: 'Taller', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
     { field: 'cupos', headerName: 'Cupos', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
     { field: 'fecha', headerName: 'Fecha', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
+    { field: 'hora_inicio', headerName: 'Hora Inicio', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
+    { field: 'hora_fin', headerName: 'Hora Fin', flex: 1, headerAlign: 'left', align: 'center', sortable: false },
     { field: 'created_at', headerName: 'Fecha Alta', flex: 1, headerAlign: 'center', align: 'center', sortable: false },
     { field: 'updated_at', headerName: 'Fecha Actualización', flex: 1, headerAlign: 'center', align: 'center', sortable: false }
 ];
@@ -43,7 +45,7 @@ export const Talleres = () => {
     const { setModalConfirmDelete, refetch, setRefetch } = useContext<PropsUIContext>(UIContext);
     const [catModules, setCatModules] = useState<ReqGenCatalogs[]>([]);
     const [catEditions, setCatEditions] = useState<ReqEventEditions[]>([]);
-    const [editData, setEditData] = useState<{ id: number, nombre: string, cupos: number | string, fecha: string }>({ id: 0, nombre: '', cupos: 0, fecha: '' });
+    const [editData, setEditData] = useState<EditWorkshops>({ id: 0, nombre: '', cupos: 0, fecha: '', hora_inicio: '', hora_fin: '' });
     const [rows, setRows] = useState<ReqGenCatalogs[]>([]);
     const [payload, setPayload] = useState<PayloadWorkshops>(initialState);
     const [loading, setLoading] = useState<boolean>(false);
@@ -85,7 +87,7 @@ export const Talleres = () => {
 
     const handleEdit = (row: ReqGenCatalogs | null) => {
         if (!row) return;
-        setEditData({ id: row.id, nombre: row.nombre, cupos: row.cupos ? row.cupos : 0, fecha: dayjs.utc(row.fecha).format('YYYY-MM-DD') });
+        setEditData({ id: row.id, nombre: row.nombre, cupos: row.cupos ? row.cupos : 0, fecha: dayjs.utc(row.fecha).format('YYYY-MM-DD'), hora_inicio: dayjs.utc(row.hora_inicio).format('HH:mm:ss'), hora_fin: dayjs.utc(row.hora_fin).format('HH:mm:ss') });
         handleClose();
     }
 
@@ -95,12 +97,21 @@ export const Talleres = () => {
     }
 
     const handleSave = async () => {
-        if (editData.nombre === rows.filter((item) => item.id === editData.id)[0].nombre && editData.cupos === rows.filter((item) => item.id === editData.id)[0].cupos && editData.fecha === dayjs.utc(rows.filter((item) => item.id === editData.id)[0].fecha).format('YYYY-MM-DD')) {
-            setEditData({ id: 0, nombre: '', cupos: 0, fecha: '' });
+        const ogItem = rows.find((item) => item.id === editData.id);
+
+        const hasChanges =
+            editData.nombre !== ogItem?.nombre ||
+            editData.cupos !== ogItem?.cupos ||
+            editData.fecha !== dayjs.utc(ogItem?.fecha).format('YYYY-MM-DD') ||
+            editData.hora_inicio !== dayjs.utc(ogItem?.hora_inicio).format('HH:mm:ss') ||
+            editData.hora_fin !== dayjs.utc(ogItem?.hora_fin).format('HH:mm:ss');
+
+        if (!hasChanges) {
+            setEditData({ id: 0, nombre: '', cupos: 0, fecha: '', hora_inicio: '', hora_fin: '' });
             return;
         };
 
-        const res = await editWorkshop({ id: editData.id, nombre: editData.nombre, cupos: editData.cupos, fecha: editData.fecha });
+        const res = await editWorkshop({ id: editData.id, nombre: editData.nombre, cupos: editData.cupos, fecha: editData.fecha, hora_inicio: editData.hora_inicio, hora_fin: editData.hora_fin });
 
         if (!res.error) {
             enqueueSnackbar('Taller editado correctamente.', { variant: 'success' });
@@ -109,7 +120,7 @@ export const Talleres = () => {
             enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
         }
 
-        setEditData({ id: 0, nombre: '', cupos: 0, fecha: '' });
+        setEditData({ id: 0, nombre: '', cupos: 0, fecha: '', hora_inicio: '', hora_fin: '' });
     };
 
     const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
@@ -432,6 +443,55 @@ export const Talleres = () => {
                                                         />
                                                         :
                                                         <Typography fontSize={15}>{dayjs.utc(row.fecha).format('YYYY-MM-DD')}</Typography>
+                                                }
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                {
+                                                    editData.id === row.id ?
+                                                        <TextField
+                                                            variant="standard"
+                                                            value={editData.hora_inicio}
+                                                            onChange={(e) => setEditData({ ...editData, hora_inicio: e.target.value })}
+                                                            size="small"
+                                                            type="time"
+                                                            sx={{
+                                                                '& .MuiInputBase-root:after': {
+                                                                    borderBottom: '2px solid green', // Línea inferior cuando está enfocado
+                                                                },
+                                                                '& .MuiInputLabel-root.Mui-focused': {
+                                                                    color: 'green', // Color del label cuando está enfocado
+                                                                },
+                                                                width: 'auto'
+                                                            }}
+                                                            onBlur={handleSave}
+                                                        />
+                                                        :
+                                                        <Typography fontSize={15}>{dayjs.utc(row.hora_inicio).format('HH:mm:ss')}
+                                                        </Typography>
+                                                }
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                {
+                                                    editData.id === row.id ?
+                                                        <TextField
+                                                            variant="standard"
+                                                            value={editData.hora_fin}
+                                                            onChange={(e) => setEditData({ ...editData, hora_fin: e.target.value })}
+                                                            size="small"
+                                                            type="time"
+                                                            sx={{
+                                                                '& .MuiInputBase-root:after': {
+                                                                    borderBottom: '2px solid green', // Línea inferior cuando está enfocado
+                                                                },
+                                                                '& .MuiInputLabel-root.Mui-focused': {
+                                                                    color: 'green', // Color del label cuando está enfocado
+                                                                },
+                                                                width: 'auto'
+                                                            }}
+                                                            onBlur={handleSave}
+                                                        />
+                                                        :
+                                                        <Typography fontSize={15}>{dayjs.utc(row.hora_fin).format('HH:mm:ss')}</Typography>
                                                 }
                                             </TableCell>
                                             <TableCell align="center">

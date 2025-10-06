@@ -49,7 +49,7 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             label: 'Talleres Activos',
             registries: catalogs.talleres,
             Cmp: Talleres,
-            width: '1000px'
+            width: '1300px'
         },
         {
             id: 3,

@@ -35,6 +35,8 @@ export interface ReqGenCatalogs {
     nombre: string;
     fecha: string;
     cupos?: number;
+    hora_inicio: string;
+    hora_fin: string;
     created_at?: string;
     updated_at?: string;
     borderStyle?: string;
@@ -158,4 +160,13 @@ export interface PayloadWorkshops {
 
 export interface ModuleErrors {
     [key: string]: boolean;
+}
+
+export interface EditWorkshops {
+    id: number;
+    nombre: string;
+    cupos: number | string;
+    fecha: string;
+    hora_inicio: string;
+    hora_fin: string;
 }

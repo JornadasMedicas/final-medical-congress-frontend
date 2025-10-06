@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import jornadasApi from '../../api/jornadasApi';
-import { PayloadWorkshops, PropsCreateEdition, PropsGetAssistantsFilters } from '../../interfaces/admin/IAdmin';
+import { EditWorkshops, PayloadWorkshops, PropsCreateEdition, PropsGetAssistantsFilters } from '../../interfaces/admin/IAdmin';
 import { PropsTableAssistantsFilters } from '../../interfaces/admin/IAdminContext';
 
 export const getAssitantInfo = async (email: string) => {
@@ -75,7 +75,7 @@ export const getWorkshops = async () => {
     }
 }
 
-export const editWorkshop = async (payload: { id: number, nombre: string, cupos: number | string, fecha: string }) => {
+export const editWorkshop = async (payload: EditWorkshops) => {
     try {
         const res: AxiosResponse = await jornadasApi.put(`/api/admin/editWorkshop`, { ...payload });
         return res.data;
