@@ -26,13 +26,13 @@ export const AppRouter = () => {
                         </Suspense>
                     } />
 
-                    <Route path='registro' element={
+                    {/* <Route path='registro' element={
                         <Suspense fallback={<Loader />}>
                             <SocketProvider>
                                 <LazyRegistro />
                             </SocketProvider>
                         </Suspense>
-                    } />
+                    } /> */}
 
                     <Route path='admin' element={
                         <Suspense fallback={<Loader />}>
