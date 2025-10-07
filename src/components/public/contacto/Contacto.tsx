@@ -55,7 +55,10 @@ export const Contacto = () => {
     }
 
     return (
-        <Grid container sx={{ pb: responsive ? '2vh' : '7.5vh', position: 'relative', mt: responsive ? 2 : 0 }}>
+        <Grid container sx={{
+            pb: responsive ? '2vh' : '7.5vh', position: 'relative', mt: responsive ? 2 : 0,
+            zIndex: 10
+        }}>
             <Grid size={responsive ? 12 : 6} sx={{ height: 'auto', pb: responsive ? '2vh' : 0, display: responsive ? 'none' : 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Box sx={{ width: '80%', pl: 10 }}>
                     <Typography fontSize={'20px'} fontFamily={'sans-serif'} textAlign={'justify'} fontWeight={500} letterSpacing={1}>

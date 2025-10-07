@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
+import LabelImportantTwoToneIcon from '@mui/icons-material/LabelImportantTwoTone';
 import { SectionObserver } from "../../ui/SectionObserver";
 import dayjs from "dayjs";
 
@@ -36,8 +37,8 @@ export const Inicio = () => {
             <Grid size={12} sx={{ textAlign: 'center', minHeight: responsive ? '46.5vh' : '65vh' }}>
                 <Carousel />
             </Grid>
-            <Box sx={{ ml: responsive ? 3 : 20, mr: responsive ? 3 : 20 }}>
-                <Grid container columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column' : 'row', justifyContent: 'center', gap: 3, mb: 4, mt: 2 }}>
+            <Box>
+                <Grid container columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column' : 'row', justifyContent: 'center', gap: 3, mb: 4, mt: 2, ml: responsive ? 2 : 0, mr: responsive ? 2 : 0 }}>
                     {
                         cards.map((card, index) => (
                             <Grid key={card.title} size={'auto'}>
@@ -91,13 +92,14 @@ export const Inicio = () => {
                             flexDirection: 'column',
                             pt: responsive ? 2 : 0,
                             backgroundColor: 'primary.main',
-                            boxShadow: '3px 5px 10px 0px rgba(1,18,38, 0.2)',
                             borderRadius: 5,
-                            width: responsive ? 'auto' : '60%',
+                            width: responsive ? 'auto' : '100%',
                             m: 'auto',
                             p: responsive ? 2 : '20px 40px 20px 40px',
                             gap: 3,
-                            borderLeft: ''
+                            borderLeft: '',
+                            pl: responsive ? 3 : 25,
+                            pr: responsive ? 3 : 25
                         }}>
                         <SectionObserver sectionId="Inicio" />
                         <Typography
@@ -107,7 +109,7 @@ export const Inicio = () => {
                             textAlign={'justify'}
                             sx={{
                                 color: 'secondary.main',
-                                fontSize: responsive ? '18px' : '27px',
+                                fontSize: responsive ? '18px' : '27px'
                             }}
                         >
                             MENSAJE DE BIENVENIDA
@@ -129,7 +131,7 @@ export const Inicio = () => {
                                 color: 'secondary.main',
                                 fontSize: responsive ? '18px' : '20px'
                             }}>
-                            Es un honor darles la bienvenida a este congreso tan especial, donde celebramos <b style={{ color: '#13322c' }}> 35 años de logros, colaboración y avances</b> en el campo de la salud de Veracruz.
+                            Es un honor darles la bienvenida a este congreso tan especial, donde celebramos <b style={{ color: '#13322c' }}> {parseInt(dayjs.utc().format('YYYY')) - 1989} años de logros, colaboración y avances</b> en el campo de la salud de Veracruz.
                         </Typography>
                         <Typography
                             fontFamily={'sans-serif'}
@@ -141,7 +143,7 @@ export const Inicio = () => {
                                 color: 'secondary.main',
                                 fontSize: responsive ? '18px' : '20px'
                             }}>
-                            A lo largo de estos {parseInt(dayjs.utc().format('YYYY')) - 1989} años, hemos enfrentado numerosos desafíos, pero también hemos alcanzado metas significativas gracias al esfuerzo y dedicación de cada uno de ustedes. Este congreso es un testimonio de nuestro <b style={{ color: '#322118' }}>compromiso continuo con la excelencia y la innovación</b>.
+                            A lo largo de estos {parseInt(dayjs.utc().format('YYYY')) - 1989} años, hemos enfrentado numerosos desafíos, pero también hemos alcanzado metas significativas gracias al esfuerzo y dedicación de cada uno de ustedes. Este congreso es un testimonio de nuestro <b style={{ color: '#13322c' }}>compromiso continuo con la excelencia y la innovación</b>.
                         </Typography>
                         <Typography
                             fontFamily={'sans-serif'}
@@ -173,6 +175,119 @@ export const Inicio = () => {
                             En este evento, no solo celebraremos nuestros logros pasados, sino que también exploraremos nuevas ideas y estrategias para enfrentar los retos futuros.
                         </Typography>
                     </Box>
+                </Grid>
+                <Grid
+                    container
+                    spacing={4}
+                    columns={12}
+                    sx={{
+                        pl: responsive ? 3 : 25,
+                        pr: responsive ? 3 : 25,
+                        mt: 3
+                    }}>
+                    <Grid
+                        component={motion.div}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.85, ease: 'easeInOut', delay: 0.5 }}
+                        viewport={{ once: true }}
+                        size={12}
+                        sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}
+                    >
+                        <LabelImportantTwoToneIcon sx={{ fontSize: responsive ? 33 : 40, color: '#13322c', mr: 1 }} />
+                        <Typography
+                            fontFamily={'sans-serif'}
+                            fontWeight={'bold'}
+                            textAlign={'justify'}
+                            sx={{ fontSize: responsive ? '18px' : '24px', mt: 'auto', mb: 'auto' }}
+                        >
+                            INFORMACIÓN IMPORTANTE
+                        </Typography>
+                    </Grid>
+                    <Grid
+                        component={motion.div}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.85, ease: 'easeInOut', delay: 0.7 }}
+                        viewport={{ once: true }}
+                        size={responsive ? 12 : 4}
+                        sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}
+                    >
+                        <Typography
+                            fontFamily={'sans-serif'}
+                            fontWeight={'bold'}
+                            textAlign={responsive ? 'left' : 'center'}
+                            fontSize={responsive ? '18px' : '20px'}
+                            color="#13322c"
+                        >
+                            TEMA PRINCIPAL
+                        </Typography>
+                        <Typography
+                            fontFamily={'sans-serif'}
+                            fontWeight={400}
+                            fontSize={'18px'}
+                            textAlign={responsive ? 'left' : 'center'}
+                            letterSpacing={0.5}
+                        >
+                            DESAFIOS EN SALUD DESDE EL TERCER NIVEL DE ATENCIÓN Y EL USO DE LA INTELIGENCIA ARTIFICIAL EN EL CAE
+                        </Typography>
+                    </Grid>
+                    <Grid
+                        component={motion.div}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.85, ease: 'easeInOut', delay: 0.9 }}
+                        viewport={{ once: true }}
+                        size={responsive ? 12 : 4}
+                    >
+                        <Typography
+                            fontFamily={'sans-serif'}
+                            fontWeight={'bold'}
+                            textAlign={responsive ? 'left' : 'center'}
+                            fontSize={responsive ? '18px' : '20px'}
+                            color="#13322c"
+                        >
+                            FECHAS
+                        </Typography>
+                        <Typography
+                            fontFamily={'sans-serif'}
+                            fontWeight={400}
+                            fontSize={'18px'}
+                            textAlign={responsive ? 'left' : 'center'}
+                            letterSpacing={0.5}
+                        >
+                            27 AL 29 DE NOVIEMBRE - 2025
+                        </Typography>
+                    </Grid>
+                    <Grid
+                        component={motion.div}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.85, ease: 'easeInOut', delay: 1.1 }}
+                        viewport={{ once: true }}
+                        size={responsive ? 12 : 4}
+                    >
+                        <Typography
+                            fontFamily={'sans-serif'}
+                            fontWeight={'bold'}
+                            textAlign={responsive ? 'left' : 'center'}
+                            fontSize={responsive ? '18px' : '20px'}
+                            color="#13322c"
+                        >
+                            COSTOS
+                        </Typography>
+                        <Typography
+                            fontFamily={'sans-serif'}
+                            fontWeight={400}
+                            fontSize={'18px'}
+                            textAlign={responsive ? 'left' : 'center'}
+                            letterSpacing={0.5}
+                        >
+                            Medicina: $800 pesos<br />
+                            Enfermería: $300 pesos<br />
+                            Odontología: $300 pesos
+                        </Typography>
+                    </Grid>
                 </Grid>
             </Box>
         </Grid>

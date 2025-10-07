@@ -45,7 +45,7 @@ export const Navbar = () => {
     };
 
     return (
-        <AppBar position="fixed" sx={{ display: 'flex', backgroundColor: 'background.default', zIndex: 4 }}>
+        <AppBar position="fixed" sx={{ display: 'flex', backgroundColor: 'background.default', zIndex: 20 }}>
             <Container maxWidth={'xl'}>
                 <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Box sx={{ display: responsive ? 'none' : 'flex', flexDirection: 'row', alignItems: 'center' }}>
