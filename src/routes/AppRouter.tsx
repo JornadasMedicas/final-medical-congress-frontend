@@ -8,11 +8,11 @@ import { DashboardRoutes } from "./DashboardRoutes";
 import { lazy, Suspense } from "react";
 import { Loader } from "../components/ui/Loader";
 import { AdminContextProvider } from "../context/AdminContext";
-/* import { SocketProvider } from "../context/SocketContext"; */
+import { SocketProvider } from "../context/SocketContext";
 
 const LazyAdmin = lazy(() => import('../components/admin/Admin'));
 const LazyHome = lazy(() => import('../pages/HomePage'));
-/* const LazyRegistro = lazy(() => import('../components/public/registro/Registro')) */
+const LazyRegistro = lazy(() => import('../components/public/registro/Registro'))
 
 export const AppRouter = () => {
 
@@ -26,13 +26,13 @@ export const AppRouter = () => {
                         </Suspense>
                     } />
 
-                    {/* <Route path='registro' element={
+                    <Route path='registro' element={
                         <Suspense fallback={<Loader />}>
                             <SocketProvider>
                                 <LazyRegistro />
                             </SocketProvider>
                         </Suspense>
-                    } /> */}
+                    } />
 
                     <Route path='admin' element={
                         <Suspense fallback={<Loader />}>
