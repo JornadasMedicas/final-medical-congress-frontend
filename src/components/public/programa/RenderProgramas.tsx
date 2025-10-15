@@ -17,6 +17,7 @@ export const RenderProgramas = ({ programas }: PropsIProgramas) => {
         const link = document.createElement("a");
         link.download = `JORNADAS.pdf`;
         link.href = doc;
+        link.target = '_blank'
         link.click();
         link.remove();
 
