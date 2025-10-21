@@ -39,7 +39,7 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
             label: 'Módulos Activos',
             registries: catalogs.modulos,
             Cmp: Modulos,
-            width: '800px'
+            width: '1000px'
         },
         {
             id: 2,

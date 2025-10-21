@@ -10,7 +10,7 @@ const navItem = [
     { name: 'Programa' },
     { name: 'Sedes' },
     { name: 'Contacto' },
-    /* { name: 'Registro' } */
+    { name: 'Registro' }
 ];
 
 export const Navbar = () => {

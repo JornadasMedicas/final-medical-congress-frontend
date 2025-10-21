@@ -34,7 +34,8 @@ export interface ReqGenCatalogs {
     id: number;
     nombre: string;
     fecha: string;
-    cupos?: number;
+    cupos: number;
+    costo: number;
     hora_inicio: string;
     hora_fin: string;
     created_at?: string;

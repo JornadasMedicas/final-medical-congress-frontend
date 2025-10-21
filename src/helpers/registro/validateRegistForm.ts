@@ -57,7 +57,8 @@ export const validateJornadasFields = ({ ...data }: RegistFormInterface) => {
     }
 
     if ((data.modulo === 0 || data.modulo === null) && data.talleres?.length === 0) { //adjust depends on needs
-        errors = { ...errors, modulo: { error: true, msg: "Debe elegir al menos un módulo o taller" } }
+        errors = { ...errors, modulo: { error: true, msg: "Debe elegir un módulo" } }
+        /* errors = { ...errors, modulo: { error: true, msg: "Debe elegir al menos un módulo o taller" } } */
     }
 
     Object.entries(errors).forEach(([_, value]) => {

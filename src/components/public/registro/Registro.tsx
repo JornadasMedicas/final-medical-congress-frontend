@@ -28,7 +28,7 @@ const Registro = () => {
     const [selectedItem, setSelectedItem] = useState<number[]>([]);
     const groupedWorkshops = _.groupBy(catalogs.workshops, 'jrn_modulo.nombre');
     const { socket } = useContext(SocketContext);
-
+    
     const handleSubmit = async () => {
         const { isOk, errors } = validateJornadasFields(payload);
 
@@ -447,10 +447,11 @@ const Registro = () => {
                     <Grid size={12}>
                         <Box sx={{ display: 'flex', mb: 0, gap: 0.7 }}>
                             <MedicalServicesTwoToneIcon sx={{ width: 'auto', height: '23px', color: 'background.default' }} />
-                            <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Módulos y Talleres</Typography>
+                            <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Módulos</Typography>
                         </Box>
                         <Box sx={{ mb: 2 }}>
-                            <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione los eventos a los que desea asistir. Debe elegir al menos un módulo o taller.</Typography>
+                            <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione el módulo al que desea asistir.</Typography>
+                            {/* <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione los eventos a los que desea asistir. Debe elegir al menos un módulo o taller.</Typography> */}
                         </Box>
                         <Box sx={{ mb: 3 }}>
                             <Autocomplete
