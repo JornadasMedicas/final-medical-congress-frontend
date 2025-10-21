@@ -28,7 +28,7 @@ const Registro = () => {
     const [selectedItem, setSelectedItem] = useState<number[]>([]);
     const groupedWorkshops = _.groupBy(catalogs.workshops, 'jrn_modulo.nombre');
     const { socket } = useContext(SocketContext);
-    
+
     const handleSubmit = async () => {
         const { isOk, errors } = validateJornadasFields(payload);
 
@@ -464,7 +464,7 @@ const Registro = () => {
                                     const { key, ...rest } = props;
                                     return (
                                         <MenuItem key={key} {...rest} disabled={option.cupos === 0}>
-                                            <ListItemText primary={option.nombre} />
+                                            <ListItemText primary={option.nombre + ' - $' + option.costo} />
                                             {
                                                 option.cupos !== 0 ?
                                                     <Typography sx={{ color: 'gray' }}>{option.cupos} cupos disponibles</Typography>

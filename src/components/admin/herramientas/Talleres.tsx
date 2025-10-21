@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography, useMediaQuery } from "@mui/material"
+import { Button, FormControl, FormHelperText, Grid, IconButton, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography, useMediaQuery } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import { createWorkshop, editWorkshop, getEventEditions, getModules, getWorkshops } from "../../../services/admin/adminService";
@@ -13,6 +13,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { PropsUIContext } from "../../../interfaces/context/IUIContext";
 import UIContext from "../../../context/UIContext";
+import CheckIcon from '@mui/icons-material/Check';
 
 dayjs.extend(utc);
 
@@ -54,6 +55,7 @@ export const Talleres = () => {
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
     const [errors, setErrors] = useState<ModuleErrors>(moduleErrors);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [editMode, setEditMode] = useState<boolean>(false);
     const open = Boolean(anchorEl);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -88,6 +90,7 @@ export const Talleres = () => {
     const handleEdit = (row: ReqGenCatalogs | null) => {
         if (!row) return;
         setEditData({ id: row.id, nombre: row.nombre, cupos: row.cupos ? row.cupos : 0, fecha: dayjs.utc(row.fecha).format('YYYY-MM-DD'), hora_inicio: dayjs.utc(row.hora_inicio).format('HH:mm:ss'), hora_fin: dayjs.utc(row.hora_fin).format('HH:mm:ss') });
+        setEditMode(true);
         handleClose();
     }
 
@@ -121,6 +124,7 @@ export const Talleres = () => {
         }
 
         setEditData({ id: 0, nombre: '', cupos: 0, fecha: '', hora_inicio: '', hora_fin: '' });
+        setEditMode(false);
     };
 
     const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
@@ -339,43 +343,52 @@ export const Talleres = () => {
                                         <TableRow
                                             key={row.id}
                                         >
-                                            <TableCell>
-                                                <Button
-                                                    color={'inherit'}
-                                                    aria-controls={open ? 'basic-menu' : undefined}
-                                                    aria-haspopup="true"
-                                                    aria-expanded={open ? 'true' : undefined}
-                                                    onClick={(e) => { handleClick(e, row) }}
-                                                >
-                                                    <MenuSharpIcon />
-                                                </Button>
-                                                <Menu
-                                                    key={row.id}
-                                                    id="basic-menu"
-                                                    anchorEl={anchorEl}
-                                                    open={open}
-                                                    onClose={handleClose}
-                                                    slotProps={{
-                                                        list: {
-                                                            'aria-labelledby': 'basic-button',
-                                                        },
-                                                        paper: {
-                                                            sx: {
-                                                                boxShadow: '0px 0px 3px rgba(0,0,0,0.05)', // Más suave
-                                                            },
-                                                        }
-                                                    }}
-                                                >
-                                                    <MenuItem onClick={() => handleEdit(selectedRow)}>
-                                                        <EditIcon sx={{ mr: 1 }} />
-                                                        Editar
-                                                    </MenuItem>
-                                                    <MenuItem onClick={() => handleConfirmDelete(selectedRow)}>
-                                                        <DeleteIcon sx={{ mr: 1 }} />
-                                                        Eliminar
-                                                    </MenuItem>
-                                                </Menu>
-                                            </TableCell>
+                                            {
+                                                editMode && row.id === editData.id ?
+                                                    <TableCell sx={{ display: 'flex', justifyContent: 'center' }}>
+                                                        <IconButton onClick={handleSave} aria-label="Guardar" sx={{ color: 'primary.main', backgroundColor: '#006758', ":hover": { color: 'primary.main', backgroundColor: '#005b4d' }, width: '35px', height: '35px' }}>
+                                                            <CheckIcon />
+                                                        </IconButton>
+                                                    </TableCell>
+                                                    :
+                                                    <TableCell>
+                                                        <Button
+                                                            color={'inherit'}
+                                                            aria-controls={open ? 'basic-menu' : undefined}
+                                                            aria-haspopup="true"
+                                                            aria-expanded={open ? 'true' : undefined}
+                                                            onClick={(e) => { handleClick(e, row) }}
+                                                        >
+                                                            <MenuSharpIcon />
+                                                        </Button>
+                                                        <Menu
+                                                            key={row.id}
+                                                            id="basic-menu"
+                                                            anchorEl={anchorEl}
+                                                            open={open}
+                                                            onClose={handleClose}
+                                                            slotProps={{
+                                                                list: {
+                                                                    'aria-labelledby': 'basic-button',
+                                                                },
+                                                                paper: {
+                                                                    sx: {
+                                                                        boxShadow: '0px 0px 3px rgba(0,0,0,0.05)', // Más suave
+                                                                    },
+                                                                }
+                                                            }}
+                                                        >
+                                                            <MenuItem onClick={() => handleEdit(selectedRow)}>
+                                                                <EditIcon sx={{ mr: 1 }} />
+                                                                Editar
+                                                            </MenuItem>
+                                                            <MenuItem onClick={() => handleConfirmDelete(selectedRow)}>
+                                                                <DeleteIcon sx={{ mr: 1 }} />
+                                                                Eliminar
+                                                            </MenuItem>
+                                                        </Menu>
+                                                    </TableCell>
+                                            }
                                             <TableCell sx={{ fontSize: 15, maxWidth: '13vw' }}>
                                                 {editData.id === row.id ?
                                                     <TextField
@@ -392,7 +405,6 @@ export const Talleres = () => {
                                                             },
                                                             width: '200px'
                                                         }}
-                                                        onBlur={handleSave}
                                                     />
                                                     :
                                                     <Typography fontSize={15}>{row.nombre}</Typography>
@@ -415,7 +427,6 @@ export const Talleres = () => {
                                                             },
                                                             width: '80px'
                                                         }}
-                                                        onBlur={handleSave}
                                                     />
                                                     :
                                                     <Typography fontSize={15}>{row.cupos}</Typography>
@@ -439,7 +450,6 @@ export const Talleres = () => {
                                                                 },
                                                                 width: 'auto'
                                                             }}
-                                                            onBlur={handleSave}
                                                         />
                                                         :
                                                         <Typography fontSize={15}>{dayjs.utc(row.fecha).format('YYYY-MM-DD')}</Typography>
@@ -463,7 +473,6 @@ export const Talleres = () => {
                                                                 },
                                                                 width: 'auto'
                                                             }}
-                                                            onBlur={handleSave}
                                                         />
                                                         :
                                                         <Typography fontSize={15}>{dayjs.utc(row.hora_inicio).format('HH:mm:ss')}
@@ -488,7 +497,6 @@ export const Talleres = () => {
                                                                 },
                                                                 width: 'auto'
                                                             }}
-                                                            onBlur={handleSave}
                                                         />
                                                         :
                                                         <Typography fontSize={15}>{dayjs.utc(row.hora_fin).format('HH:mm:ss')}</Typography>

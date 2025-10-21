@@ -1,4 +1,4 @@
-import { Button, Grid, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography, useMediaQuery } from "@mui/material"
+import { Button, Grid, IconButton, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography, useMediaQuery } from "@mui/material"
 import MenuSharpIcon from '@mui/icons-material/MenuSharp';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -11,6 +11,7 @@ import utc from 'dayjs/plugin/utc';
 import { ModalConfirmDelete } from "./ModalConfirmDelete";
 import { PropsUIContext } from "../../../interfaces/context/IUIContext";
 import UIContext from "../../../context/UIContext";
+import CheckIcon from '@mui/icons-material/Check';
 
 dayjs.extend(utc);
 
@@ -43,6 +44,7 @@ export const Categorias = () => {
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [editMode, setEditMode] = useState<boolean>(false);
     const open = Boolean(anchorEl);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -58,6 +60,7 @@ export const Categorias = () => {
     const handleEdit = (row: ReqGenCatalogs | null) => {
         if (!row) return;
         setEditData({ id: row.id, nombre: row.nombre });
+        setEditMode(true);
         handleClose();
     }
 
@@ -82,6 +85,7 @@ export const Categorias = () => {
         }
 
         setEditData({ id: 0, nombre: '' });
+        setEditMode(true);
     };
 
     const handleRegistry = async () => {
@@ -144,7 +148,6 @@ export const Categorias = () => {
                             color: 'green', // Color del label cuando está enfocado
                         },
                     }}
-                    onBlur={handleSave}
                     error={(isSent && payload === '') && true}
                     helperText={(isSent && payload === '') && 'Este campo es necesario'}
                 />
@@ -174,43 +177,52 @@ export const Categorias = () => {
                                         <TableRow
                                             key={row.id}
                                         >
-                                            <TableCell>
-                                                <Button
-                                                    color={'inherit'}
-                                                    aria-controls={open ? 'basic-menu' : undefined}
-                                                    aria-haspopup="true"
-                                                    aria-expanded={open ? 'true' : undefined}
-                                                    onClick={(e) => { handleClick(e, row) }}
-                                                >
-                                                    <MenuSharpIcon />
-                                                </Button>
-                                                <Menu
-                                                    key={row.id}
-                                                    id="basic-menu"
-                                                    anchorEl={anchorEl}
-                                                    open={open}
-                                                    onClose={handleClose}
-                                                    slotProps={{
-                                                        list: {
-                                                            'aria-labelledby': 'basic-button',
-                                                        },
-                                                        paper: {
-                                                            sx: {
-                                                                boxShadow: '0px 0px 3px rgba(0,0,0,0.05)', // Más suave
-                                                            },
-                                                        }
-                                                    }}
-                                                >
-                                                    <MenuItem onClick={() => handleEdit(selectedRow)}>
-                                                        <EditIcon sx={{ mr: 1 }} />
-                                                        Editar
-                                                    </MenuItem>
-                                                    <MenuItem onClick={() => handleConfirmDelete(selectedRow)}>
-                                                        <DeleteIcon sx={{ mr: 1 }} />
-                                                        Eliminar
-                                                    </MenuItem>
-                                                </Menu>
-                                            </TableCell>
+                                            {
+                                                editMode && editData.id === row.id ?
+                                                    <TableCell sx={{ display: 'flex', justifyContent: 'center' }}>
+                                                        <IconButton onClick={handleSave} aria-label="Guardar" sx={{ color: 'primary.main', backgroundColor: '#006758', ":hover": { color: 'primary.main', backgroundColor: '#005b4d' }, width: '35px', height: '35px' }}>
+                                                            <CheckIcon />
+                                                        </IconButton>
+                                                    </TableCell>
+                                                    :
+                                                    <TableCell>
+                                                        <Button
+                                                            color={'inherit'}
+                                                            aria-controls={open ? 'basic-menu' : undefined}
+                                                            aria-haspopup="true"
+                                                            aria-expanded={open ? 'true' : undefined}
+                                                            onClick={(e) => { handleClick(e, row) }}
+                                                        >
+                                                            <MenuSharpIcon />
+                                                        </Button>
+                                                        <Menu
+                                                            key={row.id}
+                                                            id="basic-menu"
+                                                            anchorEl={anchorEl}
+                                                            open={open}
+                                                            onClose={handleClose}
+                                                            slotProps={{
+                                                                list: {
+                                                                    'aria-labelledby': 'basic-button',
+                                                                },
+                                                                paper: {
+                                                                    sx: {
+                                                                        boxShadow: '0px 0px 3px rgba(0,0,0,0.05)', // Más suave
+                                                                    },
+                                                                }
+                                                            }}
+                                                        >
+                                                            <MenuItem onClick={() => handleEdit(selectedRow)}>
+                                                                <EditIcon sx={{ mr: 1 }} />
+                                                                Editar
+                                                            </MenuItem>
+                                                            <MenuItem onClick={() => handleConfirmDelete(selectedRow)}>
+                                                                <DeleteIcon sx={{ mr: 1 }} />
+                                                                Eliminar
+                                                            </MenuItem>
+                                                        </Menu>
+                                                    </TableCell>
+                                            }
                                             <TableCell sx={{ fontSize: 15, maxWidth: '13vw' }}>
                                                 {editData.id === row.id ?
                                                     <TextField
@@ -226,7 +238,6 @@ export const Categorias = () => {
                                                                 color: 'green', // Color del label cuando está enfocado
                                                             },
                                                         }}
-                                                        onBlur={handleSave}
                                                     />
                                                     :
                                                     <Typography fontSize={15}>{row.nombre}</Typography>
