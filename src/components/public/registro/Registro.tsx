@@ -53,7 +53,7 @@ const Registro = () => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Éxito',
-                    html: 'Su pase de entrada (código QR) se enviará a su correo electrónico en breve. <hr><b>No olvide llevarlo consigo pues será su registro de asistencia.<b>',
+                    html: 'Su pase de entrada junto con los próximos pasos para completar su registro se enviarán a su correo electrónico en breve. <hr><b>No olvide realizar el pago correspondiente y llevar su pase consigo, será su registro de asistencia.<b>',
                     confirmButtonColor: '#d3c19b'
                 });
 
