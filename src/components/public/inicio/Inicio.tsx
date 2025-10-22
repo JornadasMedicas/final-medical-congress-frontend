@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Grid, Typography, useMediaQuery } from "@mui/material"
+import { Box, Card, CardContent, Divider, Grid, Typography, useMediaQuery } from "@mui/material"
 import { Carousel } from "./Carousel";
 import { motion } from "motion/react";
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
@@ -211,7 +211,7 @@ export const Inicio = () => {
                         transition={{ duration: 0.85, ease: 'easeInOut', delay: 0.7 }}
                         viewport={{ once: true }}
                         size={responsive ? 12 : 4}
-                        sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}
+                        sx={{ display: 'flex', justifyContent: 'left', flexDirection: 'column' }}
                     >
                         <Typography
                             fontFamily={'sans-serif'}
@@ -285,7 +285,10 @@ export const Inicio = () => {
                         >
                             Medicina: $800 pesos<br />
                             Enfermería: $300 pesos<br />
-                            Odontología: $300 pesos
+                            Químicos: $300 pesos<br />
+                            Odontología: $300 pesos<br />
+                            <Divider sx={{ mt: '5px', mb: '5px', width: '50%', ml: 'auto', mr: 'auto' }}/>
+                            Estudiantes: $200 pesos
                         </Typography>
                     </Grid>
                 </Grid>
