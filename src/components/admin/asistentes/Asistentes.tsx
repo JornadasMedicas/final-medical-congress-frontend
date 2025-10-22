@@ -143,13 +143,16 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
                                                     ))
                                                 }
                                             </optgroup>
-                                            <optgroup label="TALLERES">
-                                                {
-                                                    tableData.talleres.map((item: { id: number, nombre: string }) => (
-                                                        <option key={item.id} value={item.id}>{item.nombre}</option>
-                                                    ))
-                                                }
-                                            </optgroup>
+                                            {
+                                                tableData.talleres.length !== 0 &&
+                                                <optgroup label="TALLERES">
+                                                    {
+                                                        tableData.talleres.map((item: { id: number, nombre: string }) => (
+                                                            <option key={item.id} value={item.id}>{item.nombre}</option>
+                                                        ))
+                                                    }
+                                                </optgroup>
+                                            }
                                         </Select>
                                     </FormControl>
                                 </Box>

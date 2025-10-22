@@ -469,7 +469,7 @@ const Registro = () => {
                                                 option.cupos !== 0 ?
                                                     <Typography sx={{ color: 'gray' }}>{option.cupos} cupos disponibles</Typography>
                                                     :
-                                                    <Typography sx={{ color: '#c53933', fontWeight: 'bold' }}>cupos agotados</Typography>
+                                                    option.costo !== 0 ? <Typography sx={{ color: '#c53933', fontWeight: 'bold' }}>cupos agotados</Typography> : <Typography sx={{ color: '#c53933', fontWeight: 'bold' }}>No Disponible</Typography> 
                                             }
                                         </MenuItem>
                                     )
