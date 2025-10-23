@@ -57,7 +57,7 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
             year: assistantsTable.filters.year
         }).then((res: ReqAssistants) => {
             if (res.data) {
-                const row = assistantsRows(res.data);
+                const row: any = assistantsRows(res.data);
                 setTableData(prev => ({ ...prev, rows: row }));
             }
         });

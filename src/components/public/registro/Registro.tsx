@@ -58,8 +58,8 @@ const Registro = () => {
                 });
 
                 socket?.emit('isValidRegistry', payload);
-                setSelectedItem([]);
-                setPayload(initValuesFormJornadas);
+                /* setSelectedItem([]);
+                setPayload(initValuesFormJornadas); */
             } else if (res.error) {
                 Swal.fire({
                     icon: "error",
@@ -464,7 +464,7 @@ const Registro = () => {
                                     const { key, ...rest } = props;
                                     return (
                                         <MenuItem key={key} {...rest} disabled={option.cupos === 0}>
-                                            <ListItemText primary={option.nombre + ' - $' + option.costo} />
+                                            <ListItemText primary={option.nombre} />
                                             {
                                                 option.cupos !== 0 ?
                                                     <Typography sx={{ color: 'gray' }}>{option.cupos} cupos disponibles</Typography>

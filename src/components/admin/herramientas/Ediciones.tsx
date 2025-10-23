@@ -1,4 +1,4 @@
-import { Button, Grid, TextField, Typography, useMediaQuery } from "@mui/material"
+import { Button, Grid, Stack, styled, Switch, TextField, Typography, useMediaQuery } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
 import dayjs from "dayjs";
 import { useContext, useState } from "react";
@@ -8,10 +8,57 @@ import { useSnackbar } from 'notistack';
 import { PropsUIContext } from "../../../interfaces/context/IUIContext";
 import UIContext from "../../../context/UIContext";
 
+const AntSwitch = styled(Switch)(({ theme }) => ({
+    width: 28,
+    height: 16,
+    padding: 0,
+    display: 'flex',
+    '&:active': {
+        '& .MuiSwitch-thumb': {
+            width: 15,
+        },
+        '& .MuiSwitch-switchBase.Mui-checked': {
+            transform: 'translateX(9px)',
+        },
+    },
+    '& .MuiSwitch-switchBase': {
+        padding: 2,
+        '&.Mui-checked': {
+            transform: 'translateX(12px)',
+            color: '#fff',
+            '& + .MuiSwitch-track': {
+                opacity: 1,
+                backgroundColor: '#06645d',
+                ...theme.applyStyles('dark', {
+                    backgroundColor: '#177ddc',
+                }),
+            },
+        },
+    },
+    '& .MuiSwitch-thumb': {
+        boxShadow: '0 2px 4px 0 rgb(0 35 11 / 20%)',
+        width: 12,
+        height: 12,
+        borderRadius: 6,
+        transition: theme.transitions.create(['width'], {
+            duration: 200,
+        }),
+    },
+    '& .MuiSwitch-track': {
+        borderRadius: 16 / 2,
+        opacity: 1,
+        backgroundColor: 'rgba(0,0,0,.25)',
+        boxSizing: 'border-box',
+        ...theme.applyStyles('dark', {
+            backgroundColor: 'rgba(255,255,255,.35)',
+        }),
+    },
+}));
+
 export const Ediciones = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const { setModalAdminData } = useContext<PropsUIContext>(UIContext);
-    const [payload, setPayload] = useState<PropsCreateEdition>({ edicion: dayjs().format('YYYY'), fec_inicial: '', fec_final: '' });
+    const [payload, setPayload] = useState<PropsCreateEdition>({ edicion: dayjs().format('YYYY'), fec_inicial: '', fec_final: '', isFree: true });
     const [loading, setLoading] = useState<boolean>(false);
     const [isSent, setIsSent] = useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -34,9 +81,13 @@ export const Ediciones = () => {
         setLoading(false);
     }
 
+    const handleCheckBox = (value: any) => {
+        setPayload(prev => ({ ...prev, isFree: !value }));
+    }
+
     return (
         <Grid container sx={{ mt: 2 }} spacing={3}>
-            <Grid size={responsive ? 12 : 12}>
+            <Grid size={responsive ? 12 : 6}>
                 <Typography fontSize={'15px'}>Año</Typography>
                 <TextField
                     variant="outlined"
@@ -45,6 +96,14 @@ export const Ediciones = () => {
                     value={payload.edicion}
                     fullWidth
                 />
+            </Grid>
+            <Grid size={responsive ? 12 : 6}>
+                <Typography fontSize={'15px'}>¿Es gratuito?</Typography>
+                <Stack direction="row" spacing={1} sx={{ alignItems: 'center', display: 'flex', justifyContent: 'center', verticalAlign: 'middle', alignContent: 'center', border: '1px solid rgb(201, 199, 199)', borderRadius: 1, height: '39px' }}>
+                    <Typography>Sí</Typography>
+                    <AntSwitch onChange={(e) => handleCheckBox(e.target.checked)} />
+                    <Typography>No</Typography>
+                </Stack>
             </Grid>
             <Grid size={responsive ? 12 : 6}>
                 <Typography fontSize={'15px'}>Fecha Inicial</Typography>

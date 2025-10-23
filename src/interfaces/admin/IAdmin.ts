@@ -6,12 +6,23 @@ export interface ReqAssistants {
     data: PropsGetAssistantsInterface[];
 }
 
+export interface PropsJrnModulo {
+    costo: number;
+    nombre: string;
+}
+
+export interface PropsJrnInscritosModulos {
+    jrn_modulo: PropsJrnModulo;
+}
+
 export interface PropsGetAssistantsInterface {
     id: number;
     acronimo: string;
     nombre: string;
+    categoria: string;
     correo: string;
     tel: string;
+    jrn_inscritos_modulos: PropsJrnInscritosModulos[];
     created_at: string;
 }
 
@@ -147,6 +158,7 @@ export interface PropsCreateEdition {
     edicion: string;
     fec_inicial: string;
     fec_final: string;
+    isFree: boolean;
 }
 
 export interface PayloadWorkshops {
