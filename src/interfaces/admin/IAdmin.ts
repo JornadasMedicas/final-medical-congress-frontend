@@ -11,8 +11,13 @@ export interface PropsJrnModulo {
     nombre: string;
 }
 
+export interface PropsJrnEdicion {
+    gratuito: boolean;
+}
+
 export interface PropsJrnInscritosModulos {
     jrn_modulo: PropsJrnModulo;
+    jrn_edicion: PropsJrnEdicion;
 }
 
 export interface PropsGetAssistantsInterface {
@@ -133,6 +138,7 @@ export interface ReqAssistantInfo {
 export interface ReqEventEditions {
     id: number;
     edicion: string;
+    gratuito: boolean;
 }
 
 export interface ReqCountCatalogs {

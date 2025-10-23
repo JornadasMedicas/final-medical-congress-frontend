@@ -23,6 +23,7 @@ export const columns: GridColDef[] = [
 export const assistantsRows = (assistants: PropsGetAssistantsInterface[]) => {
 
     const rows = assistants.map((data: PropsGetAssistantsInterface) => {
+        const isFree = data.jrn_inscritos_modulos[0].jrn_edicion.gratuito;
 
         return {
             id: data.id,
@@ -32,7 +33,7 @@ export const assistantsRows = (assistants: PropsGetAssistantsInterface[]) => {
             correo: data.correo,
             tel: data.tel,
             modulo: data.jrn_inscritos_modulos[0].jrn_modulo.nombre,
-            costo: '$' + (data.categoria.includes('Estudiante') ? 200 : data.jrn_inscritos_modulos[0].jrn_modulo.costo),
+            costo: isFree ? 'N/A' : '$' + (data.categoria.includes('Estudiante') ? 200 : data.jrn_inscritos_modulos[0].jrn_modulo.costo),
             created_at: dayjs.utc(data.created_at).format('LLLL')
         }
     });
