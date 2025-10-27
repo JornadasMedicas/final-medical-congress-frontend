@@ -67,7 +67,7 @@ export const Carousel = () => {
                     <Box
                         key={item.name}
                         onClick={() => handleClick(index)}
-                        sx={{ backgroundColor: index === activeItem ? 'rgba(19, 50, 44, 1)' : 'rgba(19, 50, 44, 0.3)', width: '13px', height: '13px', borderRadius: 10, transition: 'background 1s ease', '&:hover': { cursor: 'pointer' } }} />
+                        sx={{ backgroundColor: index === activeItem ? 'rgba(84, 14, 38, 1)' : 'rgba(84, 14, 38, 0.3)', width: '13px', height: '13px', borderRadius: 10, transition: 'background 1s ease', '&:hover': { cursor: 'pointer' } }} />
                 ))}
             </Box>
         </Stack>

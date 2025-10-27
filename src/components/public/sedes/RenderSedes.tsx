@@ -95,7 +95,7 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
                                                 backgroundColor: '#ffffff',
                                                 borderTopLeftRadius: 5,
                                                 borderBottomLeftRadius: 5,
-                                                borderLeft: selectedItem === index ? '4px solid #50736c' : '',
+                                                borderLeft: selectedItem === index ? '4px solid #540e26' : '',
                                                 borderTopRightRadius: responsive ? 10 : 5,
                                                 borderBottomRightRadius: responsive ? 10 : 0,
                                             }}>
@@ -110,7 +110,7 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
                                         </Grid>
                                         {
                                             !responsive &&
-                                            <Grid size={6} sx={{ backgroundColor: '#50736c' }}>
+                                            <Grid size={6} sx={{ backgroundColor: '#540e26' }}>
                                                 <Box sx={{ backgroundColor: 'white', height: '100%', width: '20%', borderBottomRightRadius: '100px' }} />
                                             </Grid>
                                         }
@@ -119,7 +119,7 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
                             ))
                         }
                     </Grid>
-                    <Grid size={responsive ? 12 : 6} sx={{ backgroundColor: '#50736c', height: '100%', minHeight: 'auto', borderRadius: 3, p: responsive ? 1 : 2, zIndex: 2, boxShadow: '0 8px 10px 0 rgba(1,18,38, 0.15)', }}>
+                    <Grid size={responsive ? 12 : 6} sx={{ backgroundColor: '#540e26', height: '100%', minHeight: 'auto', borderRadius: 3, p: responsive ? 1 : 2, zIndex: 2, boxShadow: '0 8px 10px 0 rgba(1,18,38, 0.15)', }}>
                         <Box
                             sx={{
                                 backgroundColor: 'white',
@@ -136,7 +136,7 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 1, ease: 'easeOut' }}
                                 fontSize={responsive ? '17px' : '20px'}
-                                color="background.default"
+                                color="text.primary"
                                 fontWeight={'bold'}
                             >
                                 {itemData[0].place}

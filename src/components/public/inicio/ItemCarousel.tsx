@@ -48,10 +48,10 @@ export const ItemCarousel = memo((props: PropsItemCarousel) => {
             >
                 <b style={{ color: '#d6bf9b' }}>¡</b>BIENVENIDOS A LAS JORNADAS MÉDICAS<b style={{ color: '#d6bf9b' }}>!</b>
             </Typography>
-            <Box sx={{ width: responsive ? '50%' : '20%', height: '5px', background: 'linear-gradient(90deg,rgb(244, 255, 251) 0%, rgb(127, 201, 177) 100%)', m: 'auto', position: 'absolute', top: responsive ? '27vh' : '35vh', left: '50%', transform: 'translate(-50%, -50%)' }} />
+            <Box sx={{ width: responsive ? '50%' : '20%', height: '5px', background: 'linear-gradient(90deg,rgb(255, 247, 243) 0%, #d6bf9b 100%)', m: 'auto', position: 'absolute', top: responsive ? '27vh' : '35vh', left: '50%', transform: 'translate(-50%, -50%)' }} />
             <Box sx={{ height: { md: '70px', xs: '50px' }, mt: 'auto', ml: { md: '5vh', xs: '2vh' }, zIndex: 3 }}>
                 <Typography
-                    sx={{ fontWeight: 'bold', fontSize: { md: '25px', xs: '18px' }, border: '1px solid white', backgroundColor: 'rgba(255, 255, 255, 0.5)', pl: 4, pr: 4, borderRadius: 3, color: 'text.primary' }}
+                    sx={{ fontWeight: 'bold', fontSize: { md: '25px', xs: '18px' }, border: '1px solid white', backgroundColor: 'rgba(255, 255, 255, 0.5)', pl: 4, pr: 4, borderRadius: 3, color: 'primary.main' }}
                 >
                     {props.item.name}
                 </Typography>

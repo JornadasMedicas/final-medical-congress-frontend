@@ -83,7 +83,7 @@ export const Modulos = () => {
             setEditData({ id: 0, nombre: '', cupos: 0, costo: 0 });
             return;
         };
-        
+
         const res = await editModule({ id: editData.id, nombre: editData.nombre.charAt(0).toUpperCase() + editData.nombre.slice(1).toLowerCase(), cupos: editData.cupos, costo: editData.costo });
 
         if (!res.error) {
@@ -178,7 +178,13 @@ export const Modulos = () => {
                                 })}
                             </TableRow>
                         </TableHead>
-                        <TableBody>
+                        <TableBody
+                            sx={{
+                                "& .MuiTableCell-body": {
+                                    color: "secondary.main"
+                                },
+                            }}
+                        >
                             {
                                 rows
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

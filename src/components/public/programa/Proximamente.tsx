@@ -24,7 +24,8 @@ export const Proximamente = () => {
                     mt: responsive ? '41vh' : '38.5vh',
                     fontSize: responsive ? '11vw' : '5vw',
                     fontWeight: 'bold',
-                    backgroundImage: 'linear-gradient(45deg, #afd5cd, #13322c)',
+                    backgroundImage: 'linear-gradient(45deg,rgb(235, 222, 217),rgb(171, 106, 69))',
+                    /* backgroundImage: 'linear-gradient(45deg, #afd5cd, #13322c)', */
                     backgroundClip: 'text',
                     color: 'transparent',
                     zIndex: 1

@@ -169,7 +169,13 @@ export const Categorias = () => {
                                 })}
                             </TableRow>
                         </TableHead>
-                        <TableBody>
+                        <TableBody
+                            sx={{
+                                "& .MuiTableCell-body": {
+                                    color: "secondary.main"
+                                },
+                            }}
+                        >
                             {
                                 rows
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

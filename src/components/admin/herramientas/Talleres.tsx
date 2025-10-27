@@ -315,7 +315,7 @@ export const Talleres = () => {
                 </FormControl>
             </Grid>
             <Grid size={12}>
-                <Button onClick={handleRegistry} loading={loading} fullWidth color="success" variant="outlined" startIcon={<AddIcon />}>
+                <Button onClick={handleRegistry} loading={loading} fullWidth color="inherit" variant="outlined" startIcon={<AddIcon />}>
                     Agregar
                 </Button>
             </Grid>
@@ -335,7 +335,13 @@ export const Talleres = () => {
                                 })}
                             </TableRow>
                         </TableHead>
-                        <TableBody>
+                        <TableBody
+                            sx={{
+                                "& .MuiTableCell-body": {
+                                    color: "secondary.main"
+                                },
+                            }}
+                        >
                             {
                                 rows
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

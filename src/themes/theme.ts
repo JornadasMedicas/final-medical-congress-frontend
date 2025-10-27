@@ -8,11 +8,14 @@ const theme = createTheme({
         secondary: {
             main: '#333333'
         },
-        background: {
+        /* background: {
             default: '#13322c'
+        }, */
+        background: {
+            default: '#540e26'
         },
         text: {
-            primary: '#333',
+            primary: '#8e4e28',
             secondary: '#d6bf9b'
         },
     },

@@ -111,7 +111,7 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
                                                 </Box>
                                             </CardContent>
                                             <CardActions sx={{ height: '40%' }}>
-                                                <Button onClick={() => handleOpenModal(item)} sx={{ m: 'auto', width: '95%' }} size="small" variant="outlined" color="success">Gestionar</Button>
+                                                <Button onClick={() => handleOpenModal(item)} sx={{ m: 'auto', width: '95%' }} size="small" variant="outlined" color="inherit">Gestionar</Button>
                                             </CardActions>
                                         </Card>
                                     </Grid>

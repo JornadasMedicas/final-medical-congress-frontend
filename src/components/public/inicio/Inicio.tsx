@@ -12,20 +12,20 @@ const cards = [
     {
         title: parseInt(dayjs().format('YYYY')) - 1989 + ' Años',
         subtitle: 'de Asistencia Médica',
-        icon: <CalendarTodayTwoToneIcon sx={{ fontSize: 40, color: '#13322c' }} />,
-        color: '#275e51'
+        icon: <CalendarTodayTwoToneIcon sx={{ fontSize: 40, color: 'background.default' }} />,
+        color: ' #a95b2a'
     },
     {
         title: 'Colaboración',
         subtitle: 'y Avances en Salud',
-        icon: <PeopleAltTwoToneIcon sx={{ fontSize: 40, color: '#13322c' }} />,
-        color: '#275e51'
+        icon: <PeopleAltTwoToneIcon sx={{ fontSize: 40, color: 'background.default' }} />,
+        color: '#a95b2a'
     },
     {
         title: 'Innovación',
         subtitle: 'y Excelencia',
-        icon: <WorkspacePremiumTwoToneIcon sx={{ fontSize: 40, color: '#13322c' }} />,
-        color: '#275e51'
+        icon: <WorkspacePremiumTwoToneIcon sx={{ fontSize: 40, color: 'background.default' }} />,
+        color: '#a95b2a'
     }
 ]
 
@@ -131,7 +131,7 @@ export const Inicio = () => {
                                 color: 'secondary.main',
                                 fontSize: responsive ? '18px' : '20px'
                             }}>
-                            Es un honor darles la bienvenida a este congreso tan especial, donde celebramos <b style={{ color: '#13322c' }}> {parseInt(dayjs.utc().format('YYYY')) - 1989} años de logros, colaboración y avances</b> en el campo de la salud de Veracruz.
+                            Es un honor darles la bienvenida a este congreso tan especial, donde celebramos <b style={{ color: '#8e4e28' }}> {parseInt(dayjs.utc().format('YYYY')) - 1989} años de logros, colaboración y avances</b> en el campo de la salud de Veracruz.
                         </Typography>
                         <Typography
                             fontFamily={'sans-serif'}
@@ -143,7 +143,7 @@ export const Inicio = () => {
                                 color: 'secondary.main',
                                 fontSize: responsive ? '18px' : '20px'
                             }}>
-                            A lo largo de estos {parseInt(dayjs.utc().format('YYYY')) - 1989} años, hemos enfrentado numerosos desafíos, pero también hemos alcanzado metas significativas gracias al esfuerzo y dedicación de cada uno de ustedes. Este congreso es un testimonio de nuestro <b style={{ color: '#13322c' }}>compromiso continuo con la excelencia y la innovación</b>.
+                            A lo largo de estos {parseInt(dayjs.utc().format('YYYY')) - 1989} años, hemos enfrentado numerosos desafíos, pero también hemos alcanzado metas significativas gracias al esfuerzo y dedicación de cada uno de ustedes. Este congreso es un testimonio de nuestro <b style={{ color: '#8e4e28' }}>compromiso continuo con la excelencia y la innovación</b>.
                         </Typography>
                         <Typography
                             fontFamily={'sans-serif'}
@@ -158,7 +158,7 @@ export const Inicio = () => {
                                 p: 2,
                                 textAlign: 'right',
                                 borderRadius: 5,
-                                borderLeft: '4px solid #50736c'
+                                borderLeft: '4px solid #540e26'
                             }}>
                             "Quiero expresar mi más profundo agradecimiento a todos los que han contribuido a este viaje: a nuestros directivos, por su apoyo incondicional; a los ponentes, por compartir su valioso conocimiento; y a todos los asistentes, por su entusiasmo y participación activa".
                         </Typography>
@@ -194,12 +194,13 @@ export const Inicio = () => {
                         size={12}
                         sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}
                     >
-                        <LabelImportantTwoToneIcon sx={{ fontSize: responsive ? 33 : 40, color: '#13322c', mr: 1 }} />
+                        <LabelImportantTwoToneIcon sx={{ fontSize: responsive ? 33 : 40, color: 'text.secondary', mr: 1 }} />
                         <Typography
                             fontFamily={'sans-serif'}
                             fontWeight={'bold'}
                             textAlign={'justify'}
                             sx={{ fontSize: responsive ? '18px' : '24px', mt: 'auto', mb: 'auto' }}
+                            color="background.default"
                         >
                             INFORMACIÓN IMPORTANTE
                         </Typography>
@@ -218,7 +219,7 @@ export const Inicio = () => {
                             fontWeight={'bold'}
                             textAlign={responsive ? 'left' : 'center'}
                             fontSize={responsive ? '18px' : '20px'}
-                            color="#13322c"
+                            color="black"
                         >
                             TEMA PRINCIPAL
                         </Typography>
@@ -245,7 +246,7 @@ export const Inicio = () => {
                             fontWeight={'bold'}
                             textAlign={responsive ? 'left' : 'center'}
                             fontSize={responsive ? '18px' : '20px'}
-                            color="#13322c"
+                            color="black"
                         >
                             FECHAS
                         </Typography>
@@ -272,7 +273,7 @@ export const Inicio = () => {
                             fontWeight={'bold'}
                             textAlign={responsive ? 'left' : 'center'}
                             fontSize={responsive ? '18px' : '20px'}
-                            color="#13322c"
+                            color="black"
                         >
                             COSTOS
                         </Typography>

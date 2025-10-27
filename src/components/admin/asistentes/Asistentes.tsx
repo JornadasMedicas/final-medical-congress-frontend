@@ -250,6 +250,7 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
                                     <DataGrid
                                         sx={{
                                             backgroundColor: '#ffffff',
+                                            color: 'secondary.main',
                                             border: 2,
                                             borderColor: 'darkgray',
                                             '& .MuiDataGrid-columnHeaderTitle': {

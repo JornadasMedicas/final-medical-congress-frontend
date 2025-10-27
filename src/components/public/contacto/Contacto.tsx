@@ -78,7 +78,7 @@ export const Contacto = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.85, ease: 'easeInOut' }}
                         viewport={{ once: true }}
-                        sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'secondary.main', width: responsive ? '80%' : '50%', m: 'auto' }}>
+                        sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: responsive ? '80%' : '50%', m: 'auto' }}>
                         CONTACTO
                     </Divider>
                 </Box>
@@ -96,7 +96,7 @@ export const Contacto = () => {
                     }}
                     >
                         <Grid container sx={{ height: '100%', overflow: 'hidden', flexDirection: responsive ? 'column' : 'row' }}>
-                            <Grid size={12} sx={{ height: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'linear-gradient(90deg, rgba(83,115,109,1) 0%, rgba(19,50,44,1) 48%, rgba(36,70,63,1) 100%);', borderTopLeftRadius: 18, borderTopRightRadius: 15, pt: 3, pb: 3 }}>
+                            <Grid size={12} sx={{ height: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'linear-gradient(90deg, rgba(132, 105, 115, 1) 0%, rgba(84, 14, 38, 1) 48%, rgba(68, 46, 54, 1) 100%);', borderTopLeftRadius: 18, borderTopRightRadius: 15, pt: 3, pb: 3 }}>
                                 <EmailIcon sx={{ width: 'auto', height: '60px', color: 'white' }} />
                             </Grid>
                             <Grid size={12} sx={{ p: 5, height: '85%', display: 'flex', flexDirection: 'column', gap: 4 }}>
