@@ -147,7 +147,7 @@ export const Ediciones = () => {
                 />
             </Grid>
             <Grid size={12}>
-                <Button onClick={handleClick} loading={loading} fullWidth color="success" variant="outlined" startIcon={<AddIcon />}>
+                <Button onClick={handleClick} loading={loading} fullWidth color="inherit" variant="outlined" startIcon={<AddIcon />}>
                     Agregar
                 </Button>
             </Grid>

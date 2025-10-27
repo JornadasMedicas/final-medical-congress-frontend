@@ -192,3 +192,12 @@ export const putRegistAssistanceWorkshops = async (data: string) => {
     }
 }
 
+export const putPaymentStatus = async (isPayed: boolean, id_persona: number) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.put(`/api/assistants/updatePaymentStatus`, { isPayed, id_persona });
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
+

@@ -18,6 +18,7 @@ export interface PropsJrnEdicion {
 export interface PropsJrnInscritosModulos {
     jrn_modulo: PropsJrnModulo;
     jrn_edicion: PropsJrnEdicion;
+    pagado: boolean;
 }
 
 export interface PropsGetAssistantsInterface {
