@@ -5,7 +5,7 @@ export const globalAttendanceUpdate = async (emailData: string, type: string): P
     if (type === 'congress') {
         const res = await putRegistAssistance(emailData).then((res: any) => {
             if (res.error) {
-                if (res.error.status === 400 || res.error.status === 404) {
+                if (res.error.status === 400 || res.error.status === 404 || res.error.status === 402) {
                     Swal.fire({
                         icon: "error",
                         title: "Error",
