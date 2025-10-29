@@ -5,14 +5,14 @@ import UIContext from "../context/UIContext";
 import { Inicio } from "../components/public/inicio/Inicio";
 import { Sedes } from "../components/public/sedes/Sedes";
 import { Contacto } from "../components/public/contacto/Contacto";
-import { Programa } from "../components/public/programa/Programa";
+import { ProgramaCurrent } from "../components/public/programa/ProgramaCurrent";
 
 export const navBarHeigth: number = 64;
 export const navBarHeigthResponsive: number = 54;
 
 //Memo components to prevent unnecessary re-renders when changing activeSection from Navbar
 const MemoizedInicio = React.memo(Inicio);
-const MemoizedPrograma = React.memo(Programa);
+const MemoizedPrograma = React.memo(ProgramaCurrent);
 const MemoizedSedes = React.memo(Sedes);
 const MemoizedContacto = React.memo(Contacto);
 
