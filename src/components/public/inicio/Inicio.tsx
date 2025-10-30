@@ -7,6 +7,7 @@ import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwo
 import LabelImportantTwoToneIcon from '@mui/icons-material/LabelImportantTwoTone';
 import { SectionObserver } from "../../ui/SectionObserver";
 import dayjs from "dayjs";
+import { CountDownTimer } from "./CountDownTimer";
 
 const cards = [
     {
@@ -230,7 +231,7 @@ export const Inicio = () => {
                             textAlign={responsive ? 'left' : 'center'}
                             letterSpacing={0.5}
                         >
-                            DESAFIOS EN SALUD DESDE EL TERCER NIVEL DE ATENCIÓN Y EL USO DE LA INTELIGENCIA ARTIFICIAL EN EL CAE
+                            DESAFIOS EN SALUD DESDE EL TERCER NIVEL DE ATENCIÓN Y EL INICIO DE LA INTELIGENCIA ARTIFICIAL EN EL CAE
                         </Typography>
                     </Grid>
                     <Grid
@@ -291,6 +292,9 @@ export const Inicio = () => {
                             <Divider sx={{ mt: '5px', mb: '5px', width: '50%', ml: 'auto', mr: 'auto' }}/>
                             Estudiantes: $200 pesos
                         </Typography>
+                    </Grid>
+                    <Grid size={12} sx={{ mb: 2 }}>
+                        <CountDownTimer />
                     </Grid>
                 </Grid>
             </Box>
