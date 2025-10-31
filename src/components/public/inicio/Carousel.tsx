@@ -5,19 +5,19 @@ import { ItemCarousel } from './ItemCarousel';
 const items = [
     {
         name: "Medicina",
-        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/medicine.webp`
+        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/carousel1.jpeg`
     },
     {
         name: "Enfermería",
-        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/nursing.webp`
+        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/carousel3.jpeg`
     },
     {
         name: "Químicos",
-        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/chemicals.webp`
+        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/carousel2.jpeg`
     },
     {
         name: "Estomatología",
-        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/stomatology.webp`
+        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/carousel4.jpeg`
     }
 ]
 

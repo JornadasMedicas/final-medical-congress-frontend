@@ -16,6 +16,9 @@ const LazyRegistro = lazy(() => import('../components/public/registro/Registro')
 
 export const AppRouter = () => {
 
+    const registerDay = new Date("November, 2025 09:00:00");
+    const currentDate = new Date();
+
     return (
         <Router>
             <Routes>
@@ -26,13 +29,16 @@ export const AppRouter = () => {
                         </Suspense>
                     } />
 
-                    <Route path='registro' element={
-                        <Suspense fallback={<Loader />}>
-                            <SocketProvider>
-                                <LazyRegistro />
-                            </SocketProvider>
-                        </Suspense>
-                    } />
+                    {
+                        currentDate >= registerDay &&
+                        <Route path='registro' element={
+                            <Suspense fallback={<Loader />}>
+                                <SocketProvider>
+                                    <LazyRegistro />
+                                </SocketProvider>
+                            </Suspense>
+                        } />
+                    }
 
                     <Route path='admin' element={
                         <Suspense fallback={<Loader />}>
