@@ -89,7 +89,7 @@ export const ProgramaCurrent = () => {
             </Grid>
             <Grid size={12} sx={{ mt: 2, height: '100%' }}>
                 {
-                    programTab === 0 &&  <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/PROGRAMA_MEDICOS_25.webp`} url={'PROGRAMA_MEDICOS.pdf'} />
+                    programTab === 0 &&  <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/PROGRAMA_MEDICOS.webp`} url={'PROGRAMA_MEDICOS.pdf'} />
                 }
                 {
                     programTab === 1 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/TRIPTICO_ENF_25.webp`} url={'TRIPTICO_ENF.pdf'} />
