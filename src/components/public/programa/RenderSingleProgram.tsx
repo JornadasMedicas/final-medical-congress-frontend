@@ -40,7 +40,7 @@ export const RenderSingleProgram = ({ image, url }: any) => {
                     mb: responsive ? 4 : 7
                 }}
             >
-                <Box component={'img'} src={image} width={responsive ? '100%' : '55%'} height={'auto'} loading='lazy' sx={{ cursor: 'pointer', transition: 'transform 0.3s ease', filter: 'drop-shadow(0px 0px 5px grey)', ':hover': { transform: 'scale(1.03)', transition: 'transform 0.3s ease' }, m: 'auto' }} onClick={() => handleClickOpen(image)}>
+                <Box component={'img'} src={image} width={responsive ? '100%' : image.includes('MEDICOS') ? '65%' : '55%'} height={'auto'} loading='lazy' sx={{ cursor: 'pointer', transition: 'transform 0.3s ease', filter: 'drop-shadow(0px 0px 5px grey)', ':hover': { transform: 'scale(1.03)', transition: 'transform 0.3s ease' }, m: 'auto' }} onClick={() => handleClickOpen(image)}>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', width: responsive ? '100%' : '40%', m: 'auto' }}>
                     <Button loading={buttonLoading} onClick={() => onDownload()} variant="contained" endIcon={<DownloadIcon />} sx={{ backgroundColor: 'background.default', color: 'primary.main', ":hover": { backgroundColor: 'primary.main', color: 'background.default' }, width: responsive ? '100%' : '100%' }}>

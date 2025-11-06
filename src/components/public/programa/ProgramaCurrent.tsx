@@ -89,7 +89,7 @@ export const ProgramaCurrent = () => {
             </Grid>
             <Grid size={12} sx={{ mt: 2, height: '100%' }}>
                 {
-                    programTab === 0 &&  <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/PROGRAMA_MEDICOS.webp`} url={'PROGRAMA_MEDICOS.pdf'} />
+                    programTab === 0 &&  <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/PROGRAMA_MEDICOS_25.webp`} url={'PROGRAMA_MEDICOS_25.pdf'} />
                 }
                 {
                     programTab === 1 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/TRIPTICO_ENF_25.webp`} url={'TRIPTICO_ENF.pdf'} />
@@ -98,7 +98,7 @@ export const ProgramaCurrent = () => {
                     programTab === 2 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/PROGRAMA-QUIMICOS_25.webp`} url={'PROGRAMA_QUIMICOS.pdf'} />
                 }
                 {
-                    programTab === 3 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/TRIPTICO_EST_25.webp`} url={'TRIPTICO_EST.pdf'} />
+                    programTab === 3 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/TRIPTICO_EST.webp`} url={'TRIPTICO_EST_25.pdf'} />
                 }
             </Grid>
             <ModalImagen />
