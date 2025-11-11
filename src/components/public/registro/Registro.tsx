@@ -18,6 +18,7 @@ import MedicalServicesTwoToneIcon from '@mui/icons-material/MedicalServicesTwoTo
 import ContactEmergencyTwoToneIcon from '@mui/icons-material/ContactEmergencyTwoTone';
 import _ from 'lodash';
 import { SocketContext } from "../../../context/SocketContext";
+import { SectionObserver } from "../../ui/SectionObserver";
 
 const Registro = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -201,9 +202,10 @@ const Registro = () => {
                 }}
             >
                 <Grid size={12} sx={{ height: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'linear-gradient(90deg, rgba(132, 105, 115, 1) 0%, rgba(84, 14, 38, 1) 48%, rgba(68, 46, 54, 1) 100%);', borderTopLeftRadius: 18, borderTopRightRadius: 15, pt: 4, pb: 4, flexDirection: 'column' }}>
+                    <SectionObserver sectionId="Registro" />
                     <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
                         <PersonAddIcon sx={{ width: 'auto', height: '30px', color: 'white' }} />
-                        <Typography sx={{ color: 'primary.main', fontWeight: 'bold', fontSize: responsive ? '23px' : '23px' }}>PRE-REGISTRO</Typography>
+                        <Typography sx={{ color: 'primary.main', fontWeight: 'bold', fontSize: responsive ? '23px' : '23px' }}>REGISTRO</Typography>
                     </Box>
                 </Grid>
                 <Grid container sx={{ width: '100%', p: responsive ? 3 : 4 }} spacing={3}>

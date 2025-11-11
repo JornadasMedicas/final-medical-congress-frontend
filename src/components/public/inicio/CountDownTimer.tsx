@@ -41,7 +41,7 @@ export const CountDownTimer = () => {
                                 sx={{ fontSize: responsive ? '18px' : '24px', mt: 'auto', mb: 'auto' }}
                                 color="background.default"
                             >
-                                ¡El PRE-REGISTRO SE HABILITARÁ PRONTO!
+                                ¡El REGISTRO SE HABILITARÁ PRONTO!
                             </Typography>
                         </Grid>
                         <Box sx={{ display: 'flex', justifyContent: responsive ? 'center' : 'space-between', flexDirection: 'row', width: responsive ? '100%' : '70%', gap: responsive ? 2 : 0 }}>
@@ -78,7 +78,7 @@ export const CountDownTimer = () => {
                                 sx={{ fontSize: responsive ? '18px' : '24px', mt: 'auto', mb: 'auto' }}
                                 color="background.default"
                             >
-                                ¡El PRE-REGISTRO ESTÁ HABILITADO!
+                                ¡El REGISTRO ESTÁ HABILITADO!
                             </Typography>
                         </Grid>
                         <Grid
@@ -86,7 +86,7 @@ export const CountDownTimer = () => {
                         >
                             <Link to={'/registro'}>
                                 <Button disabled={disabled} variant="contained" endIcon={<SendIcon />} sx={{ backgroundColor: 'background.default', color: 'primary.main', ":hover": { backgroundColor: '#b9482a' }, width: responsive ? '100%' : '100%' }}>
-                                    Llevame al Pre-Registro
+                                    Llevame al Registro
                                 </Button>
                             </Link>
                         </Grid>

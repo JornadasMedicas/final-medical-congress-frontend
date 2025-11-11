@@ -10,7 +10,7 @@ const navItem = [
     { name: 'Programa' },
     { name: 'Sedes' },
     { name: 'Contacto' },
-    { name: 'Pre-Registro' }
+    { name: 'Registro' }
 ];
 
 export const Navbar = () => {
@@ -33,9 +33,9 @@ export const Navbar = () => {
         setActiveSection(pathTo);
         setTriggerRelocation(true);
 
-        if (location.pathname !== 'Pre-Registro' && pathTo === 'Pre-Registro') {
+        if (location.pathname !== 'Registro' && pathTo === 'Registro') {
             navigate(`/registro`, { replace: true });
-        } else if (location.pathname !== 'Pre-Registro' && pathTo !== 'Pre-Registro') {
+        } else if (location.pathname !== 'Registro' && pathTo !== 'Registro') {
             navigate(`/`, { replace: true });
             setTriggerRelocation(true);
         }
