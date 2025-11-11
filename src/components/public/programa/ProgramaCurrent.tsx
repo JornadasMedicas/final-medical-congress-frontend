@@ -98,7 +98,7 @@ export const ProgramaCurrent = () => {
                     programTab === 2 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/PROGRAMA-QUIMICOS_25.webp`} url={'PROGRAMA_QUIMICOS.pdf'} />
                 }
                 {
-                    programTab === 3 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/TRIPTICO_EST.webp`} url={'TRIPTICO_EST_25.pdf'} />
+                    programTab === 3 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/TRIPTICO_EST_25.webp`} url={'TRIPTICO_EST.pdf'} />
                 }
             </Grid>
             <ModalImagen />
