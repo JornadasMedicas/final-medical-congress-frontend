@@ -42,7 +42,8 @@ export default defineConfig({
     port: 5173
   },
   build: {
-    outDir: 'docs'
+    outDir: 'docs',
+    target: ['es2019', 'safari13']
   },
   /* base: "/final-medical-congress-frontend" */ //route base for github pages without domain
   base: "/",

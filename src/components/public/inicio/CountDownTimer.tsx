@@ -17,7 +17,7 @@ export const CountDownTimer = () => {
         setDisplay(2);
     }
 
-    const registerDay = new Date("November, 2025 09:00:00");
+    const registerDay = new Date("2025-11-03T09:00:00");
 
     return (
         <>
