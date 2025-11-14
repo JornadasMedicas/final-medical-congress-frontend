@@ -17,15 +17,20 @@ const tableValues = {
 const AdminContext = createContext<TablePropsJornadasAdmin>({
     assistantsTable: tableValues,
     setAssistantsTableAction: () => { },
+    printableIds: [] as number[],
+    setPrintableIds: () => { }
 });
 
 export const AdminContextProvider = ({ children: Component }: { children: ReactNode }) => {
     const [assistantsTable, setAssistantsTableAction] = useState<PropsAssistantsTable>(tableValues);
+    const [printableIds, setPrintableIds] = useState<number[]>([]);
 
     return (
         <AdminContext value={{
             assistantsTable,
-            setAssistantsTableAction
+            setAssistantsTableAction,
+            printableIds,
+            setPrintableIds
         }}>
             {Component}
         </AdminContext>

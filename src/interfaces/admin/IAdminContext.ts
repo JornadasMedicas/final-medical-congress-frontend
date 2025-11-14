@@ -1,6 +1,8 @@
 export interface TablePropsJornadasAdmin {
     assistantsTable: PropsAssistantsTable;
     setAssistantsTableAction: React.Dispatch<React.SetStateAction<PropsAssistantsTable>>;
+    printableIds: number[];
+    setPrintableIds: React.Dispatch<React.SetStateAction<number[]>>
 }
 
 export interface PropsTableAssistantsFilters {

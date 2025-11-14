@@ -1,10 +1,12 @@
 import { Chip } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { putPaymentStatus } from "../../services/admin/adminService";
 import Swal from "sweetalert2";
+import AdminContext from "../../context/AdminContext";
 
 export const ButtonPayClick = ({ params }: any) => {
     const [pagado, setPagado] = useState<number>(params.row.pagado);
+    const { printableIds, setPrintableIds } = useContext(AdminContext);
 
     const handleClick = () => {
         if ((pagado + 1) % 3 === 0) {
@@ -36,7 +38,17 @@ export const ButtonPayClick = ({ params }: any) => {
                 confirmButtonColor: '#d37c6b'
             });
         });
-    }, [pagado])
+
+        if (pagado === 1) {
+            if (!printableIds.includes(params.row.id)) {
+                setPrintableIds([...printableIds, params.row.id]);
+            }
+        } else {
+            setPrintableIds(printableIds.filter((id) => id !== params.row.id));
+        }
+
+        params.row.pagado = pagado;
+    }, [pagado]);
 
 
     return (
