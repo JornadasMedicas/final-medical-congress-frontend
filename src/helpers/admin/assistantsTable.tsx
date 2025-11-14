@@ -12,9 +12,6 @@ export const columns: GridColDef[] = [
     {
         field: 'correo', headerName: 'CORREO', flex: 1, headerAlign: 'center', align: 'center', sortable: false
     },
-    /* {
-        field: 'tel', headerName: 'TELEFONO', flex: 1, headerAlign: 'center', align: 'center', sortable: false
-    }, */
     { field: 'modulo', headerName: 'MODULO', flex: 0.8, headerAlign: 'center', align: 'center', sortable: false },
     { field: 'costo', headerName: 'COSTO', flex: 0.7, headerAlign: 'center', align: 'center', sortable: false },
     {
@@ -61,7 +58,6 @@ export const assistantsRows = (assistants: PropsGetAssistantsInterface[]) => {
             nombre: data.nombre,
             categoria: data.categoria,
             correo: data.correo,
-            /* tel: data.tel, */
             modulo: data.jrn_inscritos_modulos[0].jrn_modulo.nombre,
             costo: isFree ? 'N/A' : '$' + (data.categoria.includes('Estudiante') ? 200 : data.jrn_inscritos_modulos[0].jrn_modulo.costo),
             pagado: data.jrn_inscritos_modulos[0].pagado,

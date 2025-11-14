@@ -55,7 +55,7 @@ export const ButtonPayClick = ({ params }: any) => {
         <>
             {
                 pagado === 0 &&
-                <Chip label="No Pagado" color="error" sx={{ boxShadow: '0 2px 5px 2px rgba(0, 0, 0, 0.3)', transition: 'all 1s ease', ':hover': { cursor: 'pointer' } }} onClick={handleClick} />
+                <Chip label="No Pagado" color="error" sx={{ boxShadow: '0 2px 5px 2px rgba(0, 0, 0, 0.3)', transition: 'all 1s ease', ':hover': { cursor: 'pointer' } }} onClick={handleClick} disabled={params.row.costo === 'N/A' ? true : false} />
             }
             {
                 pagado === 1 &&
