@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import jornadasApi from '../../api/jornadasApi';
 import { EditWorkshops, PayloadWorkshops, PropsCreateEdition, PropsGetAssistantsFilters } from '../../interfaces/admin/IAdmin';
 import { PropsTableAssistantsFilters } from '../../interfaces/admin/IAdminContext';
@@ -200,4 +200,23 @@ export const putPaymentStatus = async (isPayed: number, id_persona: number) => {
         return { error: err };
     }
 }
+
+export const downLoadVoucherPago = (data: any) => { //PayloadReporteChecadasInterface
+    return new Promise((resolve, reject) => {
+        const URI = `${import.meta.env.VITE_APP_URL_API_JORNADAS}/api/admin/printVoucher`;
+        axios({
+            method: 'GET',
+            url: URI,
+            responseType: 'blob',
+            headers: { Accept: 'application/octet-stream' },
+            params: { ...data }
+        }).then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+            window.open(url);
+            resolve(res.data);
+        }).catch((err: AxiosError) => {
+            reject(err);
+        });
+    });
+};
 
