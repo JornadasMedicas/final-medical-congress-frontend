@@ -10,8 +10,6 @@ export const ButtonVoucherPrinting = ({ params }: any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handlePrinting = async () => {
-        console.log(params);
-        
         setIsLoading(true);
         let costoTexto = '';
 
