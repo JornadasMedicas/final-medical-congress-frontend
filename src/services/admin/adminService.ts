@@ -220,3 +220,21 @@ export const downLoadVoucherPago = (data: any) => { //PayloadReporteChecadasInte
     });
 };
 
+export const getReason = async (id: number) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.get(`/api/assistants/reason/${id}`);
+        
+        return res.data;
+    } catch (err: unknown) {
+        return [];
+    }
+}
+
+export const putScholarshipReason = async (id: number, razon: string) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.put(`/api/assistants/updateReason`, { id, razon });
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}

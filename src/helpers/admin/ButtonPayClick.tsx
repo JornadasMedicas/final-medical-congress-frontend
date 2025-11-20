@@ -1,15 +1,18 @@
-import { Button, Chip, Dialog, DialogActions, DialogContent, Divider, IconButton, TextField, Tooltip } from "@mui/material"
+import { Box, Button, Chip, Dialog, DialogActions, DialogContent, Divider, IconButton, TextField, Tooltip } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
-import { putPaymentStatus } from "../../services/admin/adminService";
+import { getReason, putPaymentStatus, putScholarshipReason } from "../../services/admin/adminService";
 import Swal from "sweetalert2";
 import AdminContext from "../../context/AdminContext";
 import SaveIcon from '@mui/icons-material/Save';
+import { useSnackbar } from "notistack";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 export const ButtonPayClick = ({ params }: any) => {
     const [pagado, setPagado] = useState<number>(params.row.pagado);
     const { printableIds, setPrintableIds } = useContext(AdminContext);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [razonBeca, setRazonBeca] = useState<string>('');
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleClick = () => {
         if ((pagado + 1) % 3 === 0) {
@@ -55,7 +58,40 @@ export const ButtonPayClick = ({ params }: any) => {
         }
 
         params.row.pagado = pagado;
+
+        if (pagado === 2) {
+            getReason(params.row.id).then((res: any) => {
+                if (res.error) {
+                    enqueueSnackbar(res.error, { variant: 'error' });
+                } else {
+                    setRazonBeca(res.razon_beca === null ? '' : res.razon_beca);
+                }
+
+            }).catch((err) => {
+                enqueueSnackbar(err, { variant: 'error' });
+            });
+        }
+
     }, [pagado]);
+
+    const handleSave = () => {
+        if (razonBeca === '') {
+            return;
+        }
+
+        putScholarshipReason(params.row.id, razonBeca).then((res: any) => {
+            if (res.error) {
+                enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
+            } else {
+                enqueueSnackbar('Guardado exitosamente.', { variant: 'success' });
+                setIsOpen(false)
+            }
+
+        }).catch((err) => {
+            console.error(err);
+            enqueueSnackbar('No se ha podido procesar su solicitud. Intente más tarde.', { variant: 'error' });
+        });
+    }
 
     return (
         <>
@@ -69,7 +105,14 @@ export const ButtonPayClick = ({ params }: any) => {
             }
             {
                 pagado === 2 &&
-                <Chip label="Becado" color="info" sx={{ boxShadow: '0 2px 5px 2px rgba(0, 0, 0, 0.3)', transition: 'all 1s ease', ':hover': { cursor: 'pointer' }, width: '50%' }} onClick={handleClick} />
+                <Box sx={{ pl: 4 }}>
+                    <Chip label="Becado" color="info" sx={{ boxShadow: '0 2px 5px 2px rgba(0, 0, 0, 0.3)', transition: 'all 1s ease', ':hover': { cursor: 'pointer' }, width: '50%' }} onClick={handleClick} />
+                    <Tooltip title={'Editar'} placement="right">
+                        <IconButton sx={{ ml: 1 }} onClick={() => setIsOpen(true)}>
+                            <RemoveRedEyeIcon />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
             }
             <Dialog open={isOpen}>
                 <Divider sx={{ width: '95%', m: 'auto' }} />
@@ -93,17 +136,15 @@ export const ButtonPayClick = ({ params }: any) => {
                                 color: 'black'
                             }
                         }}
-                        onChange={(e) => setRazonBeca(e.target.value)}
-                        /* error={errors.nombre.error}
-                        helperText={errors.nombre.error ? errors.nombre.msg : ''} */
+                        onChange={(e) => setRazonBeca(e.target.value.toUpperCase())}
                     />
                 </DialogContent>
-                <DialogActions sx={{ width: '25vw' }}>
+                <DialogActions sx={{ width: '470px' }}>
                     <Button onClick={() => setIsOpen(false)} variant="contained" sx={{ backgroundColor: 'background.default', color: 'primary.main' }}>
                         Cerrar
                     </Button>
                     <Tooltip title={'Guardar'} placement="right">
-                        <IconButton sx={{ backgroundColor: 'text.primary', width: '50px', height: '50px', color: 'white', ':hover': { backgroundColor: 'rgb(158, 94, 57)' } }}>
+                        <IconButton onClick={handleSave} sx={{ backgroundColor: 'text.primary', width: '50px', height: '50px', color: 'white', ':hover': { backgroundColor: 'rgb(158, 94, 57)' } }}>
                             <SaveIcon />
                         </IconButton>
                     </Tooltip>
