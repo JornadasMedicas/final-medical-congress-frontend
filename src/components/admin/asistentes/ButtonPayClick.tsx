@@ -1,8 +1,8 @@
 import { Box, Button, Chip, Dialog, DialogActions, DialogContent, Divider, IconButton, TextField, Tooltip } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
-import { getReason, putPaymentStatus, putScholarshipReason } from "../../services/admin/adminService";
+import { getReason, putPaymentStatus, putScholarshipReason } from "../../../services/admin/adminService";
 import Swal from "sweetalert2";
-import AdminContext from "../../context/AdminContext";
+import AdminContext from "../../../context/AdminContext";
 import SaveIcon from '@mui/icons-material/Save';
 import { useSnackbar } from "notistack";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
@@ -21,7 +21,7 @@ export const ButtonPayClick = ({ params }: any) => {
             setPagado(pagado + 1);
         }
 
-        if (pagado === 1) {
+        if (pagado === 0) {
             setIsOpen(true);
         }
     }
@@ -49,7 +49,7 @@ export const ButtonPayClick = ({ params }: any) => {
             });
         });
 
-        if (pagado === 1) {
+        if (pagado === 2) {
             if (!printableIds.includes(params.row.id)) {
                 setPrintableIds([...printableIds, params.row.id]);
             }
@@ -59,7 +59,7 @@ export const ButtonPayClick = ({ params }: any) => {
 
         params.row.pagado = pagado;
 
-        if (pagado === 2) {
+        if (pagado === 1) {
             getReason(params.row.id).then((res: any) => {
                 if (res.error) {
                     enqueueSnackbar(res.error, { variant: 'error' });
@@ -101,10 +101,6 @@ export const ButtonPayClick = ({ params }: any) => {
             }
             {
                 pagado === 1 &&
-                <Chip label="Pagado" color="success" sx={{ boxShadow: '0 2px 5px 2px rgba(0, 0, 0, 0.3)', transition: 'all 1s ease', ':hover': { cursor: 'pointer' }, width: '50%' }} onClick={handleClick} />
-            }
-            {
-                pagado === 2 &&
                 <Box sx={{ pl: 4 }}>
                     <Chip label="Becado" color="info" sx={{ boxShadow: '0 2px 5px 2px rgba(0, 0, 0, 0.3)', transition: 'all 1s ease', ':hover': { cursor: 'pointer' }, width: '50%' }} onClick={handleClick} />
                     <Tooltip title={'Editar'} placement="right">
@@ -113,6 +109,10 @@ export const ButtonPayClick = ({ params }: any) => {
                         </IconButton>
                     </Tooltip>
                 </Box>
+            }
+            {
+                pagado === 2 &&
+                <Chip label="Pagado" color="success" sx={{ boxShadow: '0 2px 5px 2px rgba(0, 0, 0, 0.3)', transition: 'all 1s ease', ':hover': { cursor: 'pointer' }, width: '50%' }} onClick={handleClick} />
             }
             <Dialog open={isOpen}>
                 <Divider sx={{ width: '95%', m: 'auto' }} />

@@ -2,8 +2,8 @@ import { GridColDef } from '@mui/x-data-grid';
 import dayjs from "dayjs";
 import 'dayjs/locale/es';
 import { PropsGetAssistantsInterface } from '../../interfaces/admin/IAdmin';
-import { ButtonPayClick } from './ButtonPayClick';
-import { ButtonVoucherPrinting } from './ButtonVoucherPrinting';
+import { ButtonPayClick } from '../../components/admin/asistentes/ButtonPayClick';
+import { ButtonVoucherPrinting } from '../../components/admin/asistentes/ButtonVoucherPrinting';
 
 export const columns: GridColDef[] = [
     { field: 'acronimo', headerName: 'ACRONIMO', flex: 0.8, headerAlign: 'center', align: 'center', sortable: false },
