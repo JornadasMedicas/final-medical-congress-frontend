@@ -1,6 +1,6 @@
 import { Box, Button, Chip, Dialog, DialogActions, DialogContent, Divider, IconButton, TextField, Tooltip } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
-import { getReason, putPaymentStatus, putScholarshipReason } from "../../../services/admin/adminService";
+import { getReason, putCancelPaymentReason, putPaymentStatus, putScholarshipReason } from "../../../services/admin/adminService";
 import Swal from "sweetalert2";
 import AdminContext from "../../../context/AdminContext";
 import SaveIcon from '@mui/icons-material/Save';
@@ -11,18 +11,24 @@ export const ButtonPayClick = ({ params }: any) => {
     const [pagado, setPagado] = useState<number>(params.row.pagado);
     const { printableIds, setPrintableIds } = useContext(AdminContext);
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen2, setIsOpen2] = useState<boolean>(false);
     const [razonBeca, setRazonBeca] = useState<string>('');
+    const [razonCancelado, setRazonCancelado] = useState<string>('');
     const { enqueueSnackbar } = useSnackbar();
 
     const handleClick = () => {
-        if ((pagado + 1) % 3 === 0) {
-            setPagado(0);
+        if (pagado === 2) {
+            setIsOpen2(true);
         } else {
-            setPagado(pagado + 1);
-        }
+            if ((pagado + 1) % 3 === 0) {
+                setPagado(0);
+            } else {
+                setPagado(pagado + 1);
+            }
 
-        if (pagado === 0) {
-            setIsOpen(true);
+            if (pagado === 0) {
+                setIsOpen(true);
+            }
         }
     }
 
@@ -93,6 +99,27 @@ export const ButtonPayClick = ({ params }: any) => {
         });
     }
 
+    const handleSaveCancelado = () => {
+        if (razonCancelado === '') {
+            return;
+        }
+
+        putCancelPaymentReason(params.row.id, razonCancelado).then((res: any) => {
+            if (res.error) {
+                enqueueSnackbar(res.error.response.data.msg, { variant: 'error' });
+            } else {
+                enqueueSnackbar('Guardado exitosamente.', { variant: 'success' });
+                setPagado(0);
+                setIsOpen2(false);
+                setRazonCancelado('');
+            }
+
+        }).catch((err) => {
+            console.error(err);
+            enqueueSnackbar('No se ha podido procesar su solicitud. Intente más tarde.', { variant: 'error' });
+        });
+    }
+
     return (
         <>
             {
@@ -145,6 +172,42 @@ export const ButtonPayClick = ({ params }: any) => {
                     </Button>
                     <Tooltip title={'Guardar'} placement="right">
                         <IconButton onClick={handleSave} sx={{ backgroundColor: 'text.primary', width: '50px', height: '50px', color: 'white', ':hover': { backgroundColor: 'rgb(158, 94, 57)' } }}>
+                            <SaveIcon />
+                        </IconButton>
+                    </Tooltip>
+                </DialogActions>
+            </Dialog>
+            <Dialog open={isOpen2}>
+                <Divider sx={{ width: '95%', m: 'auto' }} />
+                <DialogContent sx={{ m: 2, p: 1, mb: 0 }}>
+                    <TextField
+                        label='Cancelado por:'
+                        size="small"
+                        fullWidth
+                        autoComplete='off'
+                        value={razonCancelado}
+                        sx={{
+                            '& .MuiOutlinedInput-root.Mui-focused': {
+                                '& fieldset': {
+                                    borderColor: 'text.secondary', // Cambia el color del borde
+                                }
+                            },
+                            "& label": {
+                                color: 'text.primary'
+                            },
+                            "& label.Mui-focused": {
+                                color: 'black'
+                            }
+                        }}
+                        onChange={(e) => setRazonCancelado(e.target.value.toUpperCase())}
+                    />
+                </DialogContent>
+                <DialogActions sx={{ width: '470px' }}>
+                    <Button onClick={() => setIsOpen2(false)} variant="contained" sx={{ backgroundColor: 'background.default', color: 'primary.main' }}>
+                        Cerrar
+                    </Button>
+                    <Tooltip title={'Guardar'} placement="right">
+                        <IconButton onClick={handleSaveCancelado} sx={{ backgroundColor: 'text.primary', width: '50px', height: '50px', color: 'white', ':hover': { backgroundColor: 'rgb(158, 94, 57)' } }}>
                             <SaveIcon />
                         </IconButton>
                     </Tooltip>

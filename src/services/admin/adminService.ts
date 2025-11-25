@@ -238,3 +238,12 @@ export const putScholarshipReason = async (id: number, razon: string) => {
         return { error: err };
     }
 }
+
+export const putCancelPaymentReason = async (id: number, razon: string) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.put(`/api/assistants/updateCancelReason`, { id, razon });
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}

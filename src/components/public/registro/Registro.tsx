@@ -71,6 +71,7 @@ const Registro = () => {
                 });
             }
         } catch (err) {
+            console.log(err);
             Swal.fire({
                 icon: "error",
                 title: "Error",
@@ -95,7 +96,7 @@ const Registro = () => {
     }
 
     const handleCheckboxes = (isChecked: boolean, workshop: ReqGenCatalogs) => {
-        let formatWorkshop: PropsTalleresInterface = {
+        const formatWorkshop: PropsTalleresInterface = {
             asistio: false,
             constancia_enviada: false,
             id_taller: workshop.id
