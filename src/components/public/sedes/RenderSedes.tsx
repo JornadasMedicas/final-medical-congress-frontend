@@ -52,7 +52,20 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
         <Box sx={{
             /* background: 'linear-gradient(180deg, rgba(255, 255, 255,1) 5%, rgba(175, 201, 194, 0.3) 50%, rgba(255, 255, 255,1) 95%)', */
         }}>
-            <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : '90.5vh', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: responsive ? 2 : 5, mb: responsive ? 0 : -3 }}>
+            <Grid container columns={12} sx={{
+                display: 'flex',
+                minHeight: responsive ? 'auto' : '90.5vh',
+                flexDirection: 'column',
+                maxWidth: {
+                    xs: '90%',
+                    md: 1024,
+                    lg: 1152,
+                    xl: 1440,
+                },
+                pl: { md: 5 }, pr: { md: 5 },
+                mx: 'auto',
+                mt: responsive ? 2 : 5,
+            }}>
                 <Grid size={responsive ? 12 : 6} sx={{ mb: responsive ? 2 : 2, position: 'relative' }}>
                     <SectionObserver sectionId="Sedes" />
                     <Divider

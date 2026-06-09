@@ -16,7 +16,7 @@ const LazyRegistro = lazy(() => import('../components/public/registro/Registro')
 
 export const AppRouter = () => {
 
-    const registerDay = new Date("2025-11-03T09:00:00");
+    const registerDay = new Date("2026-11-03T09:00:00");
     const currentDate = new Date();
 
     return (

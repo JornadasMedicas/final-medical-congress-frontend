@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Divider, Grid, Typography, useMediaQuery } from "@mui/material"
+import { Box, Card, CardContent, /* Divider, */ Grid, Typography, useMediaQuery } from "@mui/material"
 import { Carousel } from "./Carousel";
 import { motion } from "motion/react";
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
@@ -7,7 +7,7 @@ import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwo
 import LabelImportantTwoToneIcon from '@mui/icons-material/LabelImportantTwoTone';
 import { SectionObserver } from "../../ui/SectionObserver";
 import dayjs from "dayjs";
-import { CountDownTimer } from "./CountDownTimer";
+// import { CountDownTimer } from "./CountDownTimer";
 
 const cards = [
     {
@@ -39,7 +39,7 @@ export const Inicio = () => {
                 <Carousel />
             </Grid>
             <Box>
-                <Grid container columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column' : 'row', justifyContent: 'center', gap: 3, mb: 4, mt: 2, ml: responsive ? 2 : 0, mr: responsive ? 2 : 0 }}>
+                <Grid container columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column' : 'row', justifyContent: 'center', gap: 3, mb: 4, mt: 2, mx: responsive ? 2 : 0 }}>
                     {
                         cards.map((card, index) => (
                             <Grid key={card.title} size={'auto'}>
@@ -92,15 +92,19 @@ export const Inicio = () => {
                             position: 'relative',
                             flexDirection: 'column',
                             pt: responsive ? 2 : 0,
-                            backgroundColor: 'primary.main',
+                            backgroundColor: 'primary.amin',
                             borderRadius: 5,
                             width: responsive ? 'auto' : '100%',
+                            maxWidth: {
+                                xs: '90%',
+                                md: 1024,
+                                lg: 1152,
+                                xl: 1152,
+                            },
+                            pl: { md: 5 }, pr: { md: 5 },
                             m: 'auto',
-                            p: responsive ? 2 : '20px 40px 20px 40px',
                             gap: 3,
                             borderLeft: '',
-                            pl: responsive ? 3 : 25,
-                            pr: responsive ? 3 : 25
                         }}>
                         <SectionObserver sectionId="Inicio" />
                         <Typography
@@ -182,9 +186,17 @@ export const Inicio = () => {
                     spacing={4}
                     columns={12}
                     sx={{
-                        pl: responsive ? 3 : 25,
-                        pr: responsive ? 3 : 25,
-                        mt: 3
+                        maxWidth: {
+                            xs: '90%',
+                            md: 1024,
+                            lg: 1152,
+                            xl: 1152,
+                        },
+                        pl: { md: 5 }, pr: { md: 5 },
+                        mx: 'auto',
+                        mt: 7,
+                        display: 'flex',
+                        justifyContent: 'space-between',
                     }}>
                     <Grid
                         component={motion.div}
@@ -213,7 +225,7 @@ export const Inicio = () => {
                         transition={{ duration: 0.85, ease: 'easeInOut', delay: 0.7 }}
                         viewport={{ once: true }}
                         size={responsive ? 12 : 4}
-                        sx={{ display: 'flex', justifyContent: 'left', flexDirection: 'column' }}
+                        sx={{ display: 'flex', justifyContent: 'left', flexDirection: 'column'}}
                     >
                         <Typography
                             fontFamily={'sans-serif'}
@@ -289,13 +301,13 @@ export const Inicio = () => {
                             Enfermería: $300 pesos<br />
                             Químicos: $300 pesos<br />
                             Odontología: $300 pesos<br />
-                            <Divider sx={{ mt: '5px', mb: '5px', width: '50%', ml: 'auto', mr: 'auto' }}/>
+                            {/* <Divider sx={{ mt: '5px', mb: '5px', width: '50%', ml: 'auto', mr: 'auto' }} /> */}
                             Estudiantes: $200 pesos
                         </Typography>
                     </Grid>
-                    <Grid size={12} sx={{ mb: 2 }}>
+                    {/* <Grid size={12} sx={{ mb: 2 }}>
                         <CountDownTimer />
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Box>
         </Grid>

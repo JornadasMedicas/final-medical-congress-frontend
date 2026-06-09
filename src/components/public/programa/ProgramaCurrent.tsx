@@ -16,7 +16,20 @@ export const ProgramaCurrent = () => {
     };
 
     return (
-        <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : 'auto', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: 2 }}>
+        <Grid container columns={12} sx={{
+            display: 'flex',
+            minHeight: responsive ? 'auto' : 'auto',
+            flexDirection: 'column',
+            maxWidth: {
+                xs: '90%',
+                md: 1024,
+                lg: 1152,
+                xl: 1152,
+            },
+            pl: { md: 5 }, pr: { md: 5 },
+            mx: 'auto',
+            mt: 2
+        }}>
             <Grid size={12} sx={{ mb: 2, mt: 0, position: 'relative' }}>
                 <SectionObserver sectionId="Programa" />
                 <Divider
@@ -25,7 +38,7 @@ export const ProgramaCurrent = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.85, ease: 'easeInOut' }}
                     viewport={{ once: true }}
-                    sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: responsive ? '80%' : '50%', m: 'auto' }}>
+                    sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: '80%', m: 'auto' }}>
                     PROGRAMA
                 </Divider>
             </Grid>
@@ -39,7 +52,7 @@ export const ProgramaCurrent = () => {
                     sx={{
                         backgroundColor: 'background.default',
                         borderRadius: 2,
-                        width: responsive ? '100%' : '50%',
+                        width: responsive ? '100%' : '80%',
                         '& .MuiTabs-indicator': {
                             backgroundColor: 'text.secondary'
                         },
@@ -89,7 +102,7 @@ export const ProgramaCurrent = () => {
             </Grid>
             <Grid size={12} sx={{ mt: 2, height: '100%' }}>
                 {
-                    programTab === 0 &&  <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/PROGRAMA_MEDICOS.webp`} url={'PROGRAMA_MEDICOS.pdf'} />
+                    programTab === 0 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/PROGRAMA_MEDICOS.webp`} url={'PROGRAMA_MEDICOS.pdf'} />
                 }
                 {
                     programTab === 1 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/TRIPTICO_ENF.webp`} url={'TRIPTICO_ENF_25.pdf'} />

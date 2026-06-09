@@ -23,7 +23,7 @@ export const Programa = () => {
     };
 
     return (
-        <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : 'auto', flexDirection: 'column', ml: responsive ? 3 : 20, mr: responsive ? 3 : 20, mt: 2 }}>
+        <Grid container columns={12} sx={{ display: 'flex', minHeight: responsive ? 'auto' : 'auto', flexDirection: 'column', mt: 2 }}>
             <Grid size={12} sx={{ mb: 2, mt: 0, position: 'relative' }}>
                 <SectionObserver sectionId="Programa" />
                 <Divider
