@@ -1,4 +1,4 @@
-import { sedes2023, sedes2024, sedes2025 } from "../../../helpers/sedes/data";
+import { sedes2023, sedes2024, sedes2025, sedes2026 } from "../../../helpers/sedes/data";
 import { useContext } from "react";
 import UIContext from "../../../context/UIContext";
 import { RenderSedes } from "./RenderSedes";
@@ -8,6 +8,9 @@ export const Sedes = () => {
 
     return (
         <>
+            {
+                programTab.id === 3 && <RenderSedes sedes={sedes2026} />
+            }
             {
                 programTab.id === 2 && <RenderSedes sedes={sedes2025} />
             }

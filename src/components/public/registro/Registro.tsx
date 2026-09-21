@@ -453,8 +453,8 @@ const Registro = () => {
                             <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Módulos</Typography>
                         </Box>
                         <Box sx={{ mb: 2 }}>
-                            <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione el módulo al que desea asistir.</Typography>
-                            {/* <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione los eventos a los que desea asistir. Debe elegir al menos un módulo o taller.</Typography> */}
+                            {/* <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione el módulo al que desea asistir.</Typography> */}
+                            <Typography sx={{ fontSize: '17px', textAlign: 'justify' }}>Seleccione los eventos a los que desea asistir. Debe elegir al menos un módulo o taller.</Typography>
                         </Box>
                         <Box sx={{ mb: 3 }}>
                             <Autocomplete

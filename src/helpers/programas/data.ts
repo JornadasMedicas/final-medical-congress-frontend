@@ -11,6 +11,10 @@ export const programaTabs = [
     {
         id: 2,
         label: '2025'
+    },
+    {
+        id: 3,
+        label: '2026'
     }
 ]
 
