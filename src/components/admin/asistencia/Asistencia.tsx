@@ -54,7 +54,7 @@ export const Asistencia = ({ editions }: { editions: ReqEventEditions[] }) => {
 
     const qrWorkshopAssistance = async () => {
         const dataQr = workshopValues.qrdata.split('|');
-        if (dataQr.length === 3) {
+        if (dataQr.length === 4) {
             const success: boolean = await globalAttendanceUpdate(dataQr[0], 'workshop');
             if (success) {
                 setWorkshopValues({ ...moduleValues, qrdata: '' });
