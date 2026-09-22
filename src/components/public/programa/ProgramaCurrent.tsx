@@ -6,6 +6,7 @@ import { ModalImagen } from "./ModalImagen";
 import { motion } from "motion/react";
 import { SectionObserver } from "../../ui/SectionObserver";
 import { RenderSingleProgram } from "./RenderSingleProgram";
+import { Proximamente } from "./Proximamente";
 
 export const ProgramaCurrent = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -42,7 +43,7 @@ export const ProgramaCurrent = () => {
                     PROGRAMA
                 </Divider>
             </Grid>
-            <Grid size={12} sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
+            {/* <Grid size={12} sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
                 <Tabs
                     value={programTab}
                     onChange={handleChange}
@@ -99,9 +100,10 @@ export const ProgramaCurrent = () => {
                         label={'Estomatología'}
                     />
                 </Tabs>
-            </Grid>
+            </Grid> */}
             <Grid size={12} sx={{ mt: 2, height: '100%' }}>
-                {
+                <Proximamente />
+               {/*  {
                     programTab === 0 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/PROGRAMA_MEDICOS.webp`} url={'PROGRAMA_MEDICOS.pdf'} />
                 }
                 {
@@ -112,7 +114,7 @@ export const ProgramaCurrent = () => {
                 }
                 {
                     programTab === 3 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/TRIPTICO_EST.webp`} url={'TRIPTICO_EST_25.pdf'} />
-                }
+                } */}
             </Grid>
             <ModalImagen />
         </Grid>

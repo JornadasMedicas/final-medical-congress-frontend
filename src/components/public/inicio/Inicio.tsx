@@ -243,7 +243,7 @@ export const Inicio = () => {
                             textAlign={responsive ? 'left' : 'center'}
                             letterSpacing={0.5}
                         >
-                            DESAFIOS EN SALUD DESDE EL TERCER NIVEL DE ATENCIÓN Y EL INICIO DE LA INTELIGENCIA ARTIFICIAL EN EL CAE
+                            POR DEFINIR
                         </Typography>
                     </Grid>
                     <Grid
@@ -270,7 +270,7 @@ export const Inicio = () => {
                             textAlign={responsive ? 'left' : 'center'}
                             letterSpacing={0.5}
                         >
-                            27 AL 29 DE NOVIEMBRE - 2025
+                            25 AL 27 DE NOVIEMBRE - 2026
                         </Typography>
                     </Grid>
                     <Grid
@@ -297,12 +297,13 @@ export const Inicio = () => {
                             textAlign={responsive ? 'left' : 'center'}
                             letterSpacing={0.5}
                         >
-                            Medicina: $800 pesos<br />
+                            GRATUITO PARA TODOS LOS ASISTENTES
+                            {/* Medicina: $800 pesos<br />
                             Enfermería: $300 pesos<br />
                             Químicos: $300 pesos<br />
                             Odontología: $300 pesos<br />
-                            {/* <Divider sx={{ mt: '5px', mb: '5px', width: '50%', ml: 'auto', mr: 'auto' }} /> */}
-                            Estudiantes: $200 pesos
+                            <Divider sx={{ mt: '5px', mb: '5px', width: '50%', ml: 'auto', mr: 'auto' }} />
+                            Estudiantes: $200 pesos */}
                         </Typography>
                     </Grid>
                     {/* <Grid size={12} sx={{ mb: 2 }}>
