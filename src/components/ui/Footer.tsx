@@ -5,7 +5,7 @@ export const Footer = () => {
 
     return (
         <>
-            <Grid sx={{ backgroundColor: 'text.secondary' }}>
+            <Grid sx={{ backgroundColor: 'text.secondary', borderTopLeftRadius: 100, borderTopRightRadius: 100 }}>
                 <Container maxWidth='xl' sx={{ padding: '10px' }}>
                     <Grid container sx={{ justifyContent: { xs: 'center' }, display: 'flex', gap: { md: 3, xs: 1 } }}>
                         <Grid>
