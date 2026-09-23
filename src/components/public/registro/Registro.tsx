@@ -99,7 +99,8 @@ const Registro = () => {
         const formatWorkshop: PropsTalleresInterface = {
             asistio: false,
             constancia_enviada: false,
-            id_taller: workshop.id
+            id_taller: workshop.id,
+            nombre: workshop.nombre
         }
 
         if (isChecked) {
