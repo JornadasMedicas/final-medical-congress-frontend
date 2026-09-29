@@ -7,7 +7,7 @@ import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwo
 import LabelImportantTwoToneIcon from '@mui/icons-material/LabelImportantTwoTone';
 import { SectionObserver } from "../../ui/SectionObserver";
 import dayjs from "dayjs";
-// import { CountDownTimer } from "./CountDownTimer";
+import { CountDownTimer } from "./CountDownTimer";
 
 const cards = [
     {
@@ -306,9 +306,9 @@ export const Inicio = () => {
                             Estudiantes: $200 pesos */}
                         </Typography>
                     </Grid>
-                    {/* <Grid size={12} sx={{ mb: 2 }}>
+                    <Grid size={12} sx={{ mb: 2 }}>
                         <CountDownTimer />
-                    </Grid> */}
+                    </Grid>
                 </Grid>
             </Box>
         </Grid>

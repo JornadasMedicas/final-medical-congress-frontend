@@ -6,6 +6,7 @@ import { TimerObjectSingleComponent } from './TimerObjectSingleComponent';
 import LabelImportantTwoToneIcon from '@mui/icons-material/LabelImportantTwoTone';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
+import { registerDay } from '../../../helpers/registro/initValues';
 
 export const CountDownTimer = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -16,8 +17,6 @@ export const CountDownTimer = () => {
         setDisabled(false);
         setDisplay(2);
     }
-
-    const registerDay = new Date("2026-11-25T09:00:00");
 
     return (
         <>

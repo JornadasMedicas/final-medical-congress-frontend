@@ -4,6 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { NavigateFunction, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { PropsUIContext } from '../../interfaces/context/IUIContext';
 import UIContext from '../../context/UIContext';
+import { currentDate, registerDay } from '../../helpers/registro/initValues';
 
 const navItem = [
     { name: 'Inicio' },
@@ -73,7 +74,7 @@ export const Navbar = () => {
                     </Box>
                     <Box sx={{ display: responsive ? 'none' : 'flex' }}>
                         {navItem.map((item) => (
-                            <Button onClick={() => goToSection(item.name)} key={item.name} sx={{ color: activeSection === item.name ? 'text.secondary' : '#ffffff', fontWeight: 600, textTransform: 'capitalize', fontSize: '16px', transition: 'all 0.5s ease' }}>
+                            <Button onClick={() => goToSection(item.name)} key={item.name} sx={{ color: activeSection === item.name ? 'text.secondary' : '#ffffff', fontWeight: 600, textTransform: 'capitalize', fontSize: '16px', transition: 'all 0.5s ease', display: item.name === 'Registro' ? currentDate >= registerDay ? 'block' : 'none' : 'block' }}>
                                 {item.name}
                             </Button>
 
