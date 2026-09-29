@@ -3,6 +3,8 @@ import { PropsModalAdmin, PropsModalImg, PropsUIContext } from "../interfaces/co
 import { programaTabs } from "../helpers/programas/data";
 
 const UIContext = createContext<PropsUIContext>({
+    isRegistryAvailable: false,
+    setRegistryAvailable: () => { },
     activeSection: 'Inicio',
     setActiveSection: () => { },
     programTab: programaTabs[programaTabs.length - 1],
@@ -20,6 +22,7 @@ const UIContext = createContext<PropsUIContext>({
 });
 
 export const UIContextProvider = ({ children: Component }: { children: ReactNode }) => {
+    const [isRegistryAvailable, setRegistryAvailable] = useState<boolean>(false);
     const [activeSection, setActiveSection] = useState<string>('Inicio');
     const [programTab, setProgramTab] = useState<{id: number, label: string}>(programaTabs[programaTabs.length - 1]);
     const [modalProgramData, setModalProgramData] = useState<PropsModalImg>({ isOpen: false, img: '' });
@@ -30,6 +33,8 @@ export const UIContextProvider = ({ children: Component }: { children: ReactNode
 
     return (
         <UIContext value={{
+            isRegistryAvailable,
+            setRegistryAvailable,
             activeSection,
             setActiveSection,
             programTab,

@@ -1,5 +1,5 @@
 import { Box, Button, /* Button */ Grid, Typography, useMediaQuery } from '@mui/material'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Countdown from 'react-countdown';
 import SendIcon from '@mui/icons-material/Send';
 import { TimerObjectSingleComponent } from './TimerObjectSingleComponent';
@@ -7,13 +7,16 @@ import LabelImportantTwoToneIcon from '@mui/icons-material/LabelImportantTwoTone
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { registerDay } from '../../../helpers/registro/initValues';
+import UIContext from '../../../context/UIContext';
 
 export const CountDownTimer = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
+    const { setRegistryAvailable } = useContext(UIContext);
     const [disabled, setDisabled] = useState(true);
     const [display, setDisplay] = useState(1);
 
     const countdownAction = () => {
+        setRegistryAvailable(true);
         setDisabled(false);
         setDisplay(2);
     }
