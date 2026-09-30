@@ -60,7 +60,7 @@ const Registro = () => {
 
                 socket?.emit('isValidRegistry', payload);
                 setSelectedItem([]);
-                setPayload(initValuesFormJornadas);
+                setPayload({ ...initValuesFormJornadas, edicion: catalogs.editions[0].id });
             } else if (res.error) {
                 Swal.fire({
                     icon: "error",
