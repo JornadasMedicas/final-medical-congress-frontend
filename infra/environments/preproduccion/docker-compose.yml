@@ -11,11 +11,6 @@ services:
     image: registrygitlab.ssaver.gob.mx/jornadas-medicas/jornadas_front/app:latest-test
     volumes:
       - /etc/localtime:/etc/localtime:ro
-    ports:
-      - target: 443
-        published: 443
-      - target: 80
-        published: 80
     networks:
       - cae-services
     deploy:

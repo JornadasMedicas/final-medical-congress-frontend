@@ -14,5 +14,5 @@ WORKDIR /var/www/html/jornadas
 COPY ./.env_front .env
 
 
-EXPOSE 443
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
