@@ -15,7 +15,7 @@ const navItem = [
 
 export const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    const { activeSection, setActiveSection, setTriggerRelocation } = useContext<PropsUIContext>(UIContext);
+    const { activeSection, setActiveSection, setTriggerRelocation, isRegistryAvailable } = useContext<PropsUIContext>(UIContext);
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const navigate: NavigateFunction = useNavigate();
     const location = useLocation();
@@ -73,10 +73,9 @@ export const Navbar = () => {
                     </Box>
                     <Box sx={{ display: responsive ? 'none' : 'flex' }}>
                         {navItem.map((item) => (
-                            <Button onClick={() => goToSection(item.name)} key={item.name} sx={{ color: activeSection === item.name ? 'text.secondary' : '#ffffff', fontWeight: 600, textTransform: 'capitalize', fontSize: '16px', transition: 'all 0.5s ease' }}>
+                            <Button onClick={() => goToSection(item.name)} key={item.name} sx={{ color: activeSection === item.name ? 'text.secondary' : '#ffffff', fontWeight: 600, textTransform: 'capitalize', fontSize: '16px', transition: 'all 0.5s ease', display: item.name === 'Registro' ? isRegistryAvailable ? 'block' : 'none' : 'block' }}>
                                 {item.name}
                             </Button>
-
                         ))}
                     </Box>
 

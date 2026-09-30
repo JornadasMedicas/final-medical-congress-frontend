@@ -5,19 +5,18 @@ import {
     BrowserRouter as Router, Routes,
 } from "react-router-dom"
 import { DashboardRoutes } from "./DashboardRoutes";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useContext } from "react";
 import { Loader } from "../components/ui/Loader";
 import { AdminContextProvider } from "../context/AdminContext";
 import { SocketProvider } from "../context/SocketContext";
+import UIContext from "../context/UIContext";
 
 const LazyAdmin = lazy(() => import('../components/admin/Admin'));
 const LazyHome = lazy(() => import('../pages/HomePage'));
 const LazyRegistro = lazy(() => import('../components/public/registro/Registro'));
 
 export const AppRouter = () => {
-
-    const registerDay = new Date("2026-08-03T09:00:00");
-    const currentDate = new Date();
+    const { isRegistryAvailable } = useContext(UIContext);
 
     return (
         <Router>
@@ -30,7 +29,7 @@ export const AppRouter = () => {
                     } />
 
                     {
-                        currentDate >= registerDay &&
+                        isRegistryAvailable &&
                         <Route path='registro' element={
                             <Suspense fallback={<Loader />}>
                                 <SocketProvider>

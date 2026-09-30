@@ -1,11 +1,12 @@
 
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, useMediaQuery } from '@mui/material';
 
 export const Footer = () => {
+    const responsive = useMediaQuery("(max-width:1050px)");
 
     return (
         <>
-            <Grid sx={{ backgroundColor: 'text.secondary', borderTopLeftRadius: 100, borderTopRightRadius: 100 }}>
+            <Grid sx={{ backgroundColor: 'text.secondary', borderTopLeftRadius: responsive ? 0 : 100, borderTopRightRadius: responsive ? 0 : 100 }}>
                 <Container maxWidth='xl' sx={{ padding: '10px' }}>
                     <Grid container sx={{ justifyContent: { xs: 'center' }, display: 'flex', gap: { md: 3, xs: 1 } }}>
                         <Grid>

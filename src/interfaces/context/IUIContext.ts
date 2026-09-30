@@ -14,6 +14,8 @@ export interface PropsModalAdmin extends PropsModalImg {
 }
 
 export interface PropsUIContext {
+    isRegistryAvailable: boolean;
+    setRegistryAvailable: React.Dispatch<React.SetStateAction<boolean>>;
     activeSection: string;
     setActiveSection: React.Dispatch<React.SetStateAction<string>>;
     programTab: { id: number, label: string };
