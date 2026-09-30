@@ -1,4 +1,3 @@
-version: '3.8'
 volumes:
   jornadas-storage:
     driver: local
@@ -6,13 +5,6 @@ volumes:
 networks:
   cae-services:
     external: true
-
-secrets:
-  key_2025:
-    external: true
-  crt_2025:
-    external: true
-
 
 services:
   front:
@@ -26,10 +18,5 @@ services:
         published: 80
     networks:
       - cae-services
-    secrets:
-      - source: crt_2025
-        target: /cert/server.crt
-      - source: key_2025
-        target: /cert/server.key
     deploy:
       replicas: 1
