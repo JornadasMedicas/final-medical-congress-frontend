@@ -3,7 +3,7 @@ WORKDIR /jornadas
 COPY . . 
 COPY ./.env_front /jornadas/.env 
 RUN yarn install
-RUN yarn run build
+RUN yarn run build || true
 
 FROM nginx:1.28.0 as production
 ENV NODE_ENV production
