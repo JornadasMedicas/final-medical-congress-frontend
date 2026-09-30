@@ -6,7 +6,7 @@ RUN yarn install
 RUN yarn run build || true
 
 FROM nginx:1.28.0 AS production
-ENV NODE_ENV production
+ENV NODE_ENV=production
 COPY --from=builder /jornadas/docs /var/www/html/jornadas
 COPY ./infra/config/nginx_front.conf /etc/nginx/conf.d/default.conf
 
