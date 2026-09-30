@@ -14,7 +14,7 @@ build-app:
         DOCKERFILE: 'infra/Dockerfile'
         ENV_PRE: $DOT_ENV_PRE 
         ENV_PROD: $DOT_ENV_PROD
-        ENV_FILE_TO_BUILD: '.env_api'
+        ENV_FILE_TO_BUILD: '.env_front'
     artifacts:
         reports:
             dotenv: image.env
