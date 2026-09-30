@@ -25,4 +25,4 @@ deploy-app-pre:
         - job: build-app
           artifacts: true
     variables:
-        SERVICE_NAME: 'front-jornadaspre_app'
+        SERVICE_NAME: 'api-jornadaspre_frontend'
