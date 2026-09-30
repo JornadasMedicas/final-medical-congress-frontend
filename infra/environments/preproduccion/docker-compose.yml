@@ -4,7 +4,7 @@ volumes:
     driver: local
 
 networks:
-  jornadas_network:
+  cae-services:
     external: true
 
 secrets:
@@ -16,7 +16,7 @@ secrets:
 
 services:
   front:
-    image: reddebjsh/jornadas2025:front-1.0.0
+    image: registrygitlab.ssaver.gob.mx/jornadas-medicas/jornadas_front/app:latest-test
     volumes:
       - /etc/localtime:/etc/localtime:ro
     ports:
@@ -25,7 +25,7 @@ services:
       - target: 80
         published: 80
     networks:
-      - jornadas_network
+      - cae-services
     secrets:
       - source: crt_2025
         target: /cert/server.crt
