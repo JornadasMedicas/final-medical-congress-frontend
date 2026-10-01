@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { PropsModalAdmin, PropsModalImg, PropsUIContext } from "../interfaces/context/IUIContext";
 import { programaTabs } from "../helpers/programas/data";
+import { registerDay } from "../helpers/registro/initValues";
 
 const UIContext = createContext<PropsUIContext>({
     isRegistryAvailable: false,
@@ -22,7 +23,9 @@ const UIContext = createContext<PropsUIContext>({
 });
 
 export const UIContextProvider = ({ children: Component }: { children: ReactNode }) => {
-    const [isRegistryAvailable, setRegistryAvailable] = useState<boolean>(false);
+    const [isRegistryAvailable, setRegistryAvailable] = useState<boolean>(
+        () => Date.now() >= new Date(registerDay).getTime()
+    );
     const [activeSection, setActiveSection] = useState<string>('Inicio');
     const [programTab, setProgramTab] = useState<{id: number, label: string}>(programaTabs[programaTabs.length - 1]);
     const [modalProgramData, setModalProgramData] = useState<PropsModalImg>({ isOpen: false, img: '' });
