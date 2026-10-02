@@ -9,13 +9,13 @@ export const Footer = () => {
             <Grid sx={{ backgroundColor: 'text.secondary', borderTopLeftRadius: responsive ? 0 : 100, borderTopRightRadius: responsive ? 0 : 100 }}>
                 <Container maxWidth='xl' sx={{ padding: '10px' }}>
                     <Grid container sx={{ justifyContent: { xs: 'center' }, display: 'flex', gap: { md: 3, xs: 1 } }}>
-                        <Grid>
+                        <Grid sx={{ display: 'flex', textAlign: 'center', alignItems: 'center' }}>
                             <img loading='lazy' src={`${import.meta.env.VITE_APP_BASE_ROUTE}/sesver_logo2.webp`} alt="sesver" width="auto" height="55px" />
                         </Grid>
-                        <Grid sx={{ display: 'flex', textAlign: 'center' }}>
+                        <Grid sx={{ display: 'flex', textAlign: 'center', alignItems: 'center' }}>
                             <img loading='lazy' src={`${import.meta.env.VITE_APP_BASE_ROUTE}/imssb_logo.webp`} alt="imss" width="auto" height="50px" />
                         </Grid>
-                        <Grid>
+                        <Grid sx={{ display: 'flex', textAlign: 'center', alignItems: 'center' }}>
                             <img loading='lazy' src={`${import.meta.env.VITE_APP_BASE_ROUTE}/favicon.ico`} alt="CAE" width="auto" height="46px" style={{ marginTop: 3 }} />
                         </Grid>
                     </Grid>
