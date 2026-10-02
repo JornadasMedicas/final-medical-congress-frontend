@@ -22,7 +22,7 @@ export interface RegistFormInterface {
     dependencia?: string;
     modulo?: number | null;
     edicion: number;
-    talleres?: PropsTalleresInterface[]
+    talleres?: PropsTalleresInterface[];
 }
 
 export interface JornadasGeneralErrorsInterface {

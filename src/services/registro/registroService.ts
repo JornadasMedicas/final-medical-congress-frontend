@@ -10,3 +10,12 @@ export const postRegistMail = async ({ ...params }: RegistFormInterface, recaptc
         return { error: err };
     }
 }
+
+export const postPreRegistMail = async (email: string, recaptchaToken: string) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.post(`/api/register/pre`, { correo: email, recaptchaToken });
+        return res.data;
+    } catch (err: unknown) {
+        return { error: err };
+    }
+}
