@@ -72,3 +72,68 @@ export const validateJornadasFields = ({ ...data }: RegistFormInterface) => {
         errors
     }
 }
+
+export const validateEmailField = (email: string) => {
+    let errors: JornadasValuesInterface = initValuesFormJornadasErrors;
+    let isOk: boolean = true;
+
+    if (!validateEmail(email)) {
+        errors = { ...errors, correo: { ...errors.correo, error: true, msg: "El correo electrónico no es válido" } }
+        isOk = false;
+    }
+
+    return {
+        isOk,
+        errors
+    }
+}
+
+export const validatePersonalInfoOnly = ({ ...data }: RegistFormInterface) => {
+    let errors: JornadasValuesInterface = initValuesFormJornadasErrors;
+    let isOk: boolean = true;
+
+    if (data.categoria === "") {
+        errors = { ...errors, categoria: { ...errors.nombre, error: true } }
+    }
+
+    if (data.acronimo === "") {
+        errors = { ...errors, acronimo: { ...errors.acronimo, error: true } }
+    } else if (!data.acronimo.trim().endsWith('.')) {
+        errors = { ...errors, acronimo: { error: true, msg: 'El acrónimo debe terminar en punto (.)' } }
+    }
+
+    if (data.nombre === "") {
+        errors = { ...errors, nombre: { ...errors.nombre, error: true } }
+    }
+
+    if (data.apellidos === "") {
+        errors = { ...errors, apellidos: { ...errors.apellidos, error: true } }
+    }
+
+    if (!validateEmail(data.correo)) {
+        errors = { ...errors, correo: { ...errors.correo, error: true, msg: "El correo electrónico no es válido" } }
+    }
+
+    if (data.tel === '') {
+        errors = { ...errors, tel: { ...errors.tel, error: true } }
+    } else if (data.tel.length !== 10) {
+        errors = { ...errors, tel: { ...errors.tel, error: true, msg: "El numero telefónico es incorrecto (ej. 228XXXXXXX)" } }
+    } else if (isNaN(parseInt(data.tel))) {
+        errors = { ...errors, tel: { ...errors.tel, error: true, msg: "El numero telefónico debe ser numérico" } }
+    }
+
+    if (data.ciudad === '') {
+        errors = { ...errors, ciudad: { ...errors.ciudad, error: true } }
+    }
+
+    Object.entries(errors).forEach(([_, value]) => {
+        if (value.error) {
+            isOk = false;
+        }
+    });
+
+    return {
+        isOk,
+        errors
+    }
+}
