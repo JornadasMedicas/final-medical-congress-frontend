@@ -58,7 +58,6 @@ const PreRegistro = () => {
 					setPayload({ ...initValuesFormJornadas, edicion: catalogs.editions[0].id });
 					setFound(null);
 				} else if (res.error) {
-					console.log(res.error);
 					Swal.fire({
 						icon: "error",
 						title: "Error",
@@ -66,7 +65,10 @@ const PreRegistro = () => {
 						showConfirmButton: true,
 						confirmButtonColor: '#d37c6b'
 					});
-					setFound(false);
+
+					if (res.error.status === 404) {
+						setFound(false);
+					}
 				}
 			} catch (error) {
 				console.log(error);
@@ -97,13 +99,13 @@ const PreRegistro = () => {
 			try {
 				const recaptchaToken = await window.grecaptcha.execute(import.meta.env.VITE_APP_SITE_KEY, { action: 'submit' });
 
-				const res = await postRegistMail(payload, recaptchaToken);
+				const res = await postRegistMail(payload, recaptchaToken, true);
 
 				if (res.data) {
 					Swal.fire({
 						icon: 'success',
 						title: 'Éxito',
-						html: 'Gracias por completar su registro. <hr><b>En breve recibirá un correo electrónico con las indicaciones posteriores.<b>',
+						html: 'Gracias por completar su pre-registro. <hr><b>En breve recibirá un correo electrónico con las indicaciones posteriores.<b>',
 						confirmButtonColor: '#d3c19b'
 					});
 
