@@ -48,7 +48,7 @@ const Registro = () => {
         try {
             const recaptchaToken = await window.grecaptcha.execute(import.meta.env.VITE_APP_SITE_KEY, { action: 'submit' });
 
-            const res = await postRegistMail(payload, recaptchaToken);
+            const res = await postRegistMail(payload, recaptchaToken, false);
 
             if (res.data) {
                 Swal.fire({
