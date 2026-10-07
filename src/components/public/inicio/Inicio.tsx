@@ -8,25 +8,23 @@ import LabelImportantTwoToneIcon from '@mui/icons-material/LabelImportantTwoTone
 import { SectionObserver } from "../../ui/SectionObserver";
 import dayjs from "dayjs";
 import { CountDownTimer } from "./CountDownTimer";
+import theme from "../../../themes/theme";
 
 const cards = [
     {
         title: parseInt(dayjs().format('YYYY')) - 1989 + ' Años',
         subtitle: 'de Asistencia Médica',
-        icon: <CalendarTodayTwoToneIcon sx={{ fontSize: 40, color: 'background.default' }} />,
-        color: ' #a95b2a'
+        icon: <CalendarTodayTwoToneIcon sx={{ fontSize: 40, color: 'secondary.dark' }} />
     },
     {
         title: 'Colaboración',
         subtitle: 'y Avances en Salud',
-        icon: <PeopleAltTwoToneIcon sx={{ fontSize: 40, color: 'background.default' }} />,
-        color: '#a95b2a'
+        icon: <PeopleAltTwoToneIcon sx={{ fontSize: 40, color: 'secondary.dark' }} />
     },
     {
         title: 'Innovación',
         subtitle: 'y Excelencia',
-        icon: <WorkspacePremiumTwoToneIcon sx={{ fontSize: 40, color: 'background.default' }} />,
-        color: '#a95b2a'
+        icon: <WorkspacePremiumTwoToneIcon sx={{ fontSize: 40, color: 'secondary.dark' }} />
     }
 ]
 
@@ -52,13 +50,14 @@ export const Inicio = () => {
                                     sx={{
                                         borderRadius: 3,
                                         boxShadow: 3,
-                                        borderTop: `4px solid ${card.color}`,
+                                        borderTop: (theme) => `4px solid ${theme.palette.background.default}`,
                                         width: responsive ? '100%' : 370,
                                         textAlign: 'center',
                                         '&:hover': {
                                             transform: 'scale(1.05)',
                                             boxShadow: 4,
                                         },
+                                        backgroundColor: '#fffdfa'
                                     }}
                                 >
                                     <CardContent>
@@ -113,7 +112,7 @@ export const Inicio = () => {
                             fontWeight={'bold'}
                             textAlign={'justify'}
                             sx={{
-                                color: 'secondary.main',
+                                color: 'background.default',
                                 fontSize: responsive ? '18px' : '27px'
                             }}
                         >
@@ -133,10 +132,10 @@ export const Inicio = () => {
                             letterSpacing={0.5}
                             lineHeight={responsive ? 'auto' : 2}
                             sx={{
-                                color: 'secondary.main',
+                                color: 'text.primary',
                                 fontSize: responsive ? '18px' : '20px'
                             }}>
-                            Es un honor darles la bienvenida a este congreso tan especial, donde celebramos <b style={{ color: '#8e4e28' }}> {parseInt(dayjs.utc().format('YYYY')) - 1989} años de logros, colaboración y avances</b> en el campo de la salud de Veracruz.
+                            Es un honor darles la bienvenida a este congreso tan especial, donde celebramos <b style={{ color: theme.palette.text.primary }}> {parseInt(dayjs.utc().format('YYYY')) - 1989} años de logros, colaboración y avances</b> en el campo de la salud de Veracruz.
                         </Typography>
                         <Typography
                             fontFamily={'sans-serif'}
@@ -145,10 +144,10 @@ export const Inicio = () => {
                             letterSpacing={0.5}
                             lineHeight={responsive ? 'auto' : 2}
                             sx={{
-                                color: 'secondary.main',
+                                color: 'text.primary',
                                 fontSize: responsive ? '18px' : '20px'
                             }}>
-                            A lo largo de estos {parseInt(dayjs.utc().format('YYYY')) - 1989} años, hemos enfrentado numerosos desafíos, pero también hemos alcanzado metas significativas gracias al esfuerzo y dedicación de cada uno de ustedes. Este congreso es un testimonio de nuestro <b style={{ color: '#8e4e28' }}>compromiso continuo con la excelencia y la innovación</b>.
+                            A lo largo de estos {parseInt(dayjs.utc().format('YYYY')) - 1989} años, hemos enfrentado numerosos desafíos, pero también hemos alcanzado metas significativas gracias al esfuerzo y dedicación de cada uno de ustedes. Este congreso es un testimonio de nuestro <b style={{ color: 'text.primary' }}>compromiso continuo con la excelencia y la innovación</b>.
                         </Typography>
                         <Typography
                             fontFamily={'sans-serif'}
@@ -163,7 +162,7 @@ export const Inicio = () => {
                                 p: 2,
                                 textAlign: 'right',
                                 borderRadius: 5,
-                                borderLeft: '4px solid #540e26'
+                                borderLeft: (theme) => `4px solid ${theme.palette.background.default}`,
                             }}>
                             "Quiero expresar mi más profundo agradecimiento a todos los que han contribuido a este viaje: a nuestros directivos, por su apoyo incondicional; a los ponentes, por compartir su valioso conocimiento; y a todos los asistentes, por su entusiasmo y participación activa".
                         </Typography>
@@ -174,7 +173,7 @@ export const Inicio = () => {
                             letterSpacing={0.5}
                             lineHeight={responsive ? 'auto' : 2}
                             sx={{
-                                color: 'secondary.main',
+                                color: 'text.primary',
                                 fontSize: responsive ? '18px' : '20px'
                             }}>
                             En este evento, no solo celebraremos nuestros logros pasados, sino que también exploraremos nuevas ideas y estrategias para enfrentar los retos futuros.

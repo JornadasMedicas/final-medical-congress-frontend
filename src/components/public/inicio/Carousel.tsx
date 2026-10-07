@@ -1,6 +1,7 @@
 import { Box, Stack, useMediaQuery } from '@mui/material'
 import { useEffect, useState } from 'react';
 import { ItemCarousel } from './ItemCarousel';
+import theme from '../../../themes/theme';
 
 const items = [
     {
@@ -67,7 +68,7 @@ export const Carousel = () => {
                     <Box
                         key={item.name}
                         onClick={() => handleClick(index)}
-                        sx={{ backgroundColor: index === activeItem ? 'rgba(84, 14, 38, 1)' : 'rgba(84, 14, 38, 0.3)', width: '13px', height: '13px', borderRadius: 10, transition: 'background 1s ease', '&:hover': { cursor: 'pointer' } }} />
+                        sx={{ backgroundColor: index === activeItem ? theme.palette.background.default : 'rgba(84, 14, 38, 0.3)', width: '13px', height: '13px', borderRadius: 10, transition: 'background 1s ease', '&:hover': { cursor: 'pointer' } }} />
                 ))}
             </Box>
         </Stack>
