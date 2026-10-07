@@ -35,16 +35,16 @@ const HomePage = () => {
     
     return (
         <Stack>
-            <Box component="section" id="Inicio" sx={{ backgroundColor: '#ffffff'}}>
+            <Box component="section" id="Inicio" sx={{ backgroundColor: 'primary.main'}}>
                 <MemoizedInicio />
             </Box>
-            <Box component="section" id="Programa" sx={{ backgroundColor: '#ffffff'}}>
+            <Box component="section" id="Programa" sx={{ backgroundColor: 'primary.main'}}>
                 <MemoizedPrograma />
             </Box>
-            <Box component="section" id="Sedes" sx={{ backgroundColor: '#ffffff'}}>
+            <Box component="section" id="Sedes" sx={{ backgroundColor: 'primary.main'}}>
                 <MemoizedSedes />
             </Box>
-            <Box component="section" id="Contacto" sx={{ backgroundColor: '#ffffff'}}>
+            <Box component="section" id="Contacto" sx={{ backgroundColor: 'primary.main'}}>
                 <MemoizedContacto />
             </Box>
         </Stack>
