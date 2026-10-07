@@ -182,6 +182,7 @@ export const Categorias = () => {
                                     .map((row) => (
                                         <TableRow
                                             key={row.id}
+                                            sx={{ backgroundColor: 'primary.main' }}
                                         >
                                             {
                                                 editMode && editData.id === row.id ?
@@ -193,7 +194,7 @@ export const Categorias = () => {
                                                     :
                                                     <TableCell>
                                                         <Button
-                                                            color={'inherit'}
+                                                            sx={{ color: 'text.primary' }}
                                                             aria-controls={open ? 'basic-menu' : undefined}
                                                             aria-haspopup="true"
                                                             aria-expanded={open ? 'true' : undefined}
@@ -214,6 +215,7 @@ export const Categorias = () => {
                                                                 paper: {
                                                                     sx: {
                                                                         boxShadow: '0px 0px 3px rgba(0,0,0,0.05)', // Más suave
+                                                                        backgroundColor: 'primary.main'
                                                                     },
                                                                 }
                                                             }}
@@ -246,14 +248,14 @@ export const Categorias = () => {
                                                         }}
                                                     />
                                                     :
-                                                    <Typography fontSize={15}>{row.nombre}</Typography>
+                                                    <Typography sx={{ color: 'text.primary' }} fontSize={15}>{row.nombre}</Typography>
                                                 }
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Typography fontSize={15}>{dayjs.utc(row.created_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
+                                                <Typography sx={{ color: 'text.primary' }} fontSize={15}>{dayjs.utc(row.created_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Typography fontSize={15}>{dayjs.utc(row.updated_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
+                                                <Typography sx={{ color: 'text.primary' }} fontSize={15}>{dayjs.utc(row.updated_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
                                             </TableCell>
                                         </TableRow>
                                     ))}
