@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import { SectionObserver } from "../../ui/SectionObserver";
 import { motion } from "motion/react";
 import UIContext from "../../../context/UIContext";
+import theme from "../../../themes/theme";
 
 export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -108,7 +109,7 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
                                                 backgroundColor: '#ffffff',
                                                 borderTopLeftRadius: 5,
                                                 borderBottomLeftRadius: 5,
-                                                borderLeft: selectedItem === index ? '4px solid #540e26' : '',
+                                                borderLeft: selectedItem === index ? (theme) => `4px solid ${theme.palette.background.default}` : '',
                                                 borderTopRightRadius: responsive ? 10 : 5,
                                                 borderBottomRightRadius: responsive ? 10 : 0,
                                             }}>
@@ -123,7 +124,7 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
                                         </Grid>
                                         {
                                             !responsive &&
-                                            <Grid size={6} sx={{ backgroundColor: '#540e26' }}>
+                                            <Grid size={6} sx={{ backgroundColor: theme.palette.background.default }}>
                                                 <Box sx={{ backgroundColor: 'white', height: '100%', width: '20%', borderBottomRightRadius: '100px' }} />
                                             </Grid>
                                         }
@@ -132,7 +133,7 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
                             ))
                         }
                     </Grid>
-                    <Grid size={responsive ? 12 : 6} sx={{ backgroundColor: '#540e26', height: '100%', minHeight: 'auto', borderRadius: 3, p: responsive ? 1 : 2, zIndex: 2, boxShadow: '0 8px 10px 0 rgba(1,18,38, 0.15)', }}>
+                    <Grid size={responsive ? 12 : 6} sx={{ backgroundColor: theme.palette.background.default, height: '100%', minHeight: 'auto', borderRadius: 3, p: responsive ? 1 : 2, zIndex: 2, boxShadow: '0 8px 10px 0 rgba(1,18,38, 0.15)', }}>
                         <Box
                             sx={{
                                 backgroundColor: 'white',
