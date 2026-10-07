@@ -348,6 +348,7 @@ export const Talleres = () => {
                                     .map((row) => (
                                         <TableRow
                                             key={row.id}
+                                            sx={{ backgroundColor: 'primary.main' }}
                                         >
                                             {
                                                 editMode && row.id === editData.id ?
@@ -359,7 +360,7 @@ export const Talleres = () => {
                                                     :
                                                     <TableCell>
                                                         <Button
-                                                            color={'inherit'}
+                                                            sx={{ color: 'text.primary' }}
                                                             aria-controls={open ? 'basic-menu' : undefined}
                                                             aria-haspopup="true"
                                                             aria-expanded={open ? 'true' : undefined}
@@ -380,6 +381,7 @@ export const Talleres = () => {
                                                                 paper: {
                                                                     sx: {
                                                                         boxShadow: '0px 0px 3px rgba(0,0,0,0.05)', // Más suave
+                                                                        backgroundColor: 'primary.main'
                                                                     },
                                                                 }
                                                             }}
@@ -413,7 +415,7 @@ export const Talleres = () => {
                                                         }}
                                                     />
                                                     :
-                                                    <Typography fontSize={15}>{row.nombre}</Typography>
+                                                    <Typography sx={{ color: 'text.primary' }} fontSize={15}>{row.nombre}</Typography>
                                                 }
                                             </TableCell>
                                             <TableCell align="center">
@@ -435,7 +437,7 @@ export const Talleres = () => {
                                                         }}
                                                     />
                                                     :
-                                                    <Typography fontSize={15}>{row.cupos}</Typography>
+                                                    <Typography sx={{ color: 'text.primary' }} fontSize={15}>{row.cupos}</Typography>
                                                 }
                                             </TableCell>
                                             <TableCell align="center">
@@ -458,7 +460,7 @@ export const Talleres = () => {
                                                             }}
                                                         />
                                                         :
-                                                        <Typography fontSize={15}>{dayjs.utc(row.fecha).format('YYYY-MM-DD')}</Typography>
+                                                        <Typography sx={{ color: 'text.primary' }} fontSize={15}>{dayjs.utc(row.fecha).format('YYYY-MM-DD')}</Typography>
                                                 }
                                             </TableCell>
                                             <TableCell align="center">
@@ -481,7 +483,7 @@ export const Talleres = () => {
                                                             }}
                                                         />
                                                         :
-                                                        <Typography fontSize={15}>{dayjs.utc(row.hora_inicio).format('HH:mm:ss')}
+                                                        <Typography sx={{ color: 'text.primary' }} fontSize={15}>{dayjs.utc(row.hora_inicio).format('HH:mm:ss')}
                                                         </Typography>
                                                 }
                                             </TableCell>
@@ -505,14 +507,14 @@ export const Talleres = () => {
                                                             }}
                                                         />
                                                         :
-                                                        <Typography fontSize={15}>{dayjs.utc(row.hora_fin).format('HH:mm:ss')}</Typography>
+                                                        <Typography sx={{ color: 'text.primary' }} fontSize={15}>{dayjs.utc(row.hora_fin).format('HH:mm:ss')}</Typography>
                                                 }
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Typography fontSize={15}>{dayjs.utc(row.created_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
+                                                <Typography sx={{ color: 'text.primary' }} fontSize={15}>{dayjs.utc(row.created_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Typography fontSize={15}>{dayjs.utc(row.updated_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
+                                                <Typography sx={{ color: 'text.primary' }} fontSize={15}>{dayjs.utc(row.updated_at).format('YYYY-MM-DD HH:mm:ss')}</Typography>
                                             </TableCell>
                                         </TableRow>
                                     ))}
