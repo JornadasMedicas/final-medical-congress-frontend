@@ -104,7 +104,7 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
         <>
             {
                 editions.length === 0 ?
-                    <LinearProgress color='inherit' sx={{ width: '100%', color: 'text.secondary', position: 'absolute', top: 0 }} />
+                    <LinearProgress color='inherit' sx={{ width: '100%', color: 'background.default', position: 'absolute', top: 0 }} />
                     :
                     <Stack direction={'column'} spacing={3} sx={{ width: '100%', height: '100%', pt: 3 }}>
                         <Grid container className='animate__animated animate__fadeIn' rowSpacing={responsive ? 5 : 3} columns={12} sx={{ display: 'flex', flexDirection: responsive ? 'column-reverse' : 'row', width: '100%' }}>
@@ -132,8 +132,8 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
                                             label="Filtros"
                                             sx={{
                                                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                                    borderColor: '#bd4f2b'
-                                                }
+                                                    borderColor: '#bd4f2b',
+                                                },
                                             }}>
                                             <option value={0}>Todos</option>
                                             <optgroup label="MODULOS">
@@ -164,7 +164,7 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
                                         autoHighlight
                                         sx={{
                                             width: responsive ? '100%' : '400px',
-                                            ml: responsive ? '30px' : '0px',
+                                            ml: responsive ? '30px' : '0px'
                                         }}
                                         getOptionLabel={(option: ReqAssistantsAutocompleteInterface) => option.nombre}
                                         includeInputInList
@@ -250,7 +250,7 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
                                     <DataGrid
                                         sx={{
                                             backgroundColor: '#ffffff',
-                                            color: 'secondary.main',
+                                            color: 'text.primary',
                                             border: 2,
                                             borderColor: 'darkgray',
                                             '& .MuiDataGrid-columnHeaderTitle': {

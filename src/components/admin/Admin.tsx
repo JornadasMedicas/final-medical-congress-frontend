@@ -14,6 +14,7 @@ import { getEventEditions } from '../../services/admin/adminService';
 import { ReqEventEditions } from '../../interfaces/admin/IAdmin';
 import { Herramientas } from './herramientas/Herramientas';
 import { Asistencia } from './asistencia/Asistencia';
+import theme from '../../themes/theme';
 
 const Admin = () => {
     const { setActiveSection } = useContext(UIContext);
@@ -58,7 +59,7 @@ const Admin = () => {
                         <Grid size={12}>
                             <TabContext value={tab}>
                                 <TabList
-                                    slotProps={{ indicator: { style: { backgroundColor: "#bd4f2b" } } }}
+                                    slotProps={{ indicator: { style: { backgroundColor: theme.palette.secondary.dark } } }}
                                     onChange={(_e, value) => handleTab(value)}
                                     variant={responsive ? 'scrollable' : 'fullWidth'}
                                     scrollButtons={responsive ? "auto" : false}

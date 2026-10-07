@@ -88,14 +88,14 @@ export const Herramientas = ({ editions }: { editions: ReqEventEditions[] }) => 
         <>
             {
                 editions.length === 0 ?
-                    <LinearProgress color='inherit' sx={{ width: '100%', color: 'text.secondary', position: 'absolute', top: 0 }} />
+                    <LinearProgress color='inherit' sx={{ width: '100%', color: 'background.default', position: 'absolute', top: 0 }} />
                     :
                     <Stack direction={'column'} sx={{ width: '100%', height: '100%' }}>
                         <Grid container className='animate__animated animate__fadeIn' spacing={responsive ? 5 : 3} columns={12} sx={{ width: '100%', height: '100%', p: 2, display: 'flex' }}>
                             {
                                 items.map((item) => (
                                     <Grid key={item.id} size={responsive ? 12 : 3}>
-                                        <Card sx={{ height: '200px', p: 0, width: '100%', transition: 'all 0.3s ease', ':hover': { boxShadow: '0px 5px 12px 1px rgba(1,18,38, 0.1)' } }}>
+                                        <Card sx={{ height: '200px', p: 0, width: '100%', transition: 'all 0.3s ease', ':hover': { boxShadow: '0px 5px 12px 1px rgba(1,18,38, 0.1)' }, backgroundColor: 'primary.main' }}>
                                             <CardContent sx={{ height: '30%', display: 'flex', m: 0, p: 2 }}>
                                                 <Box sx={{ flexGrow: 1 }}>
                                                     <item.Icon sx={{ width: '42px', height: '42px', color: 'background.default' }} />

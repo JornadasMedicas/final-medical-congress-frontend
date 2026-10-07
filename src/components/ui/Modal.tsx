@@ -23,6 +23,7 @@ export const Modal = () => {
                         width: modalAdminData.width, // Set desired width
                         height: 'auto', // Set desired height (optional)
                         maxWidth: 'none', // Prevent default maxWidth
+                        backgroundColor: 'primary.main'
                     },
                 }
             }}
