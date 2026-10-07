@@ -105,7 +105,7 @@ export const Contacto = () => {
                     }}
                     >
                         <Grid container sx={{ height: '100%', overflow: 'hidden', flexDirection: responsive ? 'column' : 'row' }}>
-                            <Grid size={12} sx={{ height: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'linear-gradient(90deg, rgba(132, 105, 115, 1) 0%, rgba(84, 14, 38, 1) 48%, rgba(68, 46, 54, 1) 100%);', borderTopLeftRadius: 18, borderTopRightRadius: 15, pt: 3, pb: 3 }}>
+                            <Grid size={12} sx={{ height: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'linear-gradient(90deg, rgba(19, 50, 44, 1) 0%, rgb(116, 160, 152) 48%, rgba(19, 50, 44, 1) 100%);', borderTopLeftRadius: 18, borderTopRightRadius: 15, pt: 3, pb: 3 }}>
                                 <EmailIcon sx={{ width: 'auto', height: '60px', color: 'white' }} />
                             </Grid>
                             <Grid size={12} sx={{ p: 5, height: '85%', display: 'flex', flexDirection: 'column', gap: 4 }}>
