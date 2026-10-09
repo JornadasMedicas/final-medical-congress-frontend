@@ -108,8 +108,8 @@ export const Navbar = () => {
                             sx={{ display: responsive ? 'block' : 'none' }}
                         >
                             {navItem.map((page) => (
-                                <MenuItem key={page.name} onClick={() => goToSection(page.name)}>
-                                    <Typography sx={{ textAlign: 'center' }}>{page.name}</Typography>
+                                <MenuItem sx={{ display: page.name === 'Registro' ? isRegistryAvailable ? 'block' : 'none' : 'block' }} key={page.name} onClick={() => goToSection(page.name)}>
+                                    <Typography sx={{ textAlign: 'center'  }}>{page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

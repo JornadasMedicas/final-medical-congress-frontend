@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import { SectionObserver } from "../../ui/SectionObserver";
 import { RenderSingleProgram } from "./RenderSingleProgram";
 import { Proximamente } from "./Proximamente";
+import ScheduleGrid from "./Schedulegrid";
 
 export const ProgramaCurrent = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -19,7 +20,6 @@ export const ProgramaCurrent = () => {
     return (
         <Grid container columns={12} sx={{
             display: 'flex',
-            minHeight: responsive ? 'auto' : 'auto',
             flexDirection: 'column',
             maxWidth: {
                 xs: '90%',
@@ -29,7 +29,7 @@ export const ProgramaCurrent = () => {
             },
             pl: { md: 5 }, pr: { md: 5 },
             mx: 'auto',
-            mt: 2
+            mt: 4
         }}>
             <Grid size={12} sx={{ mb: 2, mt: 0, position: 'relative' }}>
                 <SectionObserver sectionId="Programa" />
@@ -40,7 +40,7 @@ export const ProgramaCurrent = () => {
                     transition={{ duration: 0.85, ease: 'easeInOut' }}
                     viewport={{ once: true }}
                     sx={{ fontFamily: 'sans-serif', fontWeight: 700, fontSize: responsive ? '25px' : '33px', color: 'text.primary', width: '80%', m: 'auto' }}>
-                    PROGRAMA
+                    PROGRAMA 2026
                 </Divider>
             </Grid>
             {/* <Grid size={12} sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
@@ -102,7 +102,8 @@ export const ProgramaCurrent = () => {
                 </Tabs>
             </Grid> */}
             <Grid size={12} sx={{ mt: 2, height: '100%' }}>
-                <Proximamente />
+                <ScheduleGrid />
+                {/* <Proximamente /> */}
                {/*  {
                     programTab === 0 && <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/PROGRAMA_MEDICOS.webp`} url={'PROGRAMA_MEDICOS.pdf'} />
                 }

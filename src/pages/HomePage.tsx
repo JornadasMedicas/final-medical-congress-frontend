@@ -20,7 +20,7 @@ const HomePage = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
     const { triggerRelocation, activeSection } = useContext<PropsUIContext>(UIContext);
 
-    useEffect(() => {        
+    useEffect(() => {
         if (activeSection) {
             const sectionElement: HTMLElement | null = document.getElementById(activeSection);
 
@@ -32,19 +32,19 @@ const HomePage = () => {
             }
         }
     }, [activeSection]);
-    
+
     return (
         <Stack>
-            <Box component="section" id="Inicio" sx={{ backgroundColor: 'primary.main'}}>
+            <Box component="section" id="Inicio" sx={{ backgroundColor: 'primary.main' }}>
                 <MemoizedInicio />
             </Box>
-            <Box component="section" id="Programa" sx={{ backgroundColor: 'primary.main'}}>
+            <Box component="section" id="Programa" sx={{ backgroundColor: 'primary.main' }}>
                 <MemoizedPrograma />
             </Box>
-            <Box component="section" id="Sedes" sx={{ backgroundColor: 'primary.main'}}>
+            <Box component="section" id="Sedes" sx={{ backgroundColor: 'primary.main' }}>
                 <MemoizedSedes />
             </Box>
-            <Box component="section" id="Contacto" sx={{ backgroundColor: 'primary.main'}}>
+            <Box component="section" id="Contacto" sx={{ backgroundColor: 'primary.main' }}>
                 <MemoizedContacto />
             </Box>
         </Stack>
