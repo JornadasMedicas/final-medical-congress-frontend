@@ -98,7 +98,7 @@ const ACTIVITIES: Activity[] = [
     {
         dayId: 'jue',
         slotId: 'tarde',
-        area: 'Estomatología',
+        area: 'Estomatología (Taller)',
         title: 'Por Definir',
         description:
             'Estética dental y rehabilitación oral con demostraciones en vivo.',
