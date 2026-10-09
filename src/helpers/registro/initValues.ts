@@ -58,5 +58,5 @@ export const initValuesFormJornadas: RegistFormInterface = {
     talleres: []
 }
 
-export const registerDay = new Date("2026-10-09T09:00:00");
+export const registerDay = new Date("2026-10-16T09:00:00");
 export const currentDate = new Date();
