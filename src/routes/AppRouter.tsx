@@ -13,8 +13,8 @@ import UIContext from "../context/UIContext";
 
 const LazyAdmin = lazy(() => import('../components/admin/Admin'));
 const LazyHome = lazy(() => import('../pages/HomePage'));
-const LazyRegistro = lazy(() => import('../components/public/registro/Registro'));
-/* const LazyPreRegistro = lazy(() => import('../components/public/registro/PreRegistro')); */
+/* const LazyRegistro = lazy(() => import('../components/public/registro/Registro')); */
+const LazyPreRegistro = lazy(() => import('../components/public/registro/PreRegistro'));
 
 export const AppRouter = () => {
     const { isRegistryAvailable } = useContext(UIContext);
@@ -33,10 +33,10 @@ export const AppRouter = () => {
                         isRegistryAvailable &&
                         <Route path='registro' element={
                             <Suspense fallback={<Loader />}>
-                                {/* <LazyPreRegistro /> */}
-                                <SocketProvider>
+                                <LazyPreRegistro />
+                                {/* <SocketProvider>
                                     <LazyRegistro />
-                                </SocketProvider>
+                                </SocketProvider> */}
                             </Suspense>
                         } />
                     }
