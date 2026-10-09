@@ -242,7 +242,7 @@ export const Inicio = () => {
                             textAlign={responsive ? 'left' : 'center'}
                             letterSpacing={0.5}
                         >
-                            POR DEFINIR
+                            EL FUTURO DE LA <b style={{ color: theme.palette.background.default }}>MEDICINA METABÓLICA</b> Y LA TRANSFORMACIÓN DE LA SALUD
                         </Typography>
                     </Grid>
                     <Grid
