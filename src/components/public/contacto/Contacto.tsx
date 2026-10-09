@@ -71,7 +71,7 @@ export const Contacto = () => {
             <Grid size={responsive ? 12 : 6} sx={{ height: 'auto', pb: responsive ? '2vh' : 0, display: responsive ? 'none' : 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Box sx={{ width: '100%', pl: 10 }}>
                     <Typography fontSize={'20px'} fontFamily={'sans-serif'} textAlign={'justify'} fontWeight={500} letterSpacing={1}>
-                        Para cualquier consulta relacionada al evento, por favor completa el formulario de contacto o comunícate con la subdirección de Enseñanza del Centro de Alta Especialidad Dr. Rafael Lucio al teléfono 228-814-4500 Ext. 1116.
+                        Para cualquier consulta relacionada al evento, por favor completa el formulario de contacto o comunícate con la subdirección de Enseñanza del Centro de Alta Especialidad Dr. Rafael Lucio al teléfono 228-814-4500 Ext. 1106 y 1139.
                     </Typography>
                     <Typography fontSize={'20px'} fontFamily={'sans-serif'} textAlign={'justify'} fontWeight={500} letterSpacing={1}>
                         Nos comprometemos a atender tu solicitud a la mayor brevedad posible. Gracias por tu interés.
@@ -94,7 +94,7 @@ export const Contacto = () => {
                 <Box sx={{ width: '100%', m: 'auto', pl: { md: 5, lg: 10 }, pr: { md: 5, lg: 10 }, pb: responsive ? 5 : 0 }}>
                     <Box sx={{ width: responsive ? '100%' : 'auto', m: 'auto', mt: 2, display: responsive ? 'block' : 'none' }}>
                         <Typography fontSize={responsive ? '18px' : '20px'} fontFamily={'sans-serif'} textAlign={'justify'}>
-                            Para cualquier consulta relacionada al evento, por favor completa el formulario de contacto o comunícate con la subdirección de Enseñanza del Centro de Alta Especialidad Dr. Rafael Lucio al teléfono 228-814-4500 Ext. 1116.
+                            Para cualquier consulta relacionada al evento, por favor completa el formulario de contacto o comunícate con la subdirección de Enseñanza del Centro de Alta Especialidad Dr. Rafael Lucio al teléfono 228-814-4500 Ext. 1106 y 1139.
                         </Typography>
                         <Typography fontSize={responsive ? '18px' : '20px'} fontFamily={'sans-serif'} textAlign={'justify'}>
                             Nos comprometemos a atender tu solicitud a la mayor brevedad posible. Gracias por tu interés.
