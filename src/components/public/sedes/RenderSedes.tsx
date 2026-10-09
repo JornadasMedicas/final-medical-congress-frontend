@@ -68,7 +68,6 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
                 mt: responsive ? 2 : 5,
             }}>
                 <Grid size={responsive ? 12 : 6} sx={{ mb: responsive ? 2 : 2, position: 'relative' }}>
-                    <SectionObserver sectionId="Sedes" />
                     <Divider
                         component={motion.div}
                         initial={{ opacity: 0, y: 50 }}
@@ -134,6 +133,7 @@ export const RenderSedes = ({ sedes }: any /* PropsISedes */) => {
                         }
                     </Grid>
                     <Grid size={responsive ? 12 : 6} sx={{ backgroundColor: theme.palette.background.default, height: '100%', minHeight: 'auto', borderRadius: 3, p: responsive ? 1 : 2, zIndex: 2, boxShadow: '0 8px 10px 0 rgba(1,18,38, 0.15)', }}>
+                        <SectionObserver sectionId="Sedes" />
                         <Box
                             sx={{
                                 backgroundColor: 'white',
