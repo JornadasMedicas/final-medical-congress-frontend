@@ -25,6 +25,12 @@ export interface RegistFormInterface {
     talleres?: PropsTalleresInterface[];
 }
 
+export interface CompletePreRegistration {
+    modulo?: number | null;
+    edicion: number;
+    talleres?: PropsTalleresInterface[];
+}
+
 export interface JornadasGeneralErrorsInterface {
     error: boolean;
     msg: string;
@@ -40,5 +46,9 @@ export interface JornadasValuesInterface {
     tel: JornadasGeneralErrorsInterface;
     ciudad: JornadasGeneralErrorsInterface;
     dependencia: JornadasGeneralErrorsInterface;
+    modulo: JornadasGeneralErrorsInterface;
+}
+
+export interface EventsValuesInterface {
     modulo: JornadasGeneralErrorsInterface;
 }

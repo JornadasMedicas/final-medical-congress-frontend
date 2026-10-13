@@ -1,5 +1,5 @@
 
-import { JornadasValuesInterface, RegistFormInterface } from "../../interfaces/registro/IRegistForm";
+import { CompletePreRegistration, EventsValuesInterface, JornadasValuesInterface, RegistFormInterface } from "../../interfaces/registro/IRegistForm";
 import { initValuesFormJornadasErrors } from "./initValues";
 
 function validateEmail(email: string) {
@@ -124,6 +124,26 @@ export const validatePersonalInfoOnly = ({ ...data }: RegistFormInterface) => {
 
     if (data.ciudad === '') {
         errors = { ...errors, ciudad: { ...errors.ciudad, error: true } }
+    }
+
+    Object.entries(errors).forEach(([_, value]) => {
+        if (value.error) {
+            isOk = false;
+        }
+    });
+
+    return {
+        isOk,
+        errors
+    }
+}
+
+export const validateEventsOnly = ({ ...data }: CompletePreRegistration) => {
+    let errors: EventsValuesInterface = initValuesFormJornadasErrors;
+    let isOk: boolean = true;
+
+    if ((data.modulo === 0 || data.modulo === null) && data.talleres?.length === 0) {
+        errors = { ...errors, modulo: { error: true, msg: "Debe elegir un módulo" } }
     }
 
     Object.entries(errors).forEach(([_, value]) => {
