@@ -14,6 +14,7 @@ import UIContext from "../context/UIContext";
 const LazyAdmin = lazy(() => import('../components/admin/Admin'));
 const LazyHome = lazy(() => import('../pages/HomePage'));
 /* const LazyRegistro = lazy(() => import('../components/public/registro/Registro')); */
+const LazyVerificacion = lazy(() => import('../components/public/registro/Verificacion'));
 const LazyPreRegistro = lazy(() => import('../components/public/registro/PreRegistro'));
 
 export const AppRouter = () => {
@@ -40,6 +41,14 @@ export const AppRouter = () => {
                             </Suspense>
                         } />
                     }
+
+                    <Route path='preregistro/verificacion' element={
+                        <Suspense fallback={<Loader />}>
+                            <SocketProvider>
+                                <LazyVerificacion />
+                            </SocketProvider>
+                        </Suspense>
+                    } />
 
                     <Route path='admin' element={
                         <Suspense fallback={<Loader />}>

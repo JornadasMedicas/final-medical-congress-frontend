@@ -1,4 +1,4 @@
-import { JornadasValuesInterface, RegistFormInterface } from "../../interfaces/registro/IRegistForm";
+import { CompletePreRegistration, JornadasValuesInterface, RegistFormInterface } from "../../interfaces/registro/IRegistForm";
 
 export const initValuesFormJornadasErrors: JornadasValuesInterface = {
     categoria: {
@@ -53,6 +53,12 @@ export const initValuesFormJornadas: RegistFormInterface = {
     tel: '',
     ciudad: '',
     dependencia: '',
+    modulo: 0,
+    edicion: 0,
+    talleres: []
+}
+
+export const initValuesFormCompletePreRegistration: CompletePreRegistration = {
     modulo: 0,
     edicion: 0,
     talleres: []
