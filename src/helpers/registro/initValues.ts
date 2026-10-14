@@ -59,6 +59,7 @@ export const initValuesFormJornadas: RegistFormInterface = {
 }
 
 export const initValuesFormCompletePreRegistration: CompletePreRegistration = {
+    correo: '',
     modulo: 0,
     edicion: 0,
     talleres: []

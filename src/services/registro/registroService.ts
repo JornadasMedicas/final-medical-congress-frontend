@@ -27,4 +27,13 @@ export const completePreRegistration = async ({ ...params }: CompletePreRegistra
     } catch (err) {
         return { error: err };
     }
+}
+
+export const sendVerify = async (email: string) => {
+    try {
+        const res: AxiosResponse = await jornadasApi.post(`/api/register/pre/verify`, { email });
+        return res.data;
+    } catch (err) {
+        return { error: err };
+    }
 } 
