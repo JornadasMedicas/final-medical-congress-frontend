@@ -467,7 +467,7 @@ const Registro = () => {
                                 renderOption={(props, option) => {
                                     const { key, ...rest } = props;
                                     return (
-                                        <MenuItem key={key} {...rest} disabled={option.cupos === 0}>
+                                        <MenuItem sx={{ backgroundColor: 'primary.main' }} key={key} {...rest} disabled={option.cupos === 0}>
                                             <ListItemText primary={option.nombre} />
                                             {
                                                 option.cupos !== 0 ?
@@ -508,7 +508,8 @@ const Registro = () => {
                                     borderTop: `4px solid ${workshops[0].borderStyle}`,
                                     borderRadius: 3,
                                     mb: index === Object.entries(groupedWorkshops).length - 1 ? 0 : 3,
-                                    paddingBottom: 2
+                                    paddingBottom: 2,
+                                    backgroundColor: 'primary.main'
                                 }}
                             >
                                 <legend style={{ margin: 'auto', fontSize: responsive ? 24 : 25, paddingLeft: '1rem', paddingRight: '1rem', marginTop: '8px', marginBottom: '8px', display: 'flex', justifyContent: 'center' }}>
