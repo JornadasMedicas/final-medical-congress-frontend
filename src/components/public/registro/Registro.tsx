@@ -207,7 +207,7 @@ const Registro = () => {
                     <SectionObserver sectionId="Registro" />
                     <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
                         <PersonAddIcon sx={{ width: 'auto', height: '30px', color: 'white' }} />
-                        <Typography sx={{ color: 'primary.main', fontWeight: 'bold', fontSize: responsive ? '23px' : '23px' }}>PRE-REGISTRO</Typography>
+                        <Typography sx={{ color: 'primary.main', fontWeight: 'bold', fontSize: responsive ? '23px' : '23px' }}>REGISTRO</Typography>
                     </Box>
                 </Grid>
                 <Grid container sx={{ width: '100%', p: responsive ? 3 : 4 }} spacing={3}>
