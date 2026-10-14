@@ -18,6 +18,7 @@ import { validateEventsOnly } from "../../../helpers/registro/validateRegistForm
 import { completePreRegistration, sendVerify } from "../../../services/registro/registroService";
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import { regexMailPre } from "../../../helpers/registro/regex";
+import { useNavigate } from "react-router-dom";
 
 const Verificacion = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -30,6 +31,7 @@ const Verificacion = () => {
     const groupedWorkshops = _.groupBy(catalogs.workshops, 'jrn_modulo.nombre');
     const [errors, setErrors] = useState<EventsValuesInterface>(initValuesFormJornadasErrors);
     const [emailError, setEmailError] = useState(false);
+    const navigate = useNavigate();
     const { socket } = useContext(SocketContext);
 
     const handleSubmit = async () => {
@@ -59,10 +61,11 @@ const Verificacion = () => {
                     html: 'Gracias por completar su registro. <hr><b>En breve recibirá un correo electrónico con su pase de entrada (código QR) junto con las indicaciones posteriores.<b>',
                     confirmButtonColor: '#d3c19b'
                 });
-
+                
                 socket?.emit('isValidRegistry', payload);
                 setSelectedItem([]);
                 setPayload({ ...initValuesFormCompletePreRegistration, edicion: catalogs.editions[0].id });
+                navigate('/');
             } else if (res.error) {
                 Swal.fire({
                     icon: "error",
