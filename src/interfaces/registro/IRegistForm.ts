@@ -26,6 +26,7 @@ export interface RegistFormInterface {
 }
 
 export interface CompletePreRegistration {
+    correo: string;
     modulo?: number | null;
     edicion: number;
     talleres?: PropsTalleresInterface[];
