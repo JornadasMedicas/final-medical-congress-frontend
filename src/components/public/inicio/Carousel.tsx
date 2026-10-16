@@ -6,19 +6,19 @@ import theme from '../../../themes/theme';
 const items = [
     {
         name: "Medicina",
-        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/carousel1.jpeg`
+        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/medicina2026.jpeg`
     },
     {
         name: "Enfermería",
-        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/carousel3.jpeg`
+        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/enfermeria2026.jpeg`
     },
     {
         name: "Químicos",
-        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/carousel2.jpeg`
+        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/quimicos2026.jpeg`
     },
     {
-        name: "Estomatología",
-        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/carousel4.jpeg`
+        name: "Ginecología (Taller)",
+        img: `${import.meta.env.VITE_APP_BASE_ROUTE}/carousel/ginecologia2026.jpeg`
     }
 ]
 
@@ -43,7 +43,7 @@ export const Carousel = () => {
             <Box
                 sx={{
                     width: '100%',
-                    minHeight: responsive ? '44vh' : '62vh', //42
+                    minHeight: responsive ? '44vh' : '100vh', //42
                     position: 'relative'
                 }}
             >

@@ -13,7 +13,7 @@ export const ItemCarousel = memo((props: PropsItemCarousel) => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.85, ease: 'easeInOut' }}
             sx={{
-                minHeight: responsive ? '42vh' : '62vh',
+                minHeight: responsive ? '42vh' : '100vh',
                 display: 'flex',
                 flexDirection: 'row',
                 position: 'relative',
@@ -30,7 +30,7 @@ export const ItemCarousel = memo((props: PropsItemCarousel) => {
                     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
                 }
             }}>
-            <Box loading='eager' component={'img'} src={props.item.img} sx={{ zIndex: 0, position: 'absolute', justifyContent: 'center', width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}>
+            <Box loading='eager' component={'img'} src={props.item.img} sx={{ zIndex: 0, position: 'absolute', justifyContent: 'center', width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'bottom' }}>
             </Box>
             <Typography
                 fontFamily={'sans-serif'}
@@ -48,7 +48,7 @@ export const ItemCarousel = memo((props: PropsItemCarousel) => {
             >
                 <b style={{ color: '#d6bf9b' }}>¡</b>BIENVENIDOS A LAS JORNADAS MÉDICAS<b style={{ color: '#d6bf9b' }}>!</b>
             </Typography>
-            <Box sx={{ width: responsive ? '50%' : '20%', height: '5px', background: 'linear-gradient(90deg,rgb(255, 247, 243) 0%, #d6bf9b 100%)', m: 'auto', position: 'absolute', top: responsive ? '27vh' : '35vh', left: '50%', transform: 'translate(-50%, -50%)' }} />
+            <Box sx={{ width: responsive ? '50%' : '20%', height: '5px', background: 'linear-gradient(90deg,rgb(255, 247, 243) 0%, #d6bf9b 100%)', m: 'auto', position: 'absolute', top: responsive ? '27vh' : '55vh', left: '50%', transform: 'translate(-50%, -50%)' }} />
             <Box sx={{ height: { md: '70px', xs: '50px' }, mt: 'auto', ml: { md: '5vh', xs: '2vh' }, zIndex: 3 }}>
                 <Typography
                     sx={{ fontWeight: 'bold', fontSize: { md: '25px', xs: '18px' }, border: '1px solid white', backgroundColor: 'rgba(255, 255, 255, 0.5)', pl: 4, pr: 4, borderRadius: 3, color: 'primary.main' }}
