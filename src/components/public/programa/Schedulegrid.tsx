@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
     Box,
     ButtonBase,
@@ -15,6 +15,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import { RenderSingleProgram } from './RenderSingleProgram';
+import { PropsUIContext } from '../../../interfaces/context/IUIContext';
+import UIContext from '../../../context/UIContext';
 
 type Tone = 'morning' | 'afternoon';
 
@@ -39,6 +42,8 @@ interface Activity {
     description: string;
     venue: string;
     time: string;
+    image?: string;
+    pdf?: string;
 }
 
 /* ───────────── Datos ───────────── */
@@ -98,12 +103,13 @@ const ACTIVITIES: Activity[] = [
     {
         dayId: 'jue',
         slotId: 'tarde',
-        area: 'Estomatología (Taller)',
-        title: 'Por Definir',
+        area: 'Ginecología (Taller)',
+        title: 'HEMORRAGIA OBSTÉTRICA',
         description:
             'Estética dental y rehabilitación oral con demostraciones en vivo.',
         venue: 'Clínica odontológica',
         time: '15:00 — 19:00',
+        image: 'programas/2026/ginecologia_taller.webp'
     },
     {
         dayId: 'vie',
@@ -152,16 +158,12 @@ const TONES: Record<
 const GRID_COLUMNS = '170px repeat(3, minmax(0, 1fr))';
 
 export default function ScheduleGrid() {
-    const [selected, setSelected] = useState<Activity | null>(null);
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
+    const { setModalProgramData } = useContext<PropsUIContext>(UIContext);
 
-    const selectedSlot = selected
-        ? SLOTS.find((s) => s.id === selected.slotId)
-        : undefined;
-    const selectedTone = selectedSlot ? TONES[selectedSlot.tone] : TONES.morning;
 
     return (
-        <Box sx={{ p: { xs: 1.5, md: 3 }, mt: responsive ? 0 : 13, mb: responsive ? 4 : 13  }}>
+        <Box sx={{ p: { xs: 1.5, md: 3 }, mt: responsive ? 0 : 13, mb: responsive ? 4 : 13 }}>
             {/* Scroll horizontal en pantallas pequeñas */}
             <Box sx={{ overflowX: 'auto' }}>
                 <Box
@@ -279,7 +281,8 @@ export default function ScheduleGrid() {
                                         <ButtonBase
                                             key={day.id}
                                             role="cell"
-                                            /* onClick={() => setSelected(activity)} */
+                                            disabled={!activity.image}
+                                            onClick={() => setModalProgramData({ isOpen: true, img: activity.image })}
                                             aria-haspopup="dialog"
                                             aria-label={`${activity.area}: ${activity.title.replace(
                                                 '\n',
@@ -368,96 +371,6 @@ export default function ScheduleGrid() {
                     El comité organizador se reserva el derecho de modificar el programa según sea necesario.
                 </Typography>
             </Box>
-
-            {/* Modal */}
-            <Dialog
-                open={Boolean(selected)}
-                onClose={() => setSelected(null)}
-                fullWidth
-                maxWidth="sm"
-                aria-labelledby="activity-dialog-title"
-                slotProps={{
-                    paper: {
-                        sx: {
-                            borderRadius: 0,
-                            bgcolor: selectedTone.bg,
-                            color: selectedTone.fg,
-                            boxShadow: '0 24px 60px rgba(0,0,0,0.25)',
-                        },
-                    },
-                }}
-            >
-                {selected && (
-                    <DialogContent sx={{ p: { xs: 3, sm: 4 }, position: 'relative' }}>
-                        <IconButton
-                            onClick={() => setSelected(null)}
-                            aria-label="Cerrar"
-                            sx={{
-                                position: 'absolute',
-                                top: 12,
-                                right: 12,
-                                color: selectedTone.fg,
-                            }}
-                        >
-                            <CloseIcon />
-                        </IconButton>
-
-                        <Typography
-                            sx={{
-                                fontSize: 11,
-                                fontWeight: 700,
-                                letterSpacing: '0.12em',
-                                textTransform: 'uppercase',
-                                mb: 2,
-                            }}
-                        >
-                            {selected.area}
-                        </Typography>
-
-                        <Typography
-                            id="activity-dialog-title"
-                            component="h2"
-                            sx={{
-                                fontSize: { xs: 26, sm: 32 },
-                                fontWeight: 700,
-                                lineHeight: 1.1,
-                                letterSpacing: '-0.03em',
-                                pr: 4,
-                                mb: 3,
-                            }}
-                        >
-                            {selected.title.replace('\n', ' ')}
-                        </Typography>
-
-                        <Divider sx={{ borderColor: selectedTone.divider, mb: 3 }} />
-
-                        <Stack spacing={1.5} sx={{ mb: 3 }}>
-                            <Stack direction="row" spacing={1.25} alignItems="center">
-                                <CalendarMonthOutlinedIcon sx={{ fontSize: 20 }} />
-                                <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
-                                    {DAYS.find((d) => d.id === selected.dayId)?.label}
-                                </Typography>
-                            </Stack>
-                            <Stack direction="row" spacing={1.25} alignItems="center">
-                                <AccessTimeIcon sx={{ fontSize: 20 }} />
-                                <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
-                                    {selected.time}
-                                </Typography>
-                            </Stack>
-                            <Stack direction="row" spacing={1.25} alignItems="center">
-                                <PlaceOutlinedIcon sx={{ fontSize: 20 }} />
-                                <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
-                                    {selected.venue}
-                                </Typography>
-                            </Stack>
-                        </Stack>
-
-                        <Typography sx={{ fontSize: 15, lineHeight: 1.6, maxWidth: '60ch' }}>
-                            {selected.description}
-                        </Typography>
-                    </DialogContent>
-                )}
-            </Dialog>
         </Box>
     );
 }
