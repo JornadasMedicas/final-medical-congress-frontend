@@ -9,6 +9,7 @@ import { SectionObserver } from "../../ui/SectionObserver";
 import dayjs from "dayjs";
 import { CountDownTimer } from "./CountDownTimer";
 import theme from "../../../themes/theme";
+import { RenderSingleProgram } from "../programa/RenderSingleProgram";
 
 const cards = [
     {
@@ -224,7 +225,7 @@ export const Inicio = () => {
                         transition={{ duration: 0.85, ease: 'easeInOut', delay: 0.7 }}
                         viewport={{ once: true }}
                         size={responsive ? 12 : 4}
-                        sx={{ display: 'flex', justifyContent: 'left', flexDirection: 'column'}}
+                        sx={{ display: 'flex', justifyContent: 'left', flexDirection: 'column' }}
                     >
                         <Typography
                             fontFamily={'sans-serif'}
@@ -304,6 +305,9 @@ export const Inicio = () => {
                             <Divider sx={{ mt: '5px', mb: '5px', width: '50%', ml: 'auto', mr: 'auto' }} />
                             Estudiantes: $200 pesos */}
                         </Typography>
+                    </Grid>
+                    <Grid size={12}>
+                        <RenderSingleProgram image={`${import.meta.env.VITE_APP_BASE_ROUTE}/banner2026.jpeg`} url={'banner2026.pdf'} />
                     </Grid>
                     <Grid size={12} sx={{ mb: 2 }}>
                         <CountDownTimer />
