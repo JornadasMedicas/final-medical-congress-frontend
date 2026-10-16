@@ -13,7 +13,7 @@ export const RenderSingleProgram = ({ image, url }: any) => {
     const onDownload = () => {
         setButtonLoading(true);
 
-        window.open(`${import.meta.env.VITE_APP_BASE_ROUTE}/programas/2025/${url}`, '_blank');
+        window.open(`${import.meta.env.VITE_APP_BASE_ROUTE}/${url}`, '_blank');
 
         const timer = setTimeout(() => {
             setButtonLoading(false);
@@ -37,12 +37,12 @@ export const RenderSingleProgram = ({ image, url }: any) => {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 2,
-                    mb: responsive ? 4 : 7
+                    mb: responsive ? 4 : 0
                 }}
             >
                 <Box component={'img'} src={image} width={responsive ? '100%' : image.includes('MEDICOS') ? '80%' : '80%'} height={'auto'} loading='lazy' sx={{ cursor: 'pointer', transition: 'transform 0.3s ease', filter: 'drop-shadow(0px 0px 5px grey)', ':hover': { transform: 'scale(1.03)', transition: 'transform 0.3s ease' }, m: 'auto' }} onClick={() => handleClickOpen(image)}>
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center', width: responsive ? '100%' : '40%', m: 'auto' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', width: responsive ? '100%' : '40%', m: 'auto', mt: 3 }}>
                     <Button loading={buttonLoading} onClick={() => onDownload()} variant="contained" endIcon={<DownloadIcon />} sx={{ backgroundColor: 'background.default', color: 'primary.main', ":hover": { backgroundColor: 'primary.main', color: 'background.default' }, width: responsive ? '100%' : '100%' }}>
                         Descargar
                     </Button>

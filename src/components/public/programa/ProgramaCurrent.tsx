@@ -1,12 +1,12 @@
 import { Divider, Grid, useMediaQuery } from "@mui/material"
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+/* import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab'; */
 import { useState } from 'react';
 import { ModalImagen } from "./ModalImagen";
 import { motion } from "motion/react";
 import { SectionObserver } from "../../ui/SectionObserver";
-import { RenderSingleProgram } from "./RenderSingleProgram";
-import { Proximamente } from "./Proximamente";
+/* import { RenderSingleProgram } from "./RenderSingleProgram";
+import { Proximamente } from "./Proximamente"; */
 import ScheduleGrid from "./Schedulegrid";
 
 export const ProgramaCurrent = () => {
