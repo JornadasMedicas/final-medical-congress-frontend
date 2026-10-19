@@ -56,7 +56,7 @@ const DAYS: Day[] = [
 
 const SLOTS: Slot[] = [
     { id: 'manana', label: 'Mañana', time: '08:00 — 14:00', tone: 'morning' },
-    { id: 'tarde', label: 'Tarde', time: '15:00 — 20:00', tone: 'afternoon' },
+    { id: 'tarde', label: 'Tarde', time: '14:30 — 19:45', tone: 'afternoon' },
 ];
 
 const ACTIVITIES: Activity[] = [
@@ -88,17 +88,18 @@ const ACTIVITIES: Activity[] = [
         description:
             'Prevención, medicina personalizada y las tendencias que marcarán la próxima década.',
         venue: 'Auditorio principal',
-        time: '09:00 — 13:00',
+        time: '09:00 — 13:00'
     },
     {
         dayId: 'mie',
         slotId: 'tarde',
         area: 'Enfermería',
-        title: 'Por Definir',
+        title: '15:30 - 19:15',
         description:
             'Talleres prácticos sobre cuidado centrado en el paciente y comunicación.',
         venue: 'Aula 2',
         time: '15:00 — 19:00',
+        image: 'programas/2026/dip_26_Mod_Enfermeria.webp'
     },
     {
         dayId: 'jue',
@@ -115,11 +116,12 @@ const ACTIVITIES: Activity[] = [
         dayId: 'vie',
         slotId: 'tarde',
         area: 'Químicos',
-        title: 'Por Definir',
+        title: '14:30 - 19:45',
         description:
             'Del laboratorio a la farmacia: cómo se desarrollan y controlan los medicamentos.',
         venue: 'Laboratorio central',
         time: '15:00 — 19:00',
+        image: 'programas/2026/dip_26_Mod_Quimicos.webp'
     },
 ];
 
