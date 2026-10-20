@@ -27,7 +27,6 @@ export const ProgramaCurrent = () => {
                 lg: 1152,
                 xl: 1152,
             },
-            pl: { md: 5 }, pr: { md: 5 },
             mx: 'auto',
             mt: 4
         }}>
