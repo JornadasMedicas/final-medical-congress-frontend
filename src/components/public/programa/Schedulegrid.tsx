@@ -55,7 +55,7 @@ const DAYS: Day[] = [
 ];
 
 const SLOTS: Slot[] = [
-    { id: 'manana', label: 'Mañana', time: '08:00 — 14:00', tone: 'morning' },
+    { id: 'manana', label: 'Mañana', time: '08:00 — 16:00', tone: 'morning' },
     { id: 'tarde', label: 'Tarde', time: '14:30 — 19:45', tone: 'afternoon' },
 ];
 
@@ -338,7 +338,7 @@ export default function ScheduleGrid() {
                                                 sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}
                                             >
                                                 <Typography sx={{ fontSize: 12.5, fontWeight: 700 }}>
-                                                    Ver actividad
+                                                    Ver programa de actividades
                                                 </Typography>
                                                 <ChevronRightIcon
                                                     className="cta-arrow"
