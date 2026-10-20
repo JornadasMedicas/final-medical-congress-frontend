@@ -8,14 +8,14 @@ import { DashboardRoutes } from "./DashboardRoutes";
 import { lazy, Suspense, useContext } from "react";
 import { Loader } from "../components/ui/Loader";
 import { AdminContextProvider } from "../context/AdminContext";
-// import { SocketProvider } from "../context/SocketContext";
+import { SocketProvider } from "../context/SocketContext";
 import UIContext from "../context/UIContext";
 
 const LazyAdmin = lazy(() => import('../components/admin/Admin'));
 const LazyHome = lazy(() => import('../pages/HomePage'));
-// const LazyRegistro = lazy(() => import('../components/public/registro/Registro'));
-// const LazyVerificacion = lazy(() => import('../components/public/registro/Verificacion'));
-const LazyPreRegistro = lazy(() => import('../components/public/registro/PreRegistro'));
+const LazyRegistro = lazy(() => import('../components/public/registro/Registro'));
+const LazyVerificacion = lazy(() => import('../components/public/registro/Verificacion'));
+// const LazyPreRegistro = lazy(() => import('../components/public/registro/PreRegistro'));
 
 export const AppRouter = () => {
     const { isRegistryAvailable } = useContext(UIContext);
@@ -34,21 +34,21 @@ export const AppRouter = () => {
                         isRegistryAvailable &&
                         <Route path='registro' element={
                             <Suspense fallback={<Loader />}>
-                                <LazyPreRegistro />
-                                {/* <SocketProvider>
+                                {/* <LazyPreRegistro /> */}
+                                <SocketProvider>
                                     <LazyRegistro />
-                                </SocketProvider> */}
+                                </SocketProvider>
                             </Suspense>
                         } />
                     }
 
-                    {/* <Route path='preregistro/verificacion' element={
+                    <Route path='preregistro/verificacion' element={
                         <Suspense fallback={<Loader />}>
                             <SocketProvider>
                                 <LazyVerificacion />
                             </SocketProvider>
                         </Suspense>
-                    } /> */}
+                    } />
 
                     <Route path='admin' element={
                         <Suspense fallback={<Loader />}>
