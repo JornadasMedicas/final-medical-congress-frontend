@@ -19,6 +19,7 @@ import ContactEmergencyTwoToneIcon from '@mui/icons-material/ContactEmergencyTwo
 import _ from 'lodash';
 import { SocketContext } from "../../../context/SocketContext";
 import { SectionObserver } from "../../ui/SectionObserver";
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 
 const Registro = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
@@ -500,6 +501,10 @@ const Registro = () => {
                                     />
                                 )}
                             />
+                        </Box>
+                        <Box sx={{ display: 'flex', mb: 2, gap: 0.7 }}>
+                            <HomeRepairServiceIcon sx={{ width: 'auto', height: '23px', color: 'background.default' }} />
+                            <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: 'text.primary' }}>Talleres</Typography>
                         </Box>
                         {Object.entries(groupedWorkshops).map(([categoria, workshops], index: number) => (
                             <Card
