@@ -48,6 +48,18 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
     }
 
     useEffect(() => {
+        getTotalAssitants({
+            email: assistantsTable.filters.email,
+            module: assistantsTable.filters.module,
+            workshop: assistantsTable.filters.workshop,
+            year: assistantsTable.filters.year
+        }).then((res: ReqAssistantsTotalCount) => {
+            if (res.ok) {
+                setTableData(prev => ({ ...prev, totalRows: res.data }));
+                setAssistantsTableAction(prev => ({ ...prev, totalRows: res.data, tablePage: res.data <= 10 ? 0 : assistantsTable.tablePage }));
+            }
+        });
+
         getAssitants({
             limit: '10',
             page: assistantsTable.tablePage,
@@ -59,18 +71,6 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
             if (res.data) {
                 const row: any = assistantsRows(res.data);
                 setTableData(prev => ({ ...prev, rows: row }));
-            }
-        });
-
-        getTotalAssitants({
-            email: assistantsTable.filters.email,
-            module: assistantsTable.filters.module,
-            workshop: assistantsTable.filters.workshop,
-            year: assistantsTable.filters.year
-        }).then((res: ReqAssistantsTotalCount) => {
-            if (res.ok) {
-                setTableData(prev => ({ ...prev, totalRows: res.data }));
-                setAssistantsTableAction(prev => ({ ...prev, totalRows: res.data }));
             }
         });
 
@@ -92,7 +92,6 @@ export const Asistentes = ({ editions }: { editions: ReqEventEditions[] }) => {
                 setTableData(prev => ({ ...prev, talleres: talleresActuales }));
             }
         }));
-
     }, [assistantsTable.tablePage, assistantsTable.filters.year, setAssistantsTableAction, filterValue, assistantsTable.filters.email]);
 
     useEffect(() => {
