@@ -50,7 +50,8 @@ export const columns: GridColDef[] = [
 export const assistantsRows = (assistants: PropsGetAssistantsInterface[]) => {
 
     const rows = assistants.map((data: PropsGetAssistantsInterface) => {
-        const isFree = data.jrn_inscritos_modulos[0].jrn_edicion.gratuito;
+        
+        const isFree = data.jrn_inscritos_modulos.length !== 0 ? data.jrn_inscritos_modulos[0].jrn_edicion.gratuito : true;
 
         return {
             id: data.id,
@@ -58,9 +59,9 @@ export const assistantsRows = (assistants: PropsGetAssistantsInterface[]) => {
             nombre: data.nombre,
             categoria: data.categoria,
             correo: data.correo,
-            modulo: data.jrn_inscritos_modulos[0].jrn_modulo.nombre,
+            modulo: data.jrn_inscritos_modulos.length !== 0 ? data.jrn_inscritos_modulos[0].jrn_modulo.nombre : '-',
             costo: isFree ? 'N/A' : '$' + (data.categoria.includes('Estudiante') ? 200 : data.jrn_inscritos_modulos[0].jrn_modulo.costo),
-            pagado: data.jrn_inscritos_modulos[0].pagado,
+            pagado: data.jrn_inscritos_modulos.length !== 0 ? data.jrn_inscritos_modulos[0].pagado : 0,
             created_at: dayjs.utc(data.created_at).format('LLLL')
         }
     });

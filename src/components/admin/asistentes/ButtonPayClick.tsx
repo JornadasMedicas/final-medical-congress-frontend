@@ -9,7 +9,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 export const ButtonPayClick = ({ params }: any) => {
     const [pagado, setPagado] = useState<number>(params.row.pagado);
-    const { printableIds, setPrintableIds } = useContext(AdminContext);
+    // const { printableIds, setPrintableIds } = useContext(AdminContext);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isOpen2, setIsOpen2] = useState<boolean>(false);
     const [razonBeca, setRazonBeca] = useState<string>('');
@@ -32,13 +32,13 @@ export const ButtonPayClick = ({ params }: any) => {
         }
     }
 
-    useEffect(() => {
+    /* useEffect(() => {
         putPaymentStatus(pagado, params.row.id).then((res: any) => {
             if (res.error) {
                 Swal.fire({
                     icon: "error",
                     title: "Error",
-                    text: 'No se ha podido procesar su solicitud. Intente más tarde',
+                    text: 'No se ha podido procesar su solicitud. Intente más tardessss',
                     confirmButtonColor: '#d37c6b'
                 });
             } else {
@@ -78,7 +78,7 @@ export const ButtonPayClick = ({ params }: any) => {
             });
         }
 
-    }, [pagado]);
+    }, [pagado]); */
 
     const handleSave = () => {
         if (razonBeca === '') {

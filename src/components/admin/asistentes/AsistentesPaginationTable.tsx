@@ -4,16 +4,15 @@ import AdminContext from '../../../context/AdminContext';
 
 export const AsistentesPaginationTable = () => {
     const responsive: boolean = useMediaQuery("(max-width : 1050px)");
-    const [page, setPage] = useState<number>(0);
     const { assistantsTable, setAssistantsTableAction } = useContext(AdminContext);
 
     useEffect(() => {
-        setAssistantsTableAction(prev => ({ ...prev, tablePage: page  }))
-    }, [page, setAssistantsTableAction]);
+        setAssistantsTableAction(prev => ({ ...prev, tablePage: assistantsTable.tablePage  }))
+    }, [assistantsTable.tablePage]);
 
 
     const handleChange = (_e: React.ChangeEvent<unknown>, value: number) => {
-        setPage(value - 1);
+        setAssistantsTableAction(prev => ({ ...prev, tablePage: value - 1 }));
     }
 
     return (
@@ -38,7 +37,7 @@ export const AsistentesPaginationTable = () => {
                             }}
                             variant="outlined"
                             shape="circular"
-                            page={page + 1}
+                            page={assistantsTable.tablePage + 1}
                             count={Math.ceil(assistantsTable.totalRows / 10)}
                             renderItem={(props2) => <PaginationItem {...props2}/>}
                             onChange={(e, value) => handleChange(e, value)}
