@@ -55,7 +55,7 @@ const DAYS: Day[] = [
 ];
 
 const SLOTS: Slot[] = [
-    { id: 'manana', label: 'Mañana', time: '08:00 — 16:00', tone: 'morning' },
+    { id: 'manana', label: 'Mañana', time: '08:00 — 14:45', tone: 'morning' },
     { id: 'tarde', label: 'Tarde', time: '14:30 — 19:45', tone: 'afternoon' },
 ];
 
@@ -64,31 +64,34 @@ const ACTIVITIES: Activity[] = [
         dayId: 'mie',
         slotId: 'manana',
         area: 'Medicina',
-        title: 'Por Definir',
+        title: '08:00 - 13:15',
         description:
             'Casos reales y nuevas técnicas que ya están transformando la consulta diaria.',
         venue: 'Auditorio principal',
-        time: '09:00 — 13:00',
+        time: '08:00 — 13:15',
+        image: 'programas/2026/dip_26_Mod_Medicos.webp'
     },
     {
         dayId: 'jue',
         slotId: 'manana',
         area: 'Medicina',
-        title: 'Por Definir',
+        title: '08:00 - 13:45',
         description:
             'Simulaciones de urgencias para entrenar el criterio clínico bajo presión.',
         venue: 'Sala de simulación',
-        time: '09:00 — 13:00',
+        time: '08:00 — 13:45',
+        image: 'programas/2026/dip_26_Mod_Medicos.webp'
     },
     {
         dayId: 'vie',
         slotId: 'manana',
         area: 'Medicina',
-        title: 'Por Definir',
+        title: '08:00 - 14:45',
         description:
             'Prevención, medicina personalizada y las tendencias que marcarán la próxima década.',
         venue: 'Auditorio principal',
-        time: '09:00 — 13:00'
+        time: '08:00 — 14:45',
+        image: 'programas/2026/dip_26_Mod_Medicos_2.webp'
     },
     {
         dayId: 'mie',
