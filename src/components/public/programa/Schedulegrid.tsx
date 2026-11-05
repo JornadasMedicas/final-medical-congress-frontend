@@ -69,7 +69,7 @@ const ACTIVITIES: Activity[] = [
             'Casos reales y nuevas técnicas que ya están transformando la consulta diaria.',
         venue: 'Auditorio principal',
         time: '08:00 — 13:15',
-        image: 'programas/2026/dip_26_Mod_Medicos.webp'
+        image: 'programas/2026/dip_26_Medicos.webp'
     },
     {
         dayId: 'jue',
@@ -80,7 +80,7 @@ const ACTIVITIES: Activity[] = [
             'Simulaciones de urgencias para entrenar el criterio clínico bajo presión.',
         venue: 'Sala de simulación',
         time: '08:00 — 13:45',
-        image: 'programas/2026/dip_26_Mod_Medicos.webp'
+        image: 'programas/2026/dip_26_Medicos.webp'
     },
     {
         dayId: 'vie',
@@ -91,7 +91,7 @@ const ACTIVITIES: Activity[] = [
             'Prevención, medicina personalizada y las tendencias que marcarán la próxima década.',
         venue: 'Auditorio principal',
         time: '08:00 — 14:45',
-        image: 'programas/2026/dip_26_Mod_Medicos_2.webp'
+        image: 'programas/2026/dip_26_Medicos_2.webp'
     },
     {
         dayId: 'mie',
