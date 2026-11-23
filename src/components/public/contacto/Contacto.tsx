@@ -74,7 +74,7 @@ export const Contacto = () => {
                         Para cualquier consulta relacionada al evento, por favor completa el formulario de contacto o comunícate con la subdirección de Enseñanza del Centro de Alta Especialidad Dr. Rafael Lucio al teléfono 228-814-4500 Ext. 1106 y 1139.
                     </Typography>
                     <Typography fontSize={'20px'} fontFamily={'sans-serif'} textAlign={'justify'} fontWeight={500} letterSpacing={1}>
-                        Nos comprometemos a atender tu solicitud a la mayor brevedad posible. Gracias por tu interés.
+                        Nos comprometemos a atender tu solicitud a la mayor brevedad posible. Gracias por tu participación.
                     </Typography>
                 </Box>
             </Grid>
@@ -97,7 +97,7 @@ export const Contacto = () => {
                             Para cualquier consulta relacionada al evento, por favor completa el formulario de contacto o comunícate con la subdirección de Enseñanza del Centro de Alta Especialidad Dr. Rafael Lucio al teléfono 228-814-4500 Ext. 1106 y 1139.
                         </Typography>
                         <Typography fontSize={responsive ? '18px' : '20px'} fontFamily={'sans-serif'} textAlign={'justify'}>
-                            Nos comprometemos a atender tu solicitud a la mayor brevedad posible. Gracias por tu interés.
+                            Nos comprometemos a atender tu solicitud a la mayor brevedad posible. Gracias por tu participación.
                         </Typography>
                     </Box>
                     <Box sx={{
