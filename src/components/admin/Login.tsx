@@ -22,18 +22,6 @@ export const Login = () => {
             (credentials.username === import.meta.env.VITE_APP_ADMIN_USERNAME3 &&
                 credentials.password === import.meta.env.VITE_APP_ADMIN_PASSWORD3);
 
-
-        console.log(isValidUser);
-
-        console.log({
-            username: credentials.username,
-            expected1: import.meta.env.VITE_APP_ADMIN_USERNAME2,
-            password: credentials.password,
-            expectedPass1: import.meta.env.VITE_APP_ADMIN_PASSWORD2
-        });
-
-
-
         if (isValidUser) {
             localStorage.setItem('user', JSON.stringify(credentials));
             window.location.reload();
